@@ -246,10 +246,18 @@ With both variables set, `supabase` is a client object, and no other file create
 ### FR-23 — Unconfigured fallback
 
 **Requirement:**
-When either variable is missing or empty, the module exports `supabase` as `null` and throws nothing.
+When either variable is missing or empty, or when the client cannot be created from them (for example a malformed URL), the module exports `supabase` as `null` and throws nothing.
 
 **Expected Result:**
-With no `.env`, the app loads and renders the root route with no uncaught error.
+With no `.env`, or with a malformed `VITE_SUPABASE_URL`, the app loads and renders the root route with no uncaught error.
+
+### FR-24 — Pinned workflow actions
+
+**Requirement:**
+Every action the workflow uses is pinned to a full commit SHA, with its release tag in a comment.
+
+**Expected Result:**
+Every `uses:` line in `.github/workflows/deploy.yml` ends with a 40-character commit SHA followed by a `# vX.Y.Z` comment.
 
 ---
 
@@ -276,6 +284,8 @@ With no `.env`, the app loads and renders the root route with no uncaught error.
 - **D-19:** The client module exports a single binding named `supabase` - business doc (Secure Administration, `supabase.auth.signInWithPassword()`).
 - **D-20:** `supabase` is `null` when either variable is missing or empty - site owner decision, 2026-11-04.
 - **D-21:** `.gitignore` already ignores `.env` (and `*.local`), so it needs no change - existing code.
+- **D-22:** When `createClient` throws (it rejects a URL that is not a valid HTTP or HTTPS URL), the module catches the error, logs it with `console.error` and exports `supabase` as `null` - site owner decision, 2026-11-05.
+- **D-23:** Workflow actions are pinned to full commit SHAs with the release tag in a comment, as in the Vite static-deploy guide - site owner decision, 2026-11-05.
 
 ---
 
@@ -285,7 +295,7 @@ Order: code that runs locally without Supabase comes first, so the unconfigured 
 
 1. **T-01 (FR-03, D-05):** Add `base: '/'` to the Vite config. - `vite.config.js`
 2. **T-02 (FR-04, FR-22, D-02):** Install `react-router` and `@supabase/supabase-js` with `npm install`. - `package.json`, `package-lock.json`
-3. **T-03 (FR-22, FR-23, D-19, D-20):** Create the client module: read `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`; when both are non-empty, create the client and export it as `supabase`; otherwise export `supabase` as `null`. - `src/lib/supabaseClient.js`
+3. **T-03 (FR-22, FR-23, D-19, D-20, D-22):** Create the client module: read `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`; when both are non-empty, create the client and export it as `supabase`; otherwise export `supabase` as `null`. If creating the client throws, log the error and export `null`. - `src/lib/supabaseClient.js`
 4. **T-04 (FR-04, FR-05, D-03, D-04):** Wrap the existing demo markup in `HashRouter` and `Routes`, as the element of a single `Route` at `/`. Keep the demo markup, its counter state, its imports and `App.css` unchanged. - `src/App.jsx`
 5. **T-05 (FR-01, FR-02, FR-05, FR-23):** With no `.env` file, run `npm run lint`, `npm run build` and `npm run preview`, and check that the root route renders with no uncaught error. - no file
 6. **T-06 (FR-14, FR-15, D-17):** Create the Supabase project, confirm the Email provider is enabled, and turn off "Allow new users to sign up". - Supabase dashboard
@@ -294,7 +304,7 @@ Order: code that runs locally without Supabase comes first, so the unconfigured 
 9. **T-09 (FR-18, FR-19, FR-20, FR-21, D-14, D-15, D-16):** Enable RLS on `messages` and add the three policies in section 8. - Supabase dashboard
 10. **T-10 (FR-13, FR-22, D-21):** Copy the project URL and the publishable (anon) key into a local `.env` as `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`, then confirm `git status` does not list `.env`. - `.env` (local only)
 11. **T-11 (FR-09, FR-11, D-06):** In the GitHub repository settings, set Pages → Source to GitHub Actions and add the two repository secrets. - GitHub repository settings
-12. **T-12 (FR-07, FR-08, FR-12, D-06, D-07, D-08, D-09, D-10):** Create the workflow: trigger on push to `main`; check out the code, set up Node.js, install with `npm ci`, run `npm run build` with the two secrets as environment variables, upload `dist/` and deploy it to GitHub Pages. - `.github/workflows/deploy.yml`
+12. **T-12 (FR-07, FR-08, FR-12, FR-24, D-06, D-07, D-08, D-09, D-10, D-23):** Create the workflow: trigger on push to `main`; check out the code, set up Node.js, install with `npm ci`, run `npm run build` with the two secrets as environment variables, upload `dist/` and deploy it to GitHub Pages. Pin every action to its commit SHA. - `.github/workflows/deploy.yml`
 13. **T-13 (FR-01, FR-02, FR-03, FR-04, FR-05, FR-13 to FR-23):** Before the merge into `main`, verify every local and Supabase criterion in section 11. - no file
 14. **T-14 (FR-03, FR-06 to FR-12):** After the site owner merges `dev` into `main`, verify the workflow run and the live-site criteria in section 11. - no file
 
@@ -377,6 +387,7 @@ Order: code that runs locally without Supabase comes first, so the unconfigured 
 ## 9. Validation
 
 - **Client configuration:** `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` must both be non-empty - checked on the client when `src/lib/supabaseClient.js` loads - on failure: `supabase` is `null`, nothing is thrown, and the app renders.
+- **Client URL format:** `VITE_SUPABASE_URL` must be a valid HTTP or HTTPS URL - checked on the client by `createClient` when `src/lib/supabaseClient.js` loads - on failure: the error is logged to the console, `supabase` is `null`, nothing is thrown, and the app renders.
 - **Required columns:** every insert into `messages` must carry `name`, `email` and `message` - checked on the server (database constraints) - on failure: the insert is rejected with an error and no row is stored. Browser validation of the form belongs to `contact-page.feature.md`.
 - **Access rules:** every request to `messages` is checked against its RLS policies - checked on the server - on failure: a read returns zero rows and an update or delete changes zero rows, with no error.
 - **Sign-ups:** new accounts are refused - checked on the server (Supabase Auth) - on failure: the sign-up request returns an error and no user is created.
@@ -397,6 +408,7 @@ Order: code that runs locally without Supabase comes first, so the unconfigured 
 ### Error / Invalid Behavior
 
 - A variable is missing locally or as a secret: the build still succeeds, `supabase` is `null`, the site loads, and features that need Supabase show their own message.
+- `VITE_SUPABASE_URL` is malformed: the console shows the `createClient` error, `supabase` is `null`, the site loads, and features that need Supabase show their own message.
 - The install or the build fails in the workflow: nothing is deployed and the previous live version stays online.
 - A visitor tries to read, update or delete messages: zero rows are returned or changed, and no error is raised.
 - An insert is missing `name`, `email` or `message`: the database rejects it and stores nothing.
@@ -437,3 +449,5 @@ Order: code that runs locally without Supabase comes first, so the unconfigured 
 - [ ] With the SQL Editor's role set to `authenticated` as the admin user, selecting from `messages` returns every row, and deleting one row removes it. (FR-21)
 - [ ] Searching `src/` for `createClient` finds only `src/lib/supabaseClient.js`, and with `.env` filled in, running `(await import('/src/lib/supabaseClient.js')).supabase !== null` in the browser console of `npm run dev` returns `true`. (FR-22)
 - [ ] With no `.env`, or with one of the two variables empty, the same console check returns `false`, and `npm run dev` and `npm run preview` both render the root route with no uncaught error in the console. (FR-23)
+- [ ] With `VITE_SUPABASE_URL` set to a malformed value (for example `not-a-url`), the same console check returns `false`, the console shows the `Invalid supabaseUrl` error as a logged message rather than an uncaught error, and the root route renders. (FR-23)
+- [ ] Every `uses:` line in `.github/workflows/deploy.yml` pins a 40-character commit SHA with a `# vX.Y.Z` comment. (FR-24)
