@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { HashRouter, Route, Routes } from 'react-router'
+import Layout from './components/Layout.jsx'
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
@@ -121,9 +122,11 @@ function App() {
 
   return (
     <HashRouter>
-      <Routes>
-        <Route path="/" element={demoContent} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={demoContent} />
+        </Routes>
+      </Layout>
     </HashRouter>
   )
 }
