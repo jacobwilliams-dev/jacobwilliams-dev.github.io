@@ -45,7 +45,7 @@ The empty project scaffold becomes a site that builds to static files, routes on
 
 - Routes and pages for Portfolio, Links, Contact, the login route and `/backoffice`: each page's own feature specification adds its route to `src/App.jsx`.
 - Removing the Vite demo content and building the Home page: `home-page.feature.md`.
-- The shared layout (header, footer): `header-footer.feature.md`.
+- The shared layout (header, footer) and the global styles in `src/index.css`: `header-footer.feature.md`.
 - Every Supabase call (insert, sign-in, fetch, delete, sign-out) and the "not configured" messages visitors see: `contact-page.feature.md`, `login-page.feature.md`, `back-office.feature.md`.
 - `src/main.jsx`: stays unchanged.
 - A catch-all or "not found" route, a `404.html` page, a custom domain, and a manual-run trigger for the workflow: no source asks for them.
