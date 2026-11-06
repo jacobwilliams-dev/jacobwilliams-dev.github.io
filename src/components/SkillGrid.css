@@ -1,0 +1,33 @@
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--skill-columns), 1fr);
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill-grid li {
+  display: flex;
+  gap: 12px;
+}
+
+/* flex none: stops a long description squeezing the icon */
+.skill-icon {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  color: var(--gold);
+}
+
+.skill-name {
+  margin-bottom: 4px;
+  color: var(--text);
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .skill-grid {
+    grid-template-columns: 1fr;
+  }
+}

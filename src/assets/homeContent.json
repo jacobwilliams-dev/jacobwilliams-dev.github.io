@@ -1,0 +1,171 @@
+{
+  "intro": {
+    "name": "Jacob Williams",
+    "tagline": "Full-Stack Developer",
+    "paragraph": "I'm a full-stack developer who builds across the front end, the back end and mobile with React, Node.js, Java and React Native. I write a spec before I write code, and every change, AI-assisted or not, gets tested and reviewed before it ships."
+  },
+  "technicalGroups": [
+    {
+      "title": "Frontend Engineering",
+      "summary": "Interfaces for web and mobile, built from reusable components that work on any screen.",
+      "skills": [
+        {
+          "name": "React",
+          "description": "Reusable components, hooks, Context and client-side routing.",
+          "icon": "Component"
+        },
+        {
+          "name": "React Native / Expo",
+          "description": "Cross-platform mobile apps with file-based navigation.",
+          "icon": "Smartphone"
+        },
+        {
+          "name": "JavaScript ES6+",
+          "description": "Promises, async/await, array methods and ES modules.",
+          "icon": "Braces"
+        },
+        {
+          "name": "HTML & responsive CSS",
+          "description": "Semantic markup and mobile-first layouts for any screen size.",
+          "icon": "MonitorSmartphone"
+        }
+      ]
+    },
+    {
+      "title": "Backend Engineering",
+      "summary": "Secure server logic and clean APIs that validate input and fail predictably.",
+      "skills": [
+        {
+          "name": "Node.js / Express",
+          "description": "RESTful routes, controllers and custom middleware.",
+          "icon": "Server"
+        },
+        {
+          "name": "Java / Spring Boot",
+          "description": "Layered architecture, Spring Security and server-rendered views.",
+          "icon": "Layers"
+        },
+        {
+          "name": "Auth & sessions",
+          "description": "Token-based sessions, password hashing and role-based access.",
+          "icon": "KeyRound"
+        },
+        {
+          "name": "API design",
+          "description": "Clean endpoints, request validation and consistent error responses.",
+          "icon": "Plug"
+        }
+      ]
+    },
+    {
+      "title": "Data",
+      "summary": "Relational and document databases, modeled first and secured at the data layer.",
+      "skills": [
+        {
+          "name": "SQL / MySQL",
+          "description": "Normalized schemas, joins and hand-written queries.",
+          "icon": "Database"
+        },
+        {
+          "name": "Spring Data JPA / Hibernate",
+          "description": "Entity mapping and repository-based data access.",
+          "icon": "Table2"
+        },
+        {
+          "name": "MongoDB / Mongoose",
+          "description": "Flexible document models with schema validation.",
+          "icon": "FileBraces"
+        },
+        {
+          "name": "PostgreSQL / Supabase",
+          "description": "Hosted Postgres secured with row-level security policies.",
+          "icon": "ShieldCheck"
+        }
+      ]
+    },
+    {
+      "title": "Development Workflow",
+      "summary": "The habits that get code from a branch to production safely.",
+      "skills": [
+        {
+          "name": "Git / GitHub",
+          "description": "Feature branches, pull requests and conventional commits.",
+          "icon": "GitBranch"
+        },
+        {
+          "name": "CI/CD",
+          "description": "Automated builds and deployments on every merge.",
+          "icon": "Rocket"
+        },
+        {
+          "name": "Debugging",
+          "description": "Tracing issues from the browser to the server to the database.",
+          "icon": "Bug"
+        },
+        {
+          "name": "Environments",
+          "description": "Separate dev and production configs, with secrets kept out of code.",
+          "icon": "SlidersHorizontal"
+        }
+      ]
+    },
+    {
+      "title": "AI-Assisted Engineering",
+      "summary": "AI speeds up the work, while specs and human review keep it correct.",
+      "skills": [
+        {
+          "name": "Specification & decomposition",
+          "description": "Clear specs and acceptance criteria before any code, with big goals broken into small, testable tasks.",
+          "icon": "FileText"
+        },
+        {
+          "name": "Claude Code",
+          "description": "Custom commands and skills that automate repeat workflows.",
+          "icon": "SquareTerminal"
+        },
+        {
+          "name": "Context engineering (CLAUDE.md)",
+          "description": "Project rules that keep AI output on-stack and on-standard.",
+          "icon": "ScrollText"
+        },
+        {
+          "name": "AI-assisted review & testing",
+          "description": "Every AI-generated change is reviewed and verified before it ships.",
+          "icon": "ClipboardCheck"
+        }
+      ]
+    }
+  ],
+  "softSkills": [
+    {
+      "name": "Fast Learner",
+      "description": "I picked up four stacks in one program: MERN, Java + Spring Boot, React Native, and Supabase.",
+      "icon": "Lightbulb"
+    },
+    {
+      "name": "Problem Solving",
+      "description": "I break bugs down step by step and test each piece, from API calls in Postman to unit tests in JUnit.",
+      "icon": "Puzzle"
+    },
+    {
+      "name": "Planning & Organization",
+      "description": "I write a spec before I write code, so every feature has clear goals and a clear finish line.",
+      "icon": "ClipboardList"
+    },
+    {
+      "name": "Attention to Detail",
+      "description": "I lint, test and audit my work before I ship it, so small mistakes don't reach users.",
+      "icon": "Search"
+    },
+    {
+      "name": "Clear Communication",
+      "description": "I document my work in plain words: READMEs, research notes and progress updates people can act on.",
+      "icon": "MessageCircle"
+    },
+    {
+      "name": "Adaptability",
+      "description": "I switch between front end, back end and mobile without losing pace.",
+      "icon": "RefreshCw"
+    }
+  ]
+}

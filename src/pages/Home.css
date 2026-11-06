@@ -1,0 +1,21 @@
+/* margin-top auto: with the hint's own auto margin, this centres the intro in the panel */
+.home-intro {
+  max-width: 760px;
+  margin-top: auto;
+}
+
+.home-intro h1 {
+  margin: 0 0 12px;
+}
+
+.home-tagline {
+  margin-bottom: 24px;
+  color: var(--peach);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.home-skills-title {
+  margin-bottom: 32px;
+}

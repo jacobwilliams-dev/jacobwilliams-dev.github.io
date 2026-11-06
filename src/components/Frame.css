@@ -1,0 +1,40 @@
+.frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* overflow visible: the marker sits on the corner, half outside the box */
+.frame-outline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* The path carries the fill, so the panel background follows the cut corners */
+.frame-outline path {
+  fill: color-mix(in srgb, var(--ink) 70%, transparent);
+  stroke: var(--line);
+  vector-effect: non-scaling-stroke;
+}
+
+.frame-outline .frame-marker {
+  fill: var(--peach);
+}
+
+/* position relative: keeps the content above the outline */
+.frame-content {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 48px;
+}
+
+@media (max-width: 760px) {
+  .frame-content {
+    padding: 32px 20px;
+  }
+}
