@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Orbitron';
+  src: url('./assets/fonts/Orbitron-Bold.ttf') format('truetype');
+  font-weight: 700;
+  /* swap: show the fallback font while this loads, not blank headings */
+  font-display: swap;
+}
+
 :root {
   --bg: #020304;
   --ink: #050708;
@@ -9,21 +17,9 @@
   --line: rgba(230, 229, 220, 0.65);
 
   --sans: Arial, Helvetica, sans-serif;
-  --heading: 'Trebuchet MS', Arial, sans-serif;
+  --heading: 'Orbitron', 'Trebuchet MS', Arial, sans-serif;
 
   --header-height: 95px;
-
-  /* Read only by the Vite demo; home-page.feature.md removes them */
-  --text-h: #f3f4f6;
-  --border: #2e303a;
-  --code-bg: #1f2028;
-  --accent: #c084fc;
-  --accent-bg: rgba(192, 132, 252, 0.15);
-  --accent-border: rgba(192, 132, 252, 0.5);
-  --social-bg: rgba(47, 48, 58, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  --mono: ui-monospace, Consolas, monospace;
 
   color-scheme: dark;
 }
@@ -106,24 +102,4 @@ button:focus-visible {
     animation: none !important;
     transition: none !important;
   }
-}
-
-/* Vite demo only; home-page.feature.md removes these rules */
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
-
-#social .button-icon {
-  filter: invert(1) brightness(2);
 }

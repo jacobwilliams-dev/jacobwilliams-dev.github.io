@@ -192,7 +192,7 @@ One dark, sci-fi style applies to every page. The values come from the site owne
   - `--gold` `#b49a63` - buttons, hover colour, focus outline
   - `--peach` `#d9b4a2` - accent lines and current-state marks
   - `--line` `rgba(230, 229, 220, 0.65)` - frame outlines and dividers
-- **Fonts:** body `Arial, Helvetica, sans-serif`; headings `'Trebuchet MS', Arial, sans-serif`. System fonts only; no web font is loaded.
+- **Fonts:** body `Arial, Helvetica, sans-serif`; headings `Orbitron` in bold, falling back to `'Trebuchet MS', Arial, sans-serif`. Orbitron is the only web font: it is self-hosted from `src/assets/fonts/`, unmodified, with its SIL Open Font License file beside it. Every other font is a system font.
 - **Text sizes:** body text 16px with a 1.6 line height; labels in spaced-out bold capitals (letter-spacing 1.5px to 2px) are never smaller than 12px; `h1` is `clamp(38px, 4.05vw, 70px)`; `h2` is `clamp(23px, 2.2vw, 38px)`.
 - **Hover and focus:** links and buttons turn `--gold` on hover; keyboard focus shows a 2px `--gold` outline offset by 6px.
 - **Glyph line:** a section heading may carry, under it, a short decorative row of Unicode symbols in `--text-faint` with 5px letter-spacing and `aria-hidden="true"`. It uses plain Unicode characters, not an alphabet font.
