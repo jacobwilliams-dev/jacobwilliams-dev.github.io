@@ -1,0 +1,6 @@
+/* flex: takes the free height of #root, so the footer stays at the bottom on short pages.
+   snap-align start: a snap point at the page top; with the footer as the only one, pages open scrolled down. */
+.layout-main {
+  flex: 1 0 auto;
+  scroll-snap-align: start;
+}

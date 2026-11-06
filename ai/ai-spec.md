@@ -74,7 +74,7 @@ Browser (React app) → Supabase client (`src/lib/supabaseClient.js`) → Supaba
 
 Access to data is controlled by Supabase Row Level Security (RLS) policies, not by application code alone. A GitHub Actions workflow builds the site on every push to `main`, injects environment variables from repository secrets, and deploys the output to GitHub Pages.
 
-The repository is currently a fresh `npm create vite@latest` React scaffold. React Router, the Supabase client, `src/lib/`, `ai/features/` and the deploy workflow do not exist yet. The structure below is the planned one, based on the project documents.
+The repository started as an `npm create vite@latest` React scaffold. `setup-deploy.feature.md` added React Router (`HashRouter` in `src/App.jsx`), the shared Supabase client in `src/lib/supabaseClient.js` and the deploy workflow. Folders marked (planned) below do not exist yet; the first feature that needs each one creates it.
 
 ### Repository / Project Structure
 
@@ -86,7 +86,7 @@ The repository is currently a fresh `npm create vite@latest` React scaffold. Rea
   - `/src/lib/` - shared service modules; holds `supabaseClient.js`
   - `/src/assets/` - images and other assets imported by components
   - `/src/pages/` (planned) - one component per routed page
-  - `/src/components/` (planned) - shared and reusable components, including the layout
+  - `/src/components/` (planned) - shared and reusable components, including the layout and the `Frame` and `GoldButton` visual components
 - `/public/` - static files served as-is at the site root (favicon, downloadable files)
 - `/.github/workflows/deploy.yml` - build-and-deploy workflow for GitHub Pages
 - Root - config files only: `index.html`, `vite.config.js`, `eslint.config.js`, `package.json`, `package-lock.json`, `.gitignore`
@@ -117,9 +117,9 @@ The repository is currently a fresh `npm create vite@latest` React scaffold. Rea
 - **Language:** JavaScript (ES modules, JSX). The project was scaffolded with the JavaScript variant.
 - **Front-end framework:** React 19 (`react`, `react-dom`).
 - **Build tool:** Vite 8 with `@vitejs/plugin-react`.
-- **Routing:** React Router (to be added).
-- **Backend-as-a-service:** Supabase (PostgreSQL database, Auth, RLS) through the `@supabase/supabase-js` client (to be added).
-- **Styling:** hand-written CSS.
+- **Routing:** React Router (`react-router` package).
+- **Backend-as-a-service:** Supabase (PostgreSQL database, Auth, RLS) through the `@supabase/supabase-js` client.
+- **Styling:** hand-written CSS, following the visual design in section 5. No CSS framework or animation library.
 - **Linting:** ESLint 10 with `@eslint/js`, `eslint-plugin-react-hooks` and `eslint-plugin-react-refresh`.
 - **CI/CD and hosting:** GitHub Actions, GitHub Pages.
 - **Static data:** content may come from static files (JSON) in the repository or from Supabase.
@@ -178,6 +178,32 @@ Ask before adding any dependency not listed here. Reason: every package adds bun
 - Follow the scaffold's style: 2-space indentation, single quotes, no semicolons, trailing commas in multi-line lists.
 - ESLint (`eslint.config.js`) enforces code rules; `npm run lint` should report no errors.
 
+### Visual Design
+
+One dark, sci-fi style applies to every page. The values come from the site owner's design reference (2026-11-05). To change the design, update this section first, then the code.
+
+- **Theme:** dark only (`color-scheme: dark`). A light palette belongs to `light-dark-mode.feature.md`.
+- **Colour variables:** defined once in `src/index.css`. Components use these variables instead of introducing new colour values.
+  - `--bg` `#020304` - page background
+  - `--ink` `#050708` - dark fills (header bar, open menu, panels)
+  - `--text` `#f5f6f4` - headings and primary text
+  - `--text-muted` `#b7b9b8` - paragraphs and inactive links
+  - `--text-faint` `#828685` - glyph lines, footer text, background line art
+  - `--gold` `#b49a63` - buttons, hover colour, focus outline
+  - `--peach` `#d9b4a2` - accent lines and current-state marks
+  - `--line` `rgba(230, 229, 220, 0.65)` - frame outlines and dividers
+- **Fonts:** body `Arial, Helvetica, sans-serif`; headings `'Trebuchet MS', Arial, sans-serif`. System fonts only; no web font is loaded.
+- **Text sizes:** body text 16px with a 1.6 line height; labels in spaced-out bold capitals (letter-spacing 1.5px to 2px) are never smaller than 12px; `h1` is `clamp(38px, 4.05vw, 70px)`; `h2` is `clamp(23px, 2.2vw, 38px)`.
+- **Hover and focus:** links and buttons turn `--gold` on hover; keyboard focus shows a 2px `--gold` outline offset by 6px.
+- **Glyph line:** a section heading may carry, under it, a short decorative row of Unicode symbols in `--text-faint` with 5px letter-spacing and `aria-hidden="true"`. It uses plain Unicode characters, not an alphabet font.
+- **Frame panel:** page sections sit inside a `Frame` component: a 1px `--line` outline drawn in SVG with a non-scaling stroke, the top-right and bottom-left corners cut at 45°, the bottom-right corner rounded, and a small square marker on the top-left corner.
+- **Gold button:** call-to-action buttons and links use a `GoldButton` component: a `--gold` fill with the top-left and bottom-right corners cut, an inner 1px light border, a white label in spaced-out capitals, and a soft gold glow.
+- **Full-screen sections:** page sections are at least one window tall (`min-height: 100svh`) and keep their content in normal flow, never placed by percentage with absolute positioning. Wider than 760px, the page snaps to section starts just below the header; at 760px or less, snapping is off. The first section of a page with several sections shows a pulsing "Scroll down" hint.
+- **Breakpoint:** narrow-viewport styles apply at `max-width: 760px`.
+- **Motion:** CSS transitions and keyframes only. Hover and focus changes take 0.2s; the gold button lifts 2px and brightens on hover; the background orbit drawing rotates over 1.8s; the scroll hint pulses on a 2.5s loop; in-page scrolling is smooth. Under `prefers-reduced-motion: reduce`, every animation and transition is off and scrolling jumps.
+- **Where the pieces are built:** `Frame` and `GoldButton` live in `src/components/` and are created by the first feature that uses them; later features reuse them.
+- **No franchise material:** no names, logos, characters or artwork from games, films or other brands. One exception: the LinkedIn and GitHub icons on the links to the site owner's own profiles.
+
 ### Maintainability Rules
 
 - Build only what this file and the relevant feature specification describe.
@@ -212,6 +238,7 @@ Ask before adding any dependency not listed here. Reason: every package adds bun
 - **User feedback:** results of Supabase operations (form submission, login, loading or deleting messages) are shown on screen. Success and error states are visually distinct from each other.
 - **AI-generated imagery:** every AI-generated image is relevant to the page it sits on, has appropriate alt text, and has its generating tool documented in a code comment, in `RESEARCH.md`, or in the feature specification.
 - **Responsive behaviour:** layouts adapt to narrow viewports without horizontal scrolling or content hidden behind navigation.
+- **In-page jumps:** jump to a section of the same page with `element.scrollIntoView()`, never with an `href="#id"` link. Reason: `HashRouter` reads every `#` link as a route, so `#story` would open the route `/story`.
 - **Blocking rules:** if a rule here blocks needed work, stop and ask. Don't build a workaround.
 
 ---

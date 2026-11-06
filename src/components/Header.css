@@ -1,0 +1,128 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 28px;
+  padding-inline: 24px;
+  background: color-mix(in srgb, var(--ink) 70%, transparent);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Minus the 1px border, so the whole header equals --header-height */
+.header-logo {
+  display: flex;
+  align-items: center;
+  height: calc(var(--header-height) - 1px);
+}
+
+.header-logo img {
+  display: block;
+  width: auto;
+  height: 56px;
+}
+
+.header-link,
+.header-page-name,
+.header-menu-button {
+  font: 700 14px/1 var(--sans);
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.header-nav {
+  margin-left: auto;
+}
+
+.header-links {
+  display: flex;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.header-link {
+  display: block;
+  padding-block: 10px;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.header-link.active {
+  color: var(--text);
+  text-decoration-line: underline;
+  text-decoration-color: var(--peach);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 8px;
+}
+
+/* After .active, so the current link also turns gold on hover */
+.header-link:hover {
+  color: var(--gold);
+}
+
+.header-page-name,
+.header-menu-button {
+  display: none;
+}
+
+.header-page-name {
+  color: var(--text);
+}
+
+.header-menu-button {
+  padding: 9px 12px;
+  color: var(--text);
+  background: none;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    outline-color 0.2s;
+}
+
+.header-menu-button:hover {
+  border-color: var(--gold);
+}
+
+@media (max-width: 760px) {
+  .header {
+    column-gap: 12px;
+    padding-inline: 16px;
+  }
+
+  .header-page-name {
+    display: block;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .header-menu-button {
+    display: block;
+  }
+
+  /* Wider than the row by the header's padding, so the list reaches both edges */
+  .header-nav {
+    display: none;
+    flex-basis: calc(100% + 32px);
+    margin-inline: -16px;
+    background: var(--ink);
+  }
+
+  .header-nav.is-open {
+    display: block;
+  }
+
+  .header-links {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .header-link {
+    padding: 18px 16px;
+  }
+}
