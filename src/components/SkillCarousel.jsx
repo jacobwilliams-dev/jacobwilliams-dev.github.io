@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { handleMagnetMove } from '../lib/magnetHover.js'
 import SkillGrid from './SkillGrid.jsx'
 import './SkillCarousel.css'
 
@@ -90,6 +91,7 @@ function SkillCarousel({ heading, groups }) {
                 '--distance': Math.abs(offset),
               }}
               onClick={() => setFocusedIndex(index)}
+              onPointerMove={handleMagnetMove}
             >
               <h3 className="skill-card-title">{group.title}</h3>
               <p className="skill-card-summary">{group.summary}</p>

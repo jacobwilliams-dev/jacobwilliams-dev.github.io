@@ -1,7 +1,23 @@
-/* margin-top auto: with the hint's own auto margin, this centres the intro in the panel */
+.home-intro-row {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .home-intro {
   max-width: 760px;
-  margin-top: auto;
+}
+
+/* flex none: stops the text squeezing the photo out of its square */
+.home-photo {
+  flex: none;
+  width: clamp(180px, 20vw, 240px);
+  aspect-ratio: 1;
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 0.5px var(--peach),
+    0 0 18px color-mix(in srgb, var(--gold) 35%, transparent);
 }
 
 .home-intro h1 {
@@ -18,4 +34,13 @@
 
 .home-skills-title {
   margin-bottom: 32px;
+}
+
+/* column-reverse: the photo comes after the text in the page, but sits above it on a phone */
+@media (max-width: 760px) {
+  .home-intro-row {
+    flex-direction: column-reverse;
+    gap: 24px;
+    align-items: flex-start;
+  }
 }

@@ -1,9 +1,6 @@
 /* flex-wrap moves the stage under the titles when both cannot share a row */
 .skill-carousel {
-  --card-fill: color-mix(in srgb, var(--text) 8%, var(--ink));
-
   display: flex;
-  flex: 1;
   flex-wrap: wrap;
   gap: 24px;
   align-items: center;
@@ -74,8 +71,7 @@
 }
 
 /* One shared grid cell stacks the cards in normal flow, and grows to the tallest.
-   brightness, not opacity: a see-through card would show the text behind it.
-   The drift uses translate, so it adds to the position set by transform */
+   brightness, not opacity: a see-through card would show the text behind it */
 .skill-card {
   box-sizing: border-box;
   grid-area: 1 / 1;
@@ -85,30 +81,23 @@
   background: var(--card-fill);
   border: 1px solid color-mix(in srgb, var(--line) 40%, transparent);
   border-radius: 20px;
-  box-shadow: 0 18px 40px color-mix(in srgb, var(--bg) 80%, transparent);
+  box-shadow: var(--card-shadow);
   filter: brightness(calc(1 - var(--distance) * 0.25));
+  /* --lift-x and --lift-y come from the hover in SkillGrid.css */
   transform: translateX(calc(var(--offset) * 28%))
+    translate(var(--lift-x, 0), var(--lift-y, 0))
     scale(calc(1 - var(--distance) * 0.14));
   cursor: pointer;
   transition:
     transform 0.4s,
     filter 0.4s,
     border-color 0.2s;
-  animation: skill-card-float 3.5s ease-in-out infinite alternate;
-  /* A negative delay starts each card partway through, so they drift out of step */
-  animation-delay: calc(var(--index) * -0.7s);
 }
 
 .skill-card[aria-hidden='false'] {
   border-color: var(--peach);
-  box-shadow:
-    0 18px 40px color-mix(in srgb, var(--bg) 80%, transparent),
-    0 0 36px color-mix(in srgb, var(--gold) 22%, transparent);
+  box-shadow: var(--card-shadow), var(--card-glow);
   cursor: default;
-}
-
-.skill-card[aria-hidden='true']:hover {
-  border-color: var(--gold);
 }
 
 /* The global focus rule covers links and buttons only */
@@ -120,7 +109,7 @@
 .skill-card-title {
   margin: 0 0 12px;
   color: var(--text);
-  font: 700 14px/1.2 var(--heading);
+  font: 500 14px/1.2 var(--heading);
   letter-spacing: 1.8px;
   text-transform: uppercase;
 }
@@ -129,21 +118,9 @@
   margin-bottom: 24px;
   padding-bottom: 14px;
   color: var(--text);
+  font-family: var(--detail);
+  font-weight: 300;
   border-bottom: 1px solid var(--line);
-}
-
-.skill-card .skill-grid {
-  gap: 12px;
-}
-
-@keyframes skill-card-float {
-  from {
-    translate: 0 -6px;
-  }
-
-  to {
-    translate: 0 6px;
-  }
 }
 
 /* clip, not hidden: hidden would also cut the focus outline above and below */

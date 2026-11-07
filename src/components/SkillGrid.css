@@ -1,3 +1,11 @@
+/* The card look, shared by the carousel and the hover cards */
+.skill-carousel,
+.skill-grid-hover {
+  --card-fill: color-mix(in srgb, var(--text) 8%, var(--ink));
+  --card-shadow: 0 18px 40px color-mix(in srgb, var(--bg) 80%, transparent);
+  --card-glow: 0 0 36px color-mix(in srgb, var(--gold) 22%, transparent);
+}
+
 .skill-grid {
   display: grid;
   grid-template-columns: repeat(var(--skill-columns), 1fr);
@@ -10,6 +18,7 @@
 .skill-grid li {
   display: flex;
   gap: 12px;
+  font-family: var(--detail);
 }
 
 /* flex none: stops a long description squeezing the icon */
@@ -20,14 +29,130 @@
   color: var(--gold);
 }
 
+/* The PNG is a stencil: only its shape shows, filled with the gold set on .skill-icon.
+   scale: the files have clear space around the artwork, so this makes it match the lucide icons */
+.skill-image {
+  background: currentColor;
+  mask: var(--image) center / contain no-repeat;
+  scale: 1.15;
+}
+
 .skill-name {
   margin-bottom: 4px;
+  font-size: 16px;
+  line-height: 1.2;
   color: var(--text);
-  font-weight: 700;
+}
+
+.skill-name + p {
+  line-height: 1.35;
+}
+
+/* 16px: more than the two 6px drifts, so neighbours never touch */
+.skill-grid-hover {
+  gap: 16px;
+}
+
+/* The drift uses translate, so it adds to the position a carousel card sets with transform.
+   A negative delay starts each item partway through, so they drift out of step */
+.skill-card,
+.skill-grid-hover li {
+  animation: skill-float 3.5s ease-in-out infinite alternate;
+  animation-delay: calc(var(--index) * -0.7s);
+}
+
+@keyframes skill-float {
+  from {
+    translate: 0 -6px;
+  }
+
+  to {
+    translate: 0 6px;
+  }
+}
+
+/* isolate: keeps the -1 layers below inside the card, above its background */
+.skill-card,
+.skill-grid-hover li {
+  position: relative;
+  isolation: isolate;
+}
+
+/* The clear border matches the hover layer's, so the text does not shift */
+.skill-grid-hover li {
+  padding: 24px;
+  background: color-mix(in srgb, var(--card-fill) 70%, transparent);
+  border: 1px solid transparent;
+  border-radius: 20px;
+  transition: transform 0.3s ease-out;
+}
+
+/* The hover look sits on its own layer, so only opacity changes, not the fill or shadow.
+   An inset shadow, not a border: browsers can round a 0.5px border up to 1px */
+.skill-card::after,
+.skill-grid-hover li::after {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  content: '';
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 0.5px var(--peach),
+    0 0 18px color-mix(in srgb, var(--gold) 35%, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+/* 50% over the card's 70% adds up to 85% */
+.skill-grid-hover li::after {
+  background: color-mix(in srgb, var(--card-fill) 50%, transparent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skill-card:hover::after,
+  .skill-grid-hover li:hover::after {
+    opacity: 1;
+  }
+
+  /* [aria-hidden] outranks the focused card's border, so the hairline replaces it */
+  .skill-card[aria-hidden]:hover {
+    border-color: transparent;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  /* transform adds to the float, which uses translate */
+  .skill-grid-hover li:hover {
+    transform: translate(var(--magnet-x, 0), calc(var(--magnet-y, 0px) - 4px));
+  }
+
+  /* A carousel card already uses transform for its position, so its transform reads these */
+  .skill-card:hover {
+    --lift-x: var(--magnet-x, 0px);
+    --lift-y: calc(var(--magnet-y, 0px) - 4px);
+
+    transition:
+      transform 0.3s ease-out,
+      filter 0.4s,
+      border-color 0.2s;
+  }
+
+  /* A wider hover area, so the lift cannot pull the card out from under the cursor and flicker */
+  .skill-card:hover::before,
+  .skill-grid-hover li:hover::before {
+    position: absolute;
+    inset: -8px;
+    z-index: -1;
+    content: '';
+  }
 }
 
 @media (max-width: 760px) {
   .skill-grid {
     grid-template-columns: 1fr;
+  }
+
+  .skill-grid-hover li {
+    padding: 16px;
   }
 }

@@ -12,22 +12,22 @@
         {
           "name": "React",
           "description": "Reusable components, hooks, Context and client-side routing.",
-          "icon": "Component"
+          "icon": "React"
         },
         {
           "name": "React Native / Expo",
           "description": "Cross-platform mobile apps with file-based navigation.",
-          "icon": "Smartphone"
+          "icon": "Expo"
         },
         {
           "name": "JavaScript ES6+",
           "description": "Promises, async/await, array methods and ES modules.",
-          "icon": "Braces"
+          "icon": "JavaScript"
         },
         {
           "name": "HTML & responsive CSS",
           "description": "Semantic markup and mobile-first layouts for any screen size.",
-          "icon": "MonitorSmartphone"
+          "icon": "Html"
         }
       ]
     },
@@ -36,24 +36,24 @@
       "summary": "Secure server logic and clean APIs that validate input and fail predictably.",
       "skills": [
         {
-          "name": "Node.js / Express",
-          "description": "RESTful routes, controllers and custom middleware.",
-          "icon": "Server"
-        },
-        {
           "name": "Java / Spring Boot",
           "description": "Layered architecture, Spring Security and server-rendered views.",
-          "icon": "Layers"
+          "icon": "Java"
+        },
+        {
+          "name": "Node.js / Express",
+          "description": "RESTful routes, controllers and custom middleware.",
+          "icon": "NodeJs"
         },
         {
           "name": "Auth & sessions",
           "description": "Token-based sessions, password hashing and role-based access.",
-          "icon": "KeyRound"
+          "icon": "Jwt"
         },
         {
           "name": "API design",
           "description": "Clean endpoints, request validation and consistent error responses.",
-          "icon": "Plug"
+          "icon": "ApiDesign"
         }
       ]
     },
@@ -64,22 +64,22 @@
         {
           "name": "SQL / MySQL",
           "description": "Normalized schemas, joins and hand-written queries.",
-          "icon": "Database"
+          "icon": "MySql"
         },
         {
           "name": "Spring Data JPA / Hibernate",
           "description": "Entity mapping and repository-based data access.",
-          "icon": "Table2"
+          "icon": "SpringBoot"
         },
         {
           "name": "MongoDB / Mongoose",
           "description": "Flexible document models with schema validation.",
-          "icon": "FileBraces"
+          "icon": "MongoDb"
         },
         {
           "name": "PostgreSQL / Supabase",
           "description": "Hosted Postgres secured with row-level security policies.",
-          "icon": "ShieldCheck"
+          "icon": "Supabase"
         }
       ]
     },
@@ -90,22 +90,22 @@
         {
           "name": "Git / GitHub",
           "description": "Feature branches, pull requests and conventional commits.",
-          "icon": "GitBranch"
+          "icon": "GitHub"
         },
         {
           "name": "CI/CD",
           "description": "Automated builds and deployments on every merge.",
-          "icon": "Rocket"
+          "icon": "CiCd"
         },
         {
           "name": "Debugging",
           "description": "Tracing issues from the browser to the server to the database.",
-          "icon": "Bug"
+          "icon": "Debugging"
         },
         {
           "name": "Environments",
           "description": "Separate dev and production configs, with secrets kept out of code.",
-          "icon": "SlidersHorizontal"
+          "icon": "Environments"
         }
       ]
     },
@@ -114,24 +114,24 @@
       "summary": "AI speeds up the work, while specs and human review keep it correct.",
       "skills": [
         {
-          "name": "Specification & decomposition",
-          "description": "Clear specs and acceptance criteria before any code, with big goals broken into small, testable tasks.",
-          "icon": "FileText"
-        },
-        {
           "name": "Claude Code",
           "description": "Custom commands and skills that automate repeat workflows.",
-          "icon": "SquareTerminal"
+          "icon": "Claude"
         },
         {
-          "name": "Context engineering (CLAUDE.md)",
+          "name": "Specification & decomposition",
+          "description": "Clear specs and acceptance criteria before any code, with big goals broken into small, testable tasks.",
+          "icon": "Specification"
+        },
+        {
+          "name": "Context engineering",
           "description": "Project rules that keep AI output on-stack and on-standard.",
-          "icon": "ScrollText"
+          "icon": "ContextEngineering"
         },
         {
           "name": "AI-assisted review & testing",
           "description": "Every AI-generated change is reviewed and verified before it ships.",
-          "icon": "ClipboardCheck"
+          "icon": "AiAssisted"
         }
       ]
     }
