@@ -22,10 +22,13 @@ function Home() {
         imageAlt="A developer seen from behind at a glowing workstation, looking out a wide window at a starfield."
       >
         <div className="home-intro-row">
-          <div className="home-intro">
-            <h1>{intro.name}</h1>
-            <p className="home-tagline">{intro.tagline}</p>
-            <p>{intro.paragraph}</p>
+          <div className="home-intro-text">
+            <div className="home-intro">
+              <h1>{intro.name}</h1>
+              <p className="home-tagline">{intro.tagline}</p>
+              <p>{intro.paragraph}</p>
+            </div>
+            <ScrollHint />
           </div>
           <img
             className="home-photo"
@@ -33,7 +36,6 @@ function Home() {
             alt={`Portrait of ${intro.name}`}
           />
         </div>
-        <ScrollHint />
       </PageSection>
 
       <PageSection

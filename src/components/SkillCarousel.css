@@ -6,8 +6,10 @@
   align-items: center;
 }
 
+/* flex-start: puts the heading at the top of the panel, level with the Soft Skills heading */
 .skill-side {
   flex: 1 1 330px;
+  align-self: flex-start;
 }
 
 .skill-heading {
@@ -20,13 +22,18 @@
   gap: 6px;
 }
 
+/* Phones only: a mouse has the titles */
+.skill-swipe-hint {
+  display: none;
+}
+
 .skill-title {
   display: flex;
   gap: 14px;
   align-items: center;
   padding: 16px 14px;
   color: var(--text-muted);
-  background: none;
+  background: color-mix(in srgb, var(--card-fill) 70%, transparent);
   border: 0;
   border-left: 2px solid transparent;
   border-radius: 10px;
@@ -38,14 +45,14 @@
 }
 
 .skill-title[aria-selected='true'] {
-  color: var(--text);
-  background: var(--card-fill);
+  color: var(--peach);
+  background: color-mix(in srgb, var(--card-fill) 85%, transparent);
   border-left-color: var(--peach);
+  box-shadow: var(--card-soft-glow);
 }
 
-/* After the open-title rule, so the open title also turns gold on hover */
 .skill-title:hover {
-  color: var(--gold);
+  color: var(--peach);
 }
 
 .skill-title-number {
@@ -57,22 +64,23 @@
   flex: 1;
 }
 
-.skill-title-count {
-  color: var(--text-faint);
-  font-size: 12px;
-}
-
 /* The large grow value gives spare width to the stage, not the titles */
 .skill-stage {
   display: grid;
   flex: 999 1 680px;
   justify-items: center;
   min-width: 0;
+  /* Leaves sideways moves to the drag code, and up and down to the page */
+  touch-action: pan-y;
 }
 
 /* One shared grid cell stacks the cards in normal flow, and grows to the tallest.
-   brightness, not opacity: a see-through card would show the text behind it */
+   brightness, not opacity: a see-through card would show the text behind it.
+   Above 760px the cards sit in a loop, so all five stay in view */
 .skill-card {
+  --offset: var(--loop-offset);
+  --distance: var(--loop-distance);
+
   box-sizing: border-box;
   grid-area: 1 / 1;
   z-index: calc(5 - var(--distance));
@@ -100,16 +108,21 @@
   cursor: default;
 }
 
+/* The cards follow the finger directly, and the transition only runs on release */
+.skill-stage-dragging .skill-card {
+  transition: none;
+}
+
 /* The global focus rule covers links and buttons only */
 .skill-card:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--peach);
   outline-offset: 6px;
 }
 
 .skill-card-title {
   margin: 0 0 12px;
   color: var(--text);
-  font: 500 14px/1.2 var(--heading);
+  font: 700 14px/1.2 var(--heading);
   letter-spacing: 1.8px;
   text-transform: uppercase;
 }
@@ -125,11 +138,43 @@
 
 /* clip, not hidden: hidden would also cut the focus outline above and below */
 @media (max-width: 760px) {
+  .skill-swipe-hint {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+    color: var(--peach);
+  }
+
+  .skill-swipe-hint svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* visibility, not display: the word stays centred when an arrow disappears */
+  .skill-swipe-end {
+    visibility: hidden;
+  }
+
+  /* Hidden from sight only: keyboard and screen reader users still need the titles */
+  .skill-titles {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
   .skill-stage {
     overflow-x: clip;
   }
 
+  /* A line, not a loop: the first and last cards are the ends */
   .skill-card {
+    --offset: var(--line-offset);
+    --distance: var(--line-distance);
+
     width: 86%;
     padding: 16px;
   }

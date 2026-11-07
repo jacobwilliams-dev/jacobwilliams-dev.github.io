@@ -3,7 +3,10 @@
 .skill-grid-hover {
   --card-fill: color-mix(in srgb, var(--text) 8%, var(--ink));
   --card-shadow: 0 18px 40px color-mix(in srgb, var(--bg) 80%, transparent);
-  --card-glow: 0 0 36px color-mix(in srgb, var(--gold) 22%, transparent);
+  --card-glow: 0 0 36px color-mix(in srgb, var(--peach) 22%, transparent);
+  --card-soft-glow: 0 0 18px color-mix(in srgb, var(--peach) 35%, transparent);
+  /* An inset shadow, not a border: browsers can round a 0.5px border up to 1px */
+  --card-ring: inset 0 0 0 0.5px var(--peach), var(--card-soft-glow);
 }
 
 .skill-grid {
@@ -26,10 +29,10 @@
   flex: none;
   width: 28px;
   height: 28px;
-  color: var(--gold);
+  color: var(--peach);
 }
 
-/* The PNG is a stencil: only its shape shows, filled with the gold set on .skill-icon.
+/* The PNG is a stencil: only its shape shows, filled with the peach set on .skill-icon.
    scale: the files have clear space around the artwork, so this makes it match the lucide icons */
 .skill-image {
   background: currentColor;
@@ -51,6 +54,11 @@
 /* 16px: more than the two 6px drifts, so neighbours never touch */
 .skill-grid-hover {
   gap: 16px;
+}
+
+.skill-grid-hover .skill-name {
+  font-family: var(--heading);
+  font-weight: 700;
 }
 
 /* The drift uses translate, so it adds to the position a carousel card sets with transform.
@@ -87,8 +95,7 @@
   transition: transform 0.3s ease-out;
 }
 
-/* The hover look sits on its own layer, so only opacity changes, not the fill or shadow.
-   An inset shadow, not a border: browsers can round a 0.5px border up to 1px */
+/* The hover look sits on its own layer, so only opacity changes, not the fill or shadow */
 .skill-card::after,
 .skill-grid-hover li::after {
   position: absolute;
@@ -96,9 +103,7 @@
   z-index: -1;
   content: '';
   border-radius: inherit;
-  box-shadow:
-    inset 0 0 0 0.5px var(--peach),
-    0 0 18px color-mix(in srgb, var(--gold) 35%, transparent);
+  box-shadow: var(--card-ring);
   opacity: 0;
   transition: opacity 0.3s ease-out;
 }

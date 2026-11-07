@@ -1,23 +1,31 @@
 .home-intro-row {
   display: flex;
   gap: 48px;
-  align-items: center;
+}
+
+/* The hint sits in this column, so the photo can fill the panel's height beside it */
+.home-intro-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   justify-content: space-between;
+  min-width: 0;
 }
 
 .home-intro {
   max-width: 760px;
 }
 
-/* flex none: stops the text squeezing the photo out of its square */
+/* flex none: stops the text squeezing the photo.
+   The row stretches it to the taller of a square or the text, so cover crops instead of bending it */
 .home-photo {
   flex: none;
   width: clamp(180px, 20vw, 240px);
-  aspect-ratio: 1;
+  object-fit: cover;
   border-radius: 20px;
   box-shadow:
     0 0 0 0.5px var(--peach),
-    0 0 18px color-mix(in srgb, var(--gold) 35%, transparent);
+    0 0 18px color-mix(in srgb, var(--peach) 35%, transparent);
 }
 
 .home-intro h1 {

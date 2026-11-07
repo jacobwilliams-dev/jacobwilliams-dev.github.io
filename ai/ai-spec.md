@@ -86,7 +86,7 @@ The repository started as an `npm create vite@latest` React scaffold. `setup-dep
   - `/src/lib/` - shared service modules; holds `supabaseClient.js`
   - `/src/assets/` - images and other assets imported by components
   - `/src/pages/` (planned) - one component per routed page
-  - `/src/components/` (planned) - shared and reusable components, including the layout and the `Frame` and `GoldButton` visual components
+  - `/src/components/` (planned) - shared and reusable components, including the layout and the `Frame` and `PeachButton` visual components
 - `/public/` - static files served as-is at the site root (favicon, downloadable files)
 - `/.github/workflows/deploy.yml` - build-and-deploy workflow for GitHub Pages
 - Root - config files only: `index.html`, `vite.config.js`, `eslint.config.js`, `package.json`, `package-lock.json`, `.gitignore`
@@ -189,19 +189,18 @@ One dark, sci-fi style applies to every page. The values come from the site owne
   - `--text` `#f5f6f4` - headings and primary text
   - `--text-muted` `#b7b9b8` - paragraphs and inactive links
   - `--text-faint` `#828685` - glyph lines, footer text, background line art
-  - `--gold` `#b49a63` - buttons, hover colour, focus outline
-  - `--peach` `#d9b4a2` - accent lines and current-state marks
+  - `--peach` `#d9b4a2` - accent lines, current-state marks, skill icons, buttons, hover colour, focus outline
   - `--line` `rgba(230, 229, 220, 0.65)` - frame outlines and dividers
-- **Fonts:** body `Arial, Helvetica, sans-serif`; headings `Orbitron` Medium (500), falling back to `'Trebuchet MS', Arial, sans-serif`; detail text `Tomorrow`, falling back to `Arial, sans-serif`. Orbitron and Tomorrow are the only web fonts: they are self-hosted from `src/assets/fonts/`, unmodified, with their SIL Open Font License files beside them. Every other font is a system font.
+- **Fonts:** body `Arial, Helvetica, sans-serif`; headings `Orbitron` Medium (500) and card titles `Orbitron` Bold (700), falling back to `'Trebuchet MS', Arial, sans-serif`; detail text `Tomorrow`, falling back to `Arial, sans-serif`. Orbitron and Tomorrow are the only web fonts: they are self-hosted from `src/assets/fonts/`, unmodified, with their SIL Open Font License files beside them. Every other font is a system font.
 - **Text sizes:** body text 14px with a 1.6 line height; labels in spaced-out bold capitals (letter-spacing 1.5px to 2px) are never smaller than 12px; `h1` is `clamp(38px, 4.05vw, 70px)`; `h2` is `clamp(23px, 2.2vw, 38px)`.
-- **Hover and focus:** links and buttons turn `--gold` on hover; keyboard focus shows a 2px `--gold` outline offset by 6px.
+- **Hover and focus:** links and buttons turn `--peach` on hover; keyboard focus shows a 2px `--peach` outline offset by 6px.
 - **Glyph line:** a section heading may carry, under it, a short decorative row of Unicode symbols in `--text-faint` with 5px letter-spacing and `aria-hidden="true"`. It uses plain Unicode characters, not an alphabet font.
 - **Frame panel:** page sections sit inside a `Frame` component: a 1px `--line` outline drawn in SVG with a non-scaling stroke, the top-right and bottom-left corners cut at 45°, the bottom-right corner rounded, and a small square marker on the top-left corner. A `Frame` may hold a background image behind its content, cut to the same outline and shown at 30% opacity.
-- **Gold button:** call-to-action buttons and links use a `GoldButton` component: a `--gold` fill with the top-left and bottom-right corners cut, an inner 1px light border, a white label in spaced-out capitals, and a soft gold glow.
+- **Peach button:** call-to-action buttons and links use a `PeachButton` component: a `--peach` fill with the top-left and bottom-right corners cut, an inner 1px light border, a white label in spaced-out capitals, and a soft peach glow.
 - **Page sections:** page sections are only as tall as their content and keep it in normal flow, never placed by percentage with absolute positioning. Wider than 760px, the page snaps to section starts just below the header; at 760px or less, snapping is off. The first section of a page with several sections shows a pulsing "Scroll down" hint.
 - **Breakpoint:** narrow-viewport styles apply at `max-width: 760px`.
-- **Motion:** CSS transitions and keyframes only. Hover and focus changes take 0.2s; the gold button lifts 2px and brightens on hover; the background orbit drawing rotates over 1.8s; the scroll hint pulses on a 2.5s loop; in-page scrolling is smooth. Under `prefers-reduced-motion: reduce`, every animation and transition is off and scrolling jumps.
-- **Where the pieces are built:** `Frame` and `GoldButton` live in `src/components/` and are created by the first feature that uses them; later features reuse them.
+- **Motion:** CSS transitions and keyframes only. Hover and focus changes take 0.2s; the peach button lifts 2px and brightens on hover; the background orbit drawing rotates over 1.8s; the scroll hint pulses on a 2.5s loop; in-page scrolling is smooth. Under `prefers-reduced-motion: reduce`, every animation and transition is off and scrolling jumps.
+- **Where the pieces are built:** `Frame` and `PeachButton` live in `src/components/` and are created by the first feature that uses them; later features reuse them.
 - **No franchise material:** no names, logos, characters or artwork from games, films or other brands. Two exceptions: the LinkedIn and GitHub icons on the links to the site owner's own profiles, and the technology logos named as skill icons in `home-page.feature.md`.
 
 ### Maintainability Rules

@@ -59,9 +59,9 @@
   text-underline-offset: 8px;
 }
 
-/* After .active, so the current link also turns gold on hover */
+/* After .active, so the current link also turns peach on hover */
 .header-link:hover {
-  color: var(--gold);
+  color: var(--peach);
 }
 
 .header-page-name,
@@ -86,7 +86,7 @@
 }
 
 .header-menu-button:hover {
-  border-color: var(--gold);
+  border-color: var(--peach);
 }
 
 @media (max-width: 760px) {

@@ -7,6 +7,13 @@
 }
 
 @font-face {
+  font-family: 'Orbitron';
+  src: url('./assets/fonts/Orbitron-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Tomorrow';
   src: url('./assets/fonts/Tomorrow-Light.ttf') format('truetype');
   font-weight: 300;
@@ -26,7 +33,6 @@
   --text: #f5f6f4;
   --text-muted: #b7b9b8;
   --text-faint: #828685;
-  --gold: #b49a63;
   --peach: #d9b4a2;
   --line: rgba(230, 229, 220, 0.65);
 
@@ -91,12 +97,12 @@ button {
 
 a:hover,
 button:hover {
-  color: var(--gold);
+  color: var(--peach);
 }
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--peach);
   outline-offset: 6px;
 }
 
