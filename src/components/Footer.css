@@ -23,7 +23,7 @@
 }
 
 .footer-name {
-  font: 700 18px/1.2 var(--heading);
+  font: 500 18px/1.2 var(--heading);
   color: var(--text);
 }
 

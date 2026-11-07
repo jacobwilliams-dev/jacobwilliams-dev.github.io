@@ -1,8 +1,22 @@
+/* swap: show the fallback font while these load, not blank text */
 @font-face {
   font-family: 'Orbitron';
-  src: url('./assets/fonts/Orbitron-Bold.ttf') format('truetype');
-  font-weight: 700;
-  /* swap: show the fallback font while this loads, not blank headings */
+  src: url('./assets/fonts/Orbitron-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tomorrow';
+  src: url('./assets/fonts/Tomorrow-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tomorrow';
+  src: url('./assets/fonts/Tomorrow-Regular.ttf') format('truetype');
+  font-weight: 400;
   font-display: swap;
 }
 
@@ -18,6 +32,7 @@
 
   --sans: Arial, Helvetica, sans-serif;
   --heading: 'Orbitron', 'Trebuchet MS', Arial, sans-serif;
+  --detail: 'Tomorrow', Arial, sans-serif;
 
   --header-height: 95px;
 
@@ -34,7 +49,7 @@ body {
   margin: 0;
   color: var(--text);
   background: var(--bg);
-  font: 16px/1.6 var(--sans);
+  font: 14px/1.6 var(--sans);
 }
 
 #root {
@@ -47,6 +62,7 @@ body {
 h1,
 h2 {
   font-family: var(--heading);
+  font-weight: 500;
   line-height: 1.05;
   color: var(--text);
 }
