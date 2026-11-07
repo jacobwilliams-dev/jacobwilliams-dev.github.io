@@ -192,17 +192,17 @@ One dark, sci-fi style applies to every page. The values come from the site owne
   - `--gold` `#b49a63` - buttons, hover colour, focus outline
   - `--peach` `#d9b4a2` - accent lines and current-state marks
   - `--line` `rgba(230, 229, 220, 0.65)` - frame outlines and dividers
-- **Fonts:** body `Arial, Helvetica, sans-serif`; headings `Orbitron` in bold, falling back to `'Trebuchet MS', Arial, sans-serif`. Orbitron is the only web font: it is self-hosted from `src/assets/fonts/`, unmodified, with its SIL Open Font License file beside it. Every other font is a system font.
-- **Text sizes:** body text 16px with a 1.6 line height; labels in spaced-out bold capitals (letter-spacing 1.5px to 2px) are never smaller than 12px; `h1` is `clamp(38px, 4.05vw, 70px)`; `h2` is `clamp(23px, 2.2vw, 38px)`.
+- **Fonts:** body `Arial, Helvetica, sans-serif`; headings `Orbitron` Medium (500), falling back to `'Trebuchet MS', Arial, sans-serif`; detail text `Tomorrow`, falling back to `Arial, sans-serif`. Orbitron and Tomorrow are the only web fonts: they are self-hosted from `src/assets/fonts/`, unmodified, with their SIL Open Font License files beside them. Every other font is a system font.
+- **Text sizes:** body text 14px with a 1.6 line height; labels in spaced-out bold capitals (letter-spacing 1.5px to 2px) are never smaller than 12px; `h1` is `clamp(38px, 4.05vw, 70px)`; `h2` is `clamp(23px, 2.2vw, 38px)`.
 - **Hover and focus:** links and buttons turn `--gold` on hover; keyboard focus shows a 2px `--gold` outline offset by 6px.
 - **Glyph line:** a section heading may carry, under it, a short decorative row of Unicode symbols in `--text-faint` with 5px letter-spacing and `aria-hidden="true"`. It uses plain Unicode characters, not an alphabet font.
-- **Frame panel:** page sections sit inside a `Frame` component: a 1px `--line` outline drawn in SVG with a non-scaling stroke, the top-right and bottom-left corners cut at 45°, the bottom-right corner rounded, and a small square marker on the top-left corner.
+- **Frame panel:** page sections sit inside a `Frame` component: a 1px `--line` outline drawn in SVG with a non-scaling stroke, the top-right and bottom-left corners cut at 45°, the bottom-right corner rounded, and a small square marker on the top-left corner. A `Frame` may hold a background image behind its content, cut to the same outline and shown at 30% opacity.
 - **Gold button:** call-to-action buttons and links use a `GoldButton` component: a `--gold` fill with the top-left and bottom-right corners cut, an inner 1px light border, a white label in spaced-out capitals, and a soft gold glow.
-- **Full-screen sections:** page sections are at least one window tall (`min-height: 100svh`) and keep their content in normal flow, never placed by percentage with absolute positioning. Wider than 760px, the page snaps to section starts just below the header; at 760px or less, snapping is off. The first section of a page with several sections shows a pulsing "Scroll down" hint.
+- **Page sections:** page sections are only as tall as their content and keep it in normal flow, never placed by percentage with absolute positioning. Wider than 760px, the page snaps to section starts just below the header; at 760px or less, snapping is off. The first section of a page with several sections shows a pulsing "Scroll down" hint.
 - **Breakpoint:** narrow-viewport styles apply at `max-width: 760px`.
 - **Motion:** CSS transitions and keyframes only. Hover and focus changes take 0.2s; the gold button lifts 2px and brightens on hover; the background orbit drawing rotates over 1.8s; the scroll hint pulses on a 2.5s loop; in-page scrolling is smooth. Under `prefers-reduced-motion: reduce`, every animation and transition is off and scrolling jumps.
 - **Where the pieces are built:** `Frame` and `GoldButton` live in `src/components/` and are created by the first feature that uses them; later features reuse them.
-- **No franchise material:** no names, logos, characters or artwork from games, films or other brands. One exception: the LinkedIn and GitHub icons on the links to the site owner's own profiles.
+- **No franchise material:** no names, logos, characters or artwork from games, films or other brands. Two exceptions: the LinkedIn and GitHub icons on the links to the site owner's own profiles, and the technology logos named as skill icons in `home-page.feature.md`.
 
 ### Maintainability Rules
 
@@ -236,7 +236,7 @@ One dark, sci-fi style applies to every page. The values come from the site owne
 - **Supabase access:** use only the client exported by `src/lib/supabaseClient.js`, and only the anon (publishable) key. If the client is not configured, features that need it show a clear message instead of crashing.
 - **Messages data:** contact messages are stored in the Supabase `messages` table with the fields `name`, `email`, `message` and `created_at` (plus the table's primary key `id`). RLS allows public users to insert only; reading and deleting require an authenticated session.
 - **User feedback:** results of Supabase operations (form submission, login, loading or deleting messages) are shown on screen. Success and error states are visually distinct from each other.
-- **AI-generated imagery:** every AI-generated image is relevant to the page it sits on, has appropriate alt text, and has its generating tool documented in a code comment, in `RESEARCH.md`, or in the feature specification.
+- **AI-generated imagery:** every AI-generated image is relevant to the page it sits on, has appropriate alt text, and has its generating tool documented in a code comment, in `RESEARCH.md`, or in the feature specification. New images are generated with Google Gemini unless a feature specification names another tool; the logo was generated with ChatGPT (`header-footer.feature.md`).
 - **Responsive behaviour:** layouts adapt to narrow viewports without horizontal scrolling or content hidden behind navigation.
 - **In-page jumps:** jump to a section of the same page with `element.scrollIntoView()`, never with an `href="#id"` link. Reason: `HashRouter` reads every `#` link as a route, so `#story` would open the route `/story`.
 - **Blocking rules:** if a rule here blocks needed work, stop and ask. Don't build a workaround.

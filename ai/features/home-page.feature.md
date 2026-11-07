@@ -25,9 +25,10 @@ The site opens on a landing page that tells an employer who the site owner is an
 - The Home page at the root path, replacing the Vite demo content.
 - The introduction section: full name, tagline and short paragraph.
 - The Technical Skills section: 20 entries on five cards, one card per group, in a carousel with a list of titles beside it.
-- The Soft Skills section: six entries.
+- The Soft Skills section: six entries in a grid.
 - Three AI-generated images, one per section, with alt text and the generating tool documented.
-- The first reusable page pieces from `ai-spec.md` section 5 that Home uses: `Frame`, full-screen page sections and the "Scroll down" hint.
+- The site owner's photo in the Intro section.
+- The first reusable page pieces from `ai-spec.md` section 5 that Home uses: `Frame`, page sections and the "Scroll down" hint.
 - Removing the Vite demo: its markup and state in `src/App.jsx`, `src/App.css`, its assets, and its rules and variables in `src/index.css`.
 
 **Files this feature may change**
@@ -40,8 +41,10 @@ The site opens on a landing page that tells an employer who the site owner is an
 - `src/components/SkillCarousel.jsx`, `src/components/SkillCarousel.css` (new)
 - `src/lib/skillIcons.js` (new)
 - `src/assets/homeContent.json` (new)
-- `src/assets/fonts/Orbitron-Bold.ttf`, `src/assets/fonts/OFL.txt` (new)
+- `src/assets/fonts/Orbitron-Medium.ttf`, `Tomorrow-Light.ttf`, `Tomorrow-Regular.ttf`, `OFL-Orbitron.txt`, `OFL-Tomorrow.txt` (new)
 - `src/assets/home-intro.png`, `src/assets/home-technical.png`, `src/assets/home-soft.png` (new)
+- `src/assets/profile-photo.jpg` (new)
+- `src/assets/skill-icons/` (new: the 20 image icon files)
 - `src/App.jsx` (existing, shared with other features; change approved by the site owner on 2026-11-06)
 - `src/index.css` (existing, shared with other features; change approved by the site owner on 2026-11-06)
 - `package.json`, `package-lock.json` (existing, shared with other features; adding `lucide-react` approved by the site owner on 2026-11-06)
@@ -139,7 +142,7 @@ The section shows the six entries from section 8, in that order.
 The two skill sections sit below the introduction and present their entries in the same structured style.
 
 **Expected Result:**
-Technical Skills follows the introduction and Soft Skills follows Technical Skills, and an entry in either section has the same parts in the same order and style.
+Technical Skills follows the introduction and Soft Skills follows Technical Skills, and an entry in either section has the same parts in the same order, with the same fonts and text colours.
 
 ### FR-09 — Representative icon on every entry
 
@@ -201,33 +204,36 @@ The tool that generated each image is documented.
 
 ## 4. Decisions Already Taken
 
-- **D-01:** The page has three stacked sections in this order: Intro, Technical Skills, Soft Skills. "Alongside" in the business doc is met by the same entry style in both skill sections, not by placing them side by side - business doc (The Public Pages: at least three distinct sections, two parallel sections); project-wide spec (section 5: full-screen sections); site owner decision, 2026-11-06.
+- **D-01:** The page has three stacked sections in this order: Intro, Technical Skills, Soft Skills. "Alongside" in the business doc is met by the same entry style in both skill sections, not by placing them side by side - business doc (The Public Pages: at least three distinct sections, two parallel sections); project-wide spec (section 5: page sections); site owner decision, 2026-11-06.
 - **D-02:** `Home` lives in `src/pages/Home.jsx` and replaces `demoContent` as the element of the existing `Route` at `/` - project-wide spec (section 3); `setup-deploy.feature.md` D-04; `header-footer.feature.md` D-15.
 - **D-03:** The full name is `Jacob Williams` - project-wide spec (section 1); existing code (`src/components/Footer.jsx`).
 - **D-04:** The tagline is `Full-Stack Developer`, shown in spaced-out bold capitals in `--peach` and made capital by CSS, so the text stays as written - site owner decision, 2026-11-06; project-wide spec (section 5: labels).
 - **D-05:** The introduction paragraph was drafted from the site owner's two skill content files and is reviewed with this specification - site owner decision, 2026-11-06.
-- **D-06:** All 20 technical skills sit in one section, on five cards that are all on the page, one card per group, with their wording unchanged. The one exception is `Specification & decomposition`, which the site owner asked to combine from two entries - site owner decision, 2026-11-06; site owner's content file `home-page-technical-skills.md`.
+- **D-06:** All 20 technical skills sit in one section, on five cards that are all on the page, one card per group, with their wording unchanged. The exceptions are `Specification & decomposition`, which the site owner asked to combine from two entries, and `Context engineering`, which drops `(CLAUDE.md)` from its name. The order within each card follows section 8 - site owner decisions, 2026-11-06 and 2026-11-07; site owner's content file `home-page-technical-skills.md`.
 - **D-07:** All six recommended soft skills are shown, with their wording unchanged, so the grid is even - site owner's content file `home-page-soft-skills.md`.
 - **D-08:** The name, tagline, paragraph and skill entries live in `src/assets/homeContent.json`, which `Home` imports - portal slides (Slide #7: data comes from static JSON files); project-wide spec (section 3: `src/assets/` holds assets imported by components).
-- **D-09:** The icons come from the `lucide-react` package - site owner decision, 2026-11-06.
-- **D-10:** Every icon is a generic symbol, never a technology's logo - project-wide spec (section 5: no franchise material).
-- **D-11:** Each entry in `homeContent.json` names its icon as text, and `src/lib/skillIcons.js` maps that text to the imported `lucide-react` component, because JSON cannot hold a component - portal slides (Slide #7: static JSON files); project-wide spec (section 5: non-component modules).
-- **D-12:** The icons are decorative: each has `aria-hidden="true"` and takes `--gold` through `currentColor`, because the entry's visible name already says what it is - existing code (`src/components/Footer.jsx`, the same approach for its icons).
-- **D-13:** `SkillGrid` renders every entry on the page, in both sections, so the two layouts cannot drift apart. An entry shows its icon beside its name in `--text` and its description in the default paragraph colour - business doc (The Public Pages: consistent structured layout); project-wide spec (section 5: reuse one source).
-- **D-14:** `SkillGrid` takes a column count. Above 760px, Soft Skills uses three columns and a carousel card uses one. At 760px or less every grid uses one column - site owner decision, 2026-11-06; site owner's content file `home-page-soft-skills.md` (even grid); project-wide spec (section 5: breakpoint).
+- **D-09:** The 20 Technical Skills icons are the site owner's PNG files in `src/assets/skill-icons/`, unmodified except two edited at the site owner's request: `github.png` keeps only the cat, with the outer circle removed, and `mysql.png` has thicker lines. The six Soft Skills icons come from the `lucide-react` package - site owner decisions, 2026-11-06 and 2026-11-07.
+- **D-10:** Technical Skills icons may show their technology's logo, and Soft Skills icons are generic symbols - project-wide spec (section 5: no franchise material and its exceptions); site owner decision, 2026-11-07.
+- **D-11:** Each entry in `homeContent.json` names its icon as text, and `src/lib/skillIcons.js` maps that text to the imported `lucide-react` component or image file, because JSON cannot hold a component or an image - portal slides (Slide #7: static JSON files); project-wide spec (section 5: non-component modules).
+- **D-12:** The icons are decorative, because the entry's visible name already says what it is, so each has `aria-hidden="true"`. Every icon takes `--gold` through `currentColor`. An image icon is a `<span>` that uses its PNG as a CSS mask, so the file's shape shows filled with gold, at the same size as a `lucide-react` icon - existing code (`src/components/Footer.jsx`, the same approach for its icons); site owner decision, 2026-11-07.
+- **D-13:** `SkillGrid` renders every entry on the page, in both sections, so the two layouts cannot drift apart. An entry shows its icon beside its name in `--text` and its description in the default paragraph colour. As an exception to the 1.6 line height in `ai-spec.md` section 5, the name uses 1.2 and the description 1.35, with 4px between them. The name is 16px and the description keeps the 14px body size, with 24px between entries, a site owner decision of 2026-11-07 - business doc (The Public Pages: consistent structured layout); project-wide spec (section 5: reuse one source).
+- **D-14:** `SkillGrid` takes a column count. Above 760px, Soft Skills uses three columns and a carousel card uses one. At 760px or less every grid uses one column - site owner decision, 2026-11-07; site owner's content file `home-page-soft-skills.md` (even grid); project-wide spec (section 5: breakpoint).
 - **D-15:** The five group names in Technical Skills appear in the title list and as an `h3` on each card, in spaced-out bold capitals. The section headings are `h2` elements - site owner decision, 2026-11-06; project-wide spec (section 5: labels, text sizes).
-- **D-16:** `PageSection` renders a `<section>` holding a `Frame`, with `min-height: 100svh` and `scroll-snap-align: start`. Its content stays in normal flow - project-wide spec (section 5: full-screen sections, Frame panel).
-- **D-17:** `PageSection` keeps at least `--header-height` of padding at its bottom. The header takes that height from the window, so without it the end of a one-window section would start below the fold - project-wide spec (section 5: full-screen sections); existing code (`src/index.css`, `src/components/Header.css`).
+- **D-16:** `PageSection` renders a `<section>` holding a `Frame`, only as tall as its content, with `scroll-snap-align: start`. Its content stays in normal flow - site owner decision, 2026-11-07; project-wide spec (section 5: page sections, Frame panel).
+- **D-17:** `PageSection` has 16px of padding above and below, so neighbouring panels sit 32px apart - site owner decision, 2026-11-07.
 - **D-18:** `Frame` measures its own size with a `ResizeObserver` and draws its outline in pixels, because stretching a fixed drawing would bend the 45° corners on sections of different heights - project-wide spec (section 5: Frame panel).
-- **D-19:** `ScrollHint` is plain text reading `Scroll down` with `aria-hidden="true"`, not a link or a button, shown at the end of the Intro section. It is decorative, and screen reader users do not need it - project-wide spec (section 5: full-screen sections).
-- **D-20:** The three images are generated with Google Gemini by the site owner and saved as 16:9 PNG files in `src/assets/`. They use a dark sci-fi look with gold and peach light accents, and contain no text, logos or franchise material - site owner decision, 2026-11-06; project-wide spec (section 5: no franchise material).
-- **D-21:** Above 760px, the Intro section shows its text at the left and its image at the right. Each skill section shows its heading at the left and its image at the right, above its entries, in the same way. At 760px or less each section stacks in one column - site owner decision, 2026-11-06 (one image per section, skill sections kept parallel).
+- **D-19:** `ScrollHint` is plain text reading `Scroll down` with `aria-hidden="true"`, not a link or a button, shown at the end of the Intro section. It is decorative, and screen reader users do not need it - project-wide spec (section 5: page sections).
+- **D-20:** The three images are generated with Google Gemini by the site owner and saved as widescreen PNG files, 1400px wide, in `src/assets/`. They use a dark sci-fi look with gold and peach light accents, and contain no text, logos or franchise material - site owner decision, 2026-11-06; project-wide spec (section 5: no franchise material).
+- **D-21:** Each section's image sits behind its content as a background: `PageSection` passes it to `Frame`, which fills the panel without stretching, cuts the image to the panel's outline and shows it at 30% opacity. It stays an `<img>` so it keeps its alt text. Technical Skills has the heading and title list at the left and the cards at the right. When the two columns do not fit side by side, the cards move below. Soft Skills has its heading at the top and its grid below it - site owner decision, 2026-11-07 (one image per section); project-wide spec (section 5: Frame panel).
 - **D-22:** The generating tool is documented in a code comment beside each image import, the way the logo's tool is documented - business doc (The Public Pages); existing code (`src/components/Header.jsx`).
 - **D-23:** The demo cleanup removes these `src/index.css` variables: `--text-h`, `--border`, `--code-bg`, `--accent`, `--accent-bg`, `--accent-border`, `--social-bg`, `--shadow`, `--mono`. It also removes the `code`, `.counter` and `#social .button-icon` rules. No other file reads them - existing code; `header-footer.feature.md` (section 2); site owner decision, 2026-11-06.
 - **D-24:** `SkillCarousel` shows the five titles as a vertical ARIA tab list and the five cards as its panels. Titles are buttons, because they change content in place and `href="#id"` links are banned under `HashRouter`. The first card is in focus on load. Clicking a title or a card brings that card into focus, and the Up and Down arrow keys move between titles and wrap around. Each title shows its number, name and skill count. The open title carries a `--peach` bar and the card in focus a `--peach` border, because `--peach` marks the current state - site owner decision, 2026-11-06; site owner's wireframes (`home-page-card-layout`); project-wide spec (section 5: current-state marks; section 7: in-page jumps).
 - **D-25:** The card in focus sits in the centre, in front. The other four sit smaller and dimmer behind it, two on each side, so all five stay in view. Cards have rounded corners and a soft shadow, and drift slowly up and down so they look like they float. The section heading sits above the titles. Cards move with a 0.4s CSS transition, and the transition and the drift are switched off under reduced motion. When the titles and the carousel do not fit side by side, the titles move above the carousel. At 760px or less the card in focus fills most of the width and its neighbours show at the edges - site owner decision, 2026-11-06; site owner's carousel examples (`home-page-carousel-examples`); project-wide spec (section 5: motion, breakpoint; section 7: responsive behaviour).
 - **D-26:** Each technical group has a one-sentence summary, shown on its card above its entries. Claude drafted the sentences from the skills on each card, and the site owner reviewed them - site owner decision, 2026-11-06.
-- **D-27:** Headings use Orbitron Bold, including the `h3` on each card, through the `--heading` variable. The TTF file is used unconverted, because Orbitron's licence reserves its name for unmodified copies - site owner decision, 2026-11-06; project-wide spec (section 5: fonts).
+- **D-27:** Headings use Orbitron Medium, including the `h3` on each card and the footer name, through the `--heading` variable. Each card's summary uses Tomorrow Light. Skill names and descriptions use Tomorrow Regular, in both skill sections, so entries keep one style. The TTF files are used unconverted, because Orbitron's licence reserves its name for unmodified copies - site owner decision, 2026-11-06; project-wide spec (section 5: fonts).
+- **D-28:** Soft Skills is a grid of six cards with a see-through fill at rest, at 70% of the carousel card's fill, and they drift slowly up and down, out of step, with the same float as the carousel cards. On hover, a card lifts 4px and moves up to about 4px toward the cursor, and its fill rises to 85%, with a hairline peach border and a faint gold glow. It resets when the cursor leaves. The fill, border and glow sit on a layer that fades in, so only `transform` and `opacity` change. Exceptions to `ai-spec.md` section 5 (motion): the hover takes 0.3s ease-out instead of 0.2s, and `SkillGrid` uses JavaScript to read the cursor position, while CSS still does the moving. The hover is off on touch devices. Under reduced motion the fill, border and glow stay, and the drift and all movement are off - site owner decision, 2026-11-07.
+- **D-29:** The Technical Skills cards use the Soft Skills hover from D-28, with the same exceptions: the lift toward the cursor, the hairline peach border and the faint gold glow, off on touch devices, and with the movement off under reduced motion. Their fill stays solid, because a see-through card would show the cards behind it. The hairline replaces the card's own border while it is hovered - site owner decision, 2026-11-07.
+- **D-30:** The Intro section shows the site owner's photo, `src/assets/profile-photo.jpg`, a square crop of their headshot. Above 760px it sits to the right of the text, and at 760px or less it sits above the name. It has rounded corners, a hairline peach outline and a faint gold glow, to match the cards. Its alt text is "Portrait of" followed by the site owner's name. It is a real photo, so FR-12 to FR-15 do not apply to it - site owner decision, 2026-11-07.
 
 ---
 
@@ -241,9 +247,9 @@ Order: the images and the package come first because `Home` and `skillIcons.js` 
 4. **T-04 (FR-11, D-16, D-17):** Create `PageSection`: a `<section>` that wraps its children in `Frame`, with the height, snapping and padding in D-16 and D-17. - `src/components/PageSection.jsx`, `src/components/PageSection.css`
 5. **T-05 (D-19):** Create `ScrollHint`: the plain text from D-19, with its pulse from `ai-spec.md` section 5. - `src/components/ScrollHint.jsx`, `src/components/ScrollHint.css`
 6. **T-06 (FR-03, FR-04, FR-05, FR-06, FR-07, FR-10, D-05 to D-08, D-11, D-26):** Create the content file with the shape and the text in section 8. - `src/assets/homeContent.json`
-7. **T-07 (FR-09, D-10, D-11):** Create the map from icon name to `lucide-react` component for the 26 icons in section 8. - `src/lib/skillIcons.js`
-8. **T-08 (FR-06, FR-08, FR-09, FR-10, D-12, D-13, D-14, D-24, D-25):** Create `SkillGrid`: a list of entries built from the skills it receives, each with its icon, name and description, using the columns in D-14. Create `SkillCarousel`: the titles and cards from D-24 and D-25, showing each group's entries through `SkillGrid`. - `src/components/SkillGrid.jsx`, `src/components/SkillGrid.css`, `src/components/SkillCarousel.jsx`, `src/components/SkillCarousel.css`
-9. **T-09 (FR-02 to FR-08, FR-11 to FR-15, D-01, D-03, D-04, D-15, D-21, D-22):** Create `Home`: three `PageSection`s with the content from `homeContent.json`, `SkillCarousel` for the technical groups, `SkillGrid` for the soft skills, `ScrollHint` at the end of the Intro section, and the three images with the alt text from section 8 and a comment naming Google Gemini beside each import. - `src/pages/Home.jsx`, `src/pages/Home.css`
+7. **T-07 (FR-09, D-10, D-11):** Create the maps from icon name to `lucide-react` component and to image file for the 26 icons in section 8. - `src/lib/skillIcons.js`, `src/assets/skill-icons/`
+8. **T-08 (FR-06, FR-08, FR-09, FR-10, D-12, D-13, D-14, D-24, D-25, D-28, D-29):** Create `SkillGrid`: a list of entries built from the skills it receives, each with its icon, name and description, using the columns in D-14 and the hover from D-28. Create `SkillCarousel`: the titles and cards from D-24 and D-25, showing each group's entries through `SkillGrid`. - `src/components/SkillGrid.jsx`, `src/components/SkillGrid.css`, `src/components/SkillCarousel.jsx`, `src/components/SkillCarousel.css`
+9. **T-09 (FR-02 to FR-08, FR-11 to FR-15, D-01, D-03, D-04, D-15, D-21, D-22, D-30):** Create `Home`: three `PageSection`s with the content from `homeContent.json`, `SkillCarousel` for the technical groups, `SkillGrid` for the soft skills, `ScrollHint` at the end of the Intro section, and the three images with the alt text from section 8 and a comment naming Google Gemini beside each import. - `src/pages/Home.jsx`, `src/pages/Home.css`
 10. **T-10 (FR-01, D-02):** In `src/App.jsx`, render `Home` as the element of the `/` route, and remove `demoContent`, the counter state, the demo imports and the `App.css` import. - `src/App.jsx`
 11. **T-11 (FR-01, D-23):** Delete the demo files listed in section 2, and remove the variables and rules in D-23. - `src/App.css`, `src/assets/hero.png`, `src/assets/react.svg`, `src/assets/vite.svg`, `public/icons.svg`, `src/index.css`
 12. **T-12 (all FRs):** Verify the feature against section 11 at phone and desktop widths. - no file change
@@ -255,9 +261,9 @@ Order: the images and the package come first because `Home` and `skillIcons.js` 
 **Main flow**
 
 1. A visitor opens the site's root URL.
-2. The Intro section shows the name, tagline, paragraph, image and "Scroll down" hint.
+2. The Intro section shows the name, tagline, paragraph, photo, background image and "Scroll down" hint.
 3. The visitor scrolls down; the Technical Skills section shows its image, five titles and five cards, with the first card in focus. The visitor clicks a title or a card to bring another card into focus.
-4. The visitor scrolls on; the Soft Skills section shows its image and six entries, followed by the footer.
+4. The visitor scrolls on; the Soft Skills section shows its image and six entries, followed by the footer. Hovering an entry shows it as a card.
 
 **Alternate / failure flow**
 
@@ -275,11 +281,11 @@ N/A
 
 - `Home` (`src/pages/Home.jsx`) - new: composes the three sections from the content file.
 - `Frame` (`src/components/Frame.jsx`) - new: the outlined panel from `ai-spec.md` section 5, reusable by other pages.
-- `PageSection` (`src/components/PageSection.jsx`) - new: the full-screen section holding a `Frame`, reusable by other pages.
+- `PageSection` (`src/components/PageSection.jsx`) - new: the section holding a `Frame`, reusable by other pages.
 - `ScrollHint` (`src/components/ScrollHint.jsx`) - new: the "Scroll down" hint, reusable by other pages.
 - `SkillGrid` (`src/components/SkillGrid.jsx`) - new: the grid of skill entries used by both skill sections.
 - `SkillCarousel` (`src/components/SkillCarousel.jsx`) - new: the title list and five cards in Technical Skills.
-- `src/lib/skillIcons.js` - new: maps an icon name from the content file to its `lucide-react` component.
+- `src/lib/skillIcons.js` - new: maps an icon name from the content file to its `lucide-react` component or image file.
 - `src/assets/homeContent.json` - new: the page's text and icon names.
 - `lucide-react` - new dependency: the icon components.
 - `Layout` (`src/components/Layout.jsx`) - existing, unchanged: renders `Home` inside the header and footer.
@@ -299,7 +305,7 @@ N/A
 - `intro` (object) - from `src/assets/homeContent.json`: `name`, `tagline`, `paragraph`, all text.
 - `technicalGroups` (array) - from `src/assets/homeContent.json`: each item has `title` (text), `summary` (text) and `skills` (array of skill objects).
 - `softSkills` (array of skill objects) - from `src/assets/homeContent.json`.
-- Skill object: `name` (text), `description` (text), `icon` (text, a key of the map in `src/lib/skillIcons.js`).
+- Skill object: `name` (text), `description` (text), `icon` (text, a key of a map in `src/lib/skillIcons.js`).
 
 ### Outputs / Returned Data
 
@@ -313,26 +319,26 @@ N/A
 
 | Group | Name | Description | Icon |
 |---|---|---|---|
-| Frontend Engineering | React | Reusable components, hooks, Context and client-side routing. | `Component` |
-| Frontend Engineering | React Native / Expo | Cross-platform mobile apps with file-based navigation. | `Smartphone` |
-| Frontend Engineering | JavaScript ES6+ | Promises, async/await, array methods and ES modules. | `Braces` |
-| Frontend Engineering | HTML & responsive CSS | Semantic markup and mobile-first layouts for any screen size. | `MonitorSmartphone` |
-| Backend Engineering | Node.js / Express | RESTful routes, controllers and custom middleware. | `Server` |
-| Backend Engineering | Java / Spring Boot | Layered architecture, Spring Security and server-rendered views. | `Layers` |
-| Backend Engineering | Auth & sessions | Token-based sessions, password hashing and role-based access. | `KeyRound` |
-| Backend Engineering | API design | Clean endpoints, request validation and consistent error responses. | `Plug` |
-| Data | SQL / MySQL | Normalized schemas, joins and hand-written queries. | `Database` |
-| Data | Spring Data JPA / Hibernate | Entity mapping and repository-based data access. | `Table2` |
-| Data | MongoDB / Mongoose | Flexible document models with schema validation. | `FileBraces` |
-| Data | PostgreSQL / Supabase | Hosted Postgres secured with row-level security policies. | `ShieldCheck` |
-| Development Workflow | Git / GitHub | Feature branches, pull requests and conventional commits. | `GitBranch` |
-| Development Workflow | CI/CD | Automated builds and deployments on every merge. | `Rocket` |
-| Development Workflow | Debugging | Tracing issues from the browser to the server to the database. | `Bug` |
-| Development Workflow | Environments | Separate dev and production configs, with secrets kept out of code. | `SlidersHorizontal` |
-| AI-Assisted Engineering | Specification & decomposition | Clear specs and acceptance criteria before any code, with big goals broken into small, testable tasks. | `FileText` |
-| AI-Assisted Engineering | Claude Code | Custom commands and skills that automate repeat workflows. | `SquareTerminal` |
-| AI-Assisted Engineering | Context engineering (CLAUDE.md) | Project rules that keep AI output on-stack and on-standard. | `ScrollText` |
-| AI-Assisted Engineering | AI-assisted review & testing | Every AI-generated change is reviewed and verified before it ships. | `ClipboardCheck` |
+| Frontend Engineering | React | Reusable components, hooks, Context and client-side routing. | `React` |
+| Frontend Engineering | React Native / Expo | Cross-platform mobile apps with file-based navigation. | `Expo` |
+| Frontend Engineering | JavaScript ES6+ | Promises, async/await, array methods and ES modules. | `JavaScript` |
+| Frontend Engineering | HTML & responsive CSS | Semantic markup and mobile-first layouts for any screen size. | `Html` |
+| Backend Engineering | Java / Spring Boot | Layered architecture, Spring Security and server-rendered views. | `Java` |
+| Backend Engineering | Node.js / Express | RESTful routes, controllers and custom middleware. | `NodeJs` |
+| Backend Engineering | Auth & sessions | Token-based sessions, password hashing and role-based access. | `Jwt` |
+| Backend Engineering | API design | Clean endpoints, request validation and consistent error responses. | `ApiDesign` |
+| Data | SQL / MySQL | Normalized schemas, joins and hand-written queries. | `MySql` |
+| Data | Spring Data JPA / Hibernate | Entity mapping and repository-based data access. | `SpringBoot` |
+| Data | MongoDB / Mongoose | Flexible document models with schema validation. | `MongoDb` |
+| Data | PostgreSQL / Supabase | Hosted Postgres secured with row-level security policies. | `Supabase` |
+| Development Workflow | Git / GitHub | Feature branches, pull requests and conventional commits. | `GitHub` |
+| Development Workflow | CI/CD | Automated builds and deployments on every merge. | `CiCd` |
+| Development Workflow | Debugging | Tracing issues from the browser to the server to the database. | `Debugging` |
+| Development Workflow | Environments | Separate dev and production configs, with secrets kept out of code. | `Environments` |
+| AI-Assisted Engineering | Claude Code | Custom commands and skills that automate repeat workflows. | `Claude` |
+| AI-Assisted Engineering | Specification & decomposition | Clear specs and acceptance criteria before any code, with big goals broken into small, testable tasks. | `Specification` |
+| AI-Assisted Engineering | Context engineering | Project rules that keep AI output on-stack and on-standard. | `ContextEngineering` |
+| AI-Assisted Engineering | AI-assisted review & testing | Every AI-generated change is reviewed and verified before it ships. | `AiAssisted` |
 
 **Technical Group Summaries**
 
@@ -396,7 +402,7 @@ N/A
 
 ## 11. Acceptance Criteria
 
-- [ ] Opening the root URL of the built site shows Home at `/#/`, and the page holds no "Get started" heading, counter button, or React or Vite logo. (FR-01)
+- [ ] Opening the root URL of the built site shows Home at `/#/`, and the page holds no "Get started" heading, counter button, or demo React or Vite image. (FR-01)
 - [ ] At 1280px and 320px wide, the first content below the header is the introduction, and its name is larger than any other text on the page. (FR-02)
 - [ ] The page has exactly one `h1`, and it reads `Jacob Williams`. (FR-03)
 - [ ] The text `Full-Stack Developer` appears directly under the name. (FR-04)
@@ -406,9 +412,11 @@ N/A
 - [ ] Clicking a title, clicking a card, or using the Up and Down arrow keys on the titles brings that card into focus and marks its title as open. (FR-06)
 - [ ] The Soft Skills section shows six entries, in the order and wording of section 8. (FR-07)
 - [ ] Technical Skills comes after the introduction and Soft Skills comes after Technical Skills. (FR-08)
-- [ ] An entry in Technical Skills and an entry in Soft Skills show an icon, then a name, then a description, with the same styles. (FR-08)
-- [ ] At 1280px wide, each card shows its entries in one column and Soft Skills shows two rows of three. At 320px wide, Soft Skills shows one column, the titles sit above the carousel, and nothing scrolls sideways. (FR-08)
-- [ ] Each of the 26 entries shows the icon named for it in section 8, and no icon is a technology's logo. (FR-09)
+- [ ] An entry in Technical Skills and an entry in Soft Skills show an icon, then a name, then a description, with the same fonts and text colours. (FR-08)
+- [ ] At 1280px wide, each carousel card shows its entries in one column and Soft Skills shows two rows of three. Soft Skills cards have a see-through fill and drift like the carousel cards. Hovering one lifts it toward the cursor and shows a slightly stronger fill, a hairline peach border and a faint gold glow. On a touch device nothing changes on tap, and under reduced motion the card shows the fill, border and glow without moving. At 320px wide, Soft Skills shows one column, the titles sit above the carousel, and nothing scrolls sideways. (FR-08)
+- [ ] Hovering a Technical Skills card lifts it toward the cursor and shows the hairline peach border and faint gold glow, and clicking a side card still brings it into focus. (D-29)
+- [ ] The Intro section shows the photo with its alt text, to the right of the text at 1280px wide and above the name at 320px wide. (D-30)
+- [ ] Each of the 26 entries shows the icon named for it in section 8, and no Soft Skills icon is a technology's logo. (FR-09)
 - [ ] Each of the 26 entries shows a description of more than one word under its name. (FR-10)
 - [ ] The Intro, Technical Skills and Soft Skills sections each sit in their own `Frame` outline, with visible space between the outlines, at 1280px and 320px wide. (FR-11)
 - [ ] One image appears in each of the three sections, loaded from the three files in section 8. (FR-12)

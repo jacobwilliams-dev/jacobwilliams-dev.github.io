@@ -46,7 +46,7 @@ Every page of the site sits inside one shared frame and one visual style, so the
 
 - The routes and content of Portfolio, Links, Contact, the login route and `/backoffice`: each page's own feature specification adds its route to `src/App.jsx`.
 - Removing the Vite demo content from the root route, from `src/App.css`, and the demo-only rules this feature keeps in `src/index.css`: `home-page.feature.md`.
-- The `Frame` and `GoldButton` components, full-screen page sections, the "Scroll down" hint and glyph lines: built by the first page feature that uses them (`ai-spec.md` section 5, Visual Design).
+- The `Frame` and `GoldButton` components, page sections, the "Scroll down" hint and glyph lines: built by the first page feature that uses them (`ai-spec.md` section 5, Visual Design).
 - `src/main.jsx`: stays unchanged.
 - Moving the orbit drawing up and down between pages, as the design reference does between chapters: only its rotation follows the page.
 - The favicon (`public/favicon.svg`) and the page title in `index.html`: no source ties them to the layout.
@@ -209,12 +209,12 @@ At 320px wide, the bar reads "Portfolio" on `/#/portfolio` and "Home" on `/#/`, 
 Every page uses the colour variables, dark theme, fonts, text sizes, and hover and focus styles that `ai-spec.md` section 5 (Visual Design) defines.
 
 **Expected Result:**
-On any page, the background is `#020304`, body text is Arial at 16px, headings use Trebuchet MS, links turn `--gold` on hover, and keyboard focus shows a 2px `--gold` outline offset by 6px.
+On any page, the background is `#020304`, body text is Arial at 14px, headings use Trebuchet MS, links turn `--gold` on hover, and keyboard focus shows a 2px `--gold` outline offset by 6px.
 
 ### FR-19 — Section snapping below the header
 
 **Requirement:**
-Wider than 760px, the page snaps to the start of each full-screen section, with the section's top just below the header. At 760px or less, the page does not snap.
+Wider than 760px, the page snaps to the start of each page section, with the section's top just below the header. At 760px or less, the page does not snap.
 
 **Expected Result:**
 At 1280px wide, the page has `scroll-snap-type: y proximity` and a `scroll-padding-top` equal to the header's height. At 760px wide, `scroll-snap-type` is `none`.
@@ -419,7 +419,7 @@ N/A - this feature has no form and takes no user input to check.
 - [ ] At 320px wide on `/#/does-not-exist`, the bar shows no page name. (FR-17)
 - [ ] At 1280px wide on `/#/portfolio`, the header shows no page name apart from the marked link in the link row. (FR-17)
 - [ ] `src/index.css` defines the eight colour variables from `ai-spec.md` section 5 with exactly those values, and no Vite light/dark colour switch remains. (FR-18)
-- [ ] On `/#/`, the browser's computed styles show a body background of `rgb(2, 3, 4)`, a body font family starting with Arial at 16px, and an `h1` font family starting with "Trebuchet MS". (FR-18)
+- [ ] On `/#/`, the browser's computed styles show a body background of `rgb(2, 3, 4)`, a body font family starting with Arial at 14px, and an `h1` font family starting with "Trebuchet MS". (FR-18)
 - [ ] Hovering a header or footer link turns it `rgb(180, 154, 99)` (`--gold`), and focusing it with Tab shows a 2px solid outline in the same colour. (FR-18)
 - [ ] At 1280px wide, the `html` element's computed styles show `scroll-snap-type: y proximity` and a `scroll-padding-top` equal to the header's height; at 760px wide, `scroll-snap-type` is `none`. (FR-19)
 - [ ] At 1280px wide, the footer's computed styles show `scroll-snap-align: end`, and scrolling to the bottom of a page leaves the whole footer in view. (FR-19)
