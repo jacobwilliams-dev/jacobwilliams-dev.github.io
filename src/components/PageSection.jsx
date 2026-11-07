@@ -1,10 +1,12 @@
 import Frame from './Frame.jsx'
 import './PageSection.css'
 
-function PageSection({ children }) {
+function PageSection({ children, image, imageAlt }) {
   return (
     <section className="page-section">
-      <Frame>{children}</Frame>
+      <Frame image={image} imageAlt={imageAlt}>
+        {children}
+      </Frame>
     </section>
   )
 }

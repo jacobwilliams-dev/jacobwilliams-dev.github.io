@@ -1,17 +1,13 @@
-/* The sticky header takes --header-height from the window, so the bottom padding
-   includes it; without that, a one-window panel would end below the fold */
 .page-section {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100svh;
-  padding: 32px 24px calc(var(--header-height) + 32px);
+  padding: 16px 24px;
   scroll-snap-align: start;
 }
 
 .page-section .frame {
-  flex: 1;
   width: 100%;
   max-width: 1240px;
 }

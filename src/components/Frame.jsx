@@ -18,7 +18,7 @@ function getOutlinePath(width, height) {
   ].join(' ')
 }
 
-function Frame({ children }) {
+function Frame({ children, image, imageAlt }) {
   const frameRef = useRef(null)
   const [size, setSize] = useState(null)
 
@@ -50,6 +50,14 @@ function Frame({ children }) {
             />
           </g>
         </svg>
+      )}
+      {size && image && (
+        <img
+          className="frame-image"
+          src={image}
+          alt={imageAlt}
+          style={{ clipPath: `path('${getOutlinePath(size.width, size.height)}')` }}
+        />
       )}
       <div className="frame-content">{children}</div>
     </div>
