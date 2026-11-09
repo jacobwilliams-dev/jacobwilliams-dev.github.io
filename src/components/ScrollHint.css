@@ -1,6 +1,6 @@
 .scroll-hint {
   padding-top: 32px;
-  font: 700 12px/1 var(--sans);
+  font: 700 12px/1 var(--label);
   letter-spacing: 2px;
   text-align: center;
   text-transform: uppercase;

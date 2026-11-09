@@ -37,7 +37,7 @@
   border: 0;
   border-left: 2px solid transparent;
   border-radius: 10px;
-  font: 700 14px/1.2 var(--sans);
+  font: 700 14px/1.2 var(--label);
   letter-spacing: 1.8px;
   text-align: left;
   text-transform: uppercase;
@@ -122,7 +122,7 @@
 .skill-card-title {
   margin: 0 0 12px;
   color: var(--text);
-  font: 700 14px/1.2 var(--heading);
+  font: 700 14px/1.2 var(--card-title);
   letter-spacing: 1.8px;
   text-transform: uppercase;
 }

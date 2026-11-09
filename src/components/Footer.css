@@ -22,7 +22,7 @@
 }
 
 .footer-name {
-  font: 500 18px/1.2 var(--heading);
+  font: 500 18px/1.2 var(--display);
   color: var(--text);
 }
 
@@ -34,7 +34,7 @@
 
 .footer-label {
   margin-bottom: 8px;
-  font: 700 12px/1 var(--sans);
+  font: 700 12px/1 var(--label);
   letter-spacing: 1.8px;
   text-transform: uppercase;
   color: var(--peach);

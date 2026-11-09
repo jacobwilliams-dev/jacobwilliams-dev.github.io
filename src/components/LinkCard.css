@@ -50,7 +50,7 @@
 .link-card-body h2 {
   margin: 0 0 12px;
   color: var(--text);
-  font: 700 16px/1.2 var(--heading);
+  font: 700 16px/1.2 var(--card-title);
 }
 
 .link-card-title {
