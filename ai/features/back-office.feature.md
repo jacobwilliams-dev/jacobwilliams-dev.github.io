@@ -253,7 +253,7 @@ With no Supabase environment variables set, `/#/backoffice` stays on that URL, s
 - **D-12:** Logout, View, Delete and Close are plain `<button>` elements styled in this feature's CSS, and `PeachButton` is not changed - site owner decision, 2026-11-09; project-wide spec (section 5: Hover and focus).
 - **D-13:** The Date column reads like "Nov 9, 2026" and the modal like "Nov 9, 2026, 2:23 PM". Both use en-US wording and the viewer's own time zone - site owner decision, 2026-11-09.
 - **D-14:** The table keeps its four columns at every width. At the narrow breakpoint the cell spacing tightens, long values wrap, and View and Delete stack - site owner decision, 2026-11-09; project-wide spec (section 7: Responsive behaviour).
-- **D-15:** The modal is a native `<dialog>` element opened with `showModal()`. The browser handles Escape, keeps keyboard focus inside and shows it above the header. The padding sits on an inner element, so a click whose target is the `<dialog>` itself is a click on the backdrop - site owner decision, 2026-11-09.
+- **D-15:** The modal is a native `<dialog>` element opened with `showModal()`. The browser handles Escape, keeps keyboard focus inside and shows it above the header. The padding sits on an inner element, so a click whose target is the `<dialog>` itself is a click on the backdrop. It closes the modal only when the mouse press also started on the backdrop, because dragging a text selection out of the panel also produces a click on the `<dialog>` - site owner decision, 2026-11-09.
 - **D-16:** The modal is its own component in `src/components/MessageModal.jsx`, styled with the `--ink` panel fill and a 1px `--line` outline - project-wide spec (section 5: File & Folder Conventions, Colour variables).
 - **D-17:** The message body is shown as plain text with its line breaks kept and long words wrapped, and the modal scrolls when the text is taller than the window - business doc (the complete message body).
 - **D-18:** Failure messages use the existing `.form-error` class from `src/components/Form.css`, which sets the `--error` colour, and have `role="alert"`, as the contact and login failure messages do. A successful delete needs no message, because the row leaving the table is the result - existing code (`src/pages/Contact.jsx`, `src/pages/Login.jsx`); existing feature specs (`contact-page.feature.md`, D-09 and D-10; `login-page.feature.md`, D-08); project-wide spec (section 7: User feedback).
@@ -415,6 +415,7 @@ This feature has no form or typed input. These conditions must hold before an op
 - [ ] Pressing the Close button closes the modal. (FR-16)
 - [ ] Clicking the dimmed area outside the modal closes it. (FR-17)
 - [ ] Clicking inside the modal, including on its padding, leaves it open. (FR-17)
+- [ ] Selecting text inside the modal and releasing the mouse on the dimmed area leaves it open. (FR-17)
 - [ ] Pressing Escape closes the modal. (FR-18)
 - [ ] A button labelled "Logout" is visible beside the heading at phone and desktop widths, and also when the fetch has failed. (FR-19)
 - [ ] After a logout, the browser's local storage has no `sb-` auth token entry, and opening `/#/backoffice` redirects to `/#/login`. (FR-20)
