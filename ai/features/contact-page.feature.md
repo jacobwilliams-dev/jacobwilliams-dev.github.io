@@ -211,6 +211,7 @@ Pressing Send again before the insert finishes adds no second row, and the butto
 - **D-13:** When the client is not configured, a message replaces the form, so a visitor never writes a message that cannot be sent - business doc (degrade gracefully); project-wide spec (section 4: Graceful degradation); site owner decision, 2026-11-09.
 - **D-14:** The labels use spaced-out bold capitals at 12px or larger, the fields use only palette colours, and keyboard focus on a field shows the same 2px `--peach` outline as links and buttons - project-wide spec (section 5: Colour variables, Text sizes, Hover and focus).
 - **D-15:** The form is at most 640px wide, and its fields fill that width - site owner decision, 2026-11-09.
+- **D-16:** Screen readers are told about results: each validation message is tied to its field with `aria-describedby`, the success message appears inside a `role="status"` region that is always on the page, and the failure message has `role="alert"` - site owner decision, 2026-11-09.
 
 ---
 
@@ -221,9 +222,9 @@ Order: the shared palette and button change first because the page uses them. Th
 1. **T-01 (D-09):** Add `--success` and `--error` to the palette list in `ai-spec.md` section 5, then to the colour variables. - `ai/ai-spec.md`, `src/index.css`
 2. **T-02 (FR-17, D-08):** Make `PeachButton` render a `<button>` when no `href` is passed, remove the browser's default button border and background for that case, and add the disabled state. - `src/components/PeachButton.jsx`, `src/components/PeachButton.css`
 3. **T-03 (FR-02, FR-03, FR-04, FR-05, D-02, D-06, D-08, D-14, D-15):** Create the page with its `PageSection`, the three labelled fields, the send button and the form's maximum width. - `src/pages/Contact.jsx`, `src/pages/Contact.css`
-4. **T-04 (FR-06, FR-07, FR-08, FR-09, D-07, D-11):** Validate the fields when the form is submitted and show each failure's message next to its field. - `src/pages/Contact.jsx`, `src/pages/Contact.css`
+4. **T-04 (FR-06, FR-07, FR-08, FR-09, D-07, D-11, D-16):** Validate the fields when the form is submitted and show each failure's message next to its field. - `src/pages/Contact.jsx`, `src/pages/Contact.css`
 5. **T-05 (FR-10, FR-11, FR-17, D-03, D-04, D-05):** Insert the valid message through the `supabase` client, with the send button disabled until the insert finishes. - `src/pages/Contact.jsx`
-6. **T-06 (FR-12, FR-13, FR-14, FR-15, D-10, D-12):** Show the success and failure states, clear the form on success and hide the success message after 5 seconds or on typing. - `src/pages/Contact.jsx`, `src/pages/Contact.css`
+6. **T-06 (FR-12, FR-13, FR-14, FR-15, D-10, D-12, D-16):** Show the success and failure states, clear the form on success and hide the success message after 5 seconds or on typing. - `src/pages/Contact.jsx`, `src/pages/Contact.css`
 7. **T-07 (FR-16, D-13):** Show the unavailable message in place of the form when the client is `null`. - `src/pages/Contact.jsx`, `src/pages/Contact.css`
 8. **T-08 (FR-01, D-01):** Import `Contact` and add its `Route` at `/contact`. - `src/App.jsx`
 9. **T-09 (all):** Verify the feature against section 11 and the Global Definition of Done, including with Supabase unconfigured.

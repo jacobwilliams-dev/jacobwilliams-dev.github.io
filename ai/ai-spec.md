@@ -192,6 +192,8 @@ One dark, sci-fi style applies to every page. The values come from the site owne
   - `--text-faint` `#828685` - glyph lines, footer text, background line art
   - `--peach` `#d9b4a2` - accent lines, current-state marks, skill icons, the logo's globe, buttons, hover colour, focus outline
   - `--line` `rgba(230, 229, 220, 0.65)` - frame outlines and dividers
+  - `--success` `#8fd6a4` - confirmation messages
+  - `--error` `#f09a9a` - failure and validation messages
 - **Fonts:** body `Arial, Helvetica, sans-serif`; headings `Orbitron` Medium (500), and card titles and the header navigation (links, narrow-viewport page name, menu button) `Orbitron` Bold (700), falling back to `'Trebuchet MS', Arial, sans-serif`; detail text `Tomorrow`, falling back to `Arial, sans-serif`. Orbitron and Tomorrow are the only web fonts: they are self-hosted from `src/assets/fonts/`, unmodified, with their SIL Open Font License files beside them. Every other font is a system font.
 - **Text sizes:** body text 14px with a 1.6 line height; labels in spaced-out bold capitals (letter-spacing 1.5px to 2px) are never smaller than 12px; `h1` is `clamp(38px, 4.05vw, 70px)`; `h2` is `clamp(23px, 2.2vw, 38px)`.
 - **Hover and focus:** links and buttons turn `--peach` on hover; keyboard focus shows a 2px `--peach` outline offset by 6px.

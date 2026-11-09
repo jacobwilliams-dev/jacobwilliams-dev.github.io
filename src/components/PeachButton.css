@@ -19,6 +19,18 @@
     filter 0.2s;
 }
 
+button.peach-button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* pointer-events: a pointer that cannot reach the button cannot trigger the hover rules */
+.peach-button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .peach-button::before,
 .peach-button::after {
   position: absolute;
