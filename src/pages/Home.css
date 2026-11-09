@@ -1,7 +1,31 @@
-/* margin-top auto: with the hint's own auto margin, this centres the intro in the panel */
+.home-intro-row {
+  display: flex;
+  gap: 48px;
+}
+
+/* The hint sits in this column, so the photo can fill the panel's height beside it */
+.home-intro-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+
 .home-intro {
   max-width: 760px;
-  margin-top: auto;
+}
+
+/* flex none: stops the text squeezing the photo.
+   The row stretches it to the taller of a square or the text, so cover crops instead of bending it */
+.home-photo {
+  flex: none;
+  width: clamp(180px, 20vw, 240px);
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 0.5px var(--peach),
+    0 0 18px color-mix(in srgb, var(--peach) 35%, transparent);
 }
 
 .home-intro h1 {
@@ -18,4 +42,13 @@
 
 .home-skills-title {
   margin-bottom: 32px;
+}
+
+/* column-reverse: the photo comes after the text in the page, but sits above it on a phone */
+@media (max-width: 760px) {
+  .home-intro-row {
+    flex-direction: column-reverse;
+    gap: 24px;
+    align-items: flex-start;
+  }
 }

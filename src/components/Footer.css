@@ -1,17 +1,16 @@
-/* snap-align end: without it, the page would snap back to the last section and hide the footer */
 .footer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: 24px 48px;
   padding: 28px 24px 30px;
   border-top: 1px solid var(--line);
-  scroll-snap-align: end;
 }
 
+/* Spare width splits 1 to 3 with .footer-copyright, so the contact columns sit nearer the name */
 .footer-brand {
   display: flex;
+  flex-grow: 1;
   align-items: center;
   gap: 14px;
 }
@@ -23,7 +22,7 @@
 }
 
 .footer-name {
-  font: 700 18px/1.2 var(--heading);
+  font: 500 18px/1.2 var(--heading);
   color: var(--text);
 }
 
@@ -38,7 +37,7 @@
   font: 700 12px/1 var(--sans);
   letter-spacing: 1.8px;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--peach);
 }
 
 .footer-link {
@@ -70,7 +69,9 @@
 }
 
 .footer-copyright {
+  flex-grow: 3;
   font-size: 13px;
+  text-align: right;
   color: var(--text-faint);
 }
 

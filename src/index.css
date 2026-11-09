@@ -1,8 +1,29 @@
+/* swap: show the fallback font while these load, not blank text */
+@font-face {
+  font-family: 'Orbitron';
+  src: url('./assets/fonts/Orbitron-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'Orbitron';
   src: url('./assets/fonts/Orbitron-Bold.ttf') format('truetype');
   font-weight: 700;
-  /* swap: show the fallback font while this loads, not blank headings */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tomorrow';
+  src: url('./assets/fonts/Tomorrow-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tomorrow';
+  src: url('./assets/fonts/Tomorrow-Regular.ttf') format('truetype');
+  font-weight: 400;
   font-display: swap;
 }
 
@@ -12,21 +33,29 @@
   --text: #f5f6f4;
   --text-muted: #b7b9b8;
   --text-faint: #828685;
-  --gold: #b49a63;
   --peach: #d9b4a2;
   --line: rgba(230, 229, 220, 0.65);
 
   --sans: Arial, Helvetica, sans-serif;
   --heading: 'Orbitron', 'Trebuchet MS', Arial, sans-serif;
+  --detail: 'Tomorrow', Arial, sans-serif;
 
   --header-height: 95px;
+  --rail-width: 64px;
+
+  /* The card look, shared by the carousel, the hover cards and the project cards */
+  --card-fill: color-mix(in srgb, var(--text) 8%, var(--ink));
+  --card-shadow: 0 18px 40px color-mix(in srgb, var(--bg) 80%, transparent);
+  --card-glow: 0 0 36px color-mix(in srgb, var(--peach) 22%, transparent);
+  --card-soft-glow: 0 0 18px color-mix(in srgb, var(--peach) 35%, transparent);
+  /* An inset shadow, not a border: browsers can round a 0.5px border up to 1px */
+  --card-ring: inset 0 0 0 0.5px var(--peach), var(--card-soft-glow);
 
   color-scheme: dark;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
   scroll-padding-top: var(--header-height);
 }
 
@@ -34,7 +63,7 @@ body {
   margin: 0;
   color: var(--text);
   background: var(--bg);
-  font: 16px/1.6 var(--sans);
+  font: 14px/1.6 var(--sans);
 }
 
 #root {
@@ -47,6 +76,7 @@ body {
 h1,
 h2 {
   font-family: var(--heading);
+  font-weight: 500;
   line-height: 1.05;
   color: var(--text);
 }
@@ -75,18 +105,18 @@ button {
 
 a:hover,
 button:hover {
-  color: var(--gold);
+  color: var(--peach);
 }
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--peach);
   outline-offset: 6px;
 }
 
 @media (max-width: 760px) {
-  html {
-    scroll-snap-type: none;
+  :root {
+    --rail-width: 24px;
   }
 }
 

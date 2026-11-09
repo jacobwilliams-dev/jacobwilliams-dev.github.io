@@ -1,0 +1,113 @@
+/* flex-start with a small top margin: the line stays level with the title's first line */
+.portfolio-entry-title-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.portfolio-entry h3 {
+  margin: 0;
+  color: var(--text);
+  font: 700 16px/1.2 var(--heading);
+}
+
+/* The mask cuts the gradient into a ring, and the clear part of the gradient opens the gap */
+.portfolio-entry-arc {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  background: conic-gradient(from 225deg, transparent 80deg, var(--peach) 80deg);
+  border-radius: 50%;
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1.5px));
+}
+
+/* The right margin leaves room for the ring and dot drawn past the line's end */
+.portfolio-entry-trail {
+  position: relative;
+  flex: 1;
+  max-width: 280px;
+  height: 1px;
+  margin: 9px 22px 0 12px;
+  background: linear-gradient(to right, transparent, var(--peach));
+}
+
+.portfolio-entry-trail::before,
+.portfolio-entry-trail::after {
+  position: absolute;
+  box-sizing: border-box;
+  content: '';
+  border-radius: 50%;
+}
+
+.portfolio-entry-trail::before {
+  top: -4px;
+  right: -9px;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--peach);
+}
+
+.portfolio-entry-trail::after {
+  top: -1px;
+  right: -17px;
+  width: 3px;
+  height: 3px;
+  background: var(--peach);
+}
+
+.portfolio-entry-subtitle {
+  font-family: var(--detail);
+}
+
+/* inline-block: flows after the last word, and moves to a new line when there is no room */
+.portfolio-entry-dash {
+  position: relative;
+  display: inline-block;
+  width: 56px;
+  height: 1px;
+  margin-left: 30px;
+  vertical-align: middle;
+  background: linear-gradient(to right, var(--peach), transparent);
+}
+
+/* One dot, and box-shadow draws its copy 7px along */
+.portfolio-entry-dash::before {
+  position: absolute;
+  top: -1px;
+  left: -17px;
+  width: 3px;
+  height: 3px;
+  content: '';
+  background: color-mix(in srgb, var(--peach) 60%, transparent);
+  border-radius: 50%;
+  box-shadow: 7px 0 0 color-mix(in srgb, var(--peach) 60%, transparent);
+}
+
+.portfolio-entry-dates {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
+  color: var(--peach);
+  font: 700 12px/1.6 var(--sans);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.portfolio-entry-highlights {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  color: var(--text-muted);
+}
+
+.portfolio-entry-highlights li + li {
+  margin-top: 4px;
+}
+
+/* Titles wrap on a phone, so the long line has no room */
+@media (max-width: 760px) {
+  .portfolio-entry-trail {
+    display: none;
+  }
+}

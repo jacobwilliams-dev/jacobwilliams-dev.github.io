@@ -29,7 +29,8 @@ Every page of the site sits inside one shared frame and one visual style, so the
 - The footer: the logo with the site owner's name, the email address, the LinkedIn and GitHub profile links with their icons, and a copyright notice.
 - The compact menu that replaces the link row on narrow viewports.
 - The backdrop behind every page: the starfield and the orbit drawing that rotates when the page changes.
-- The site-wide visual base in `src/index.css`: colour variables, theme, fonts, text sizes, hover and focus styles, scrolling and section snapping, reduced motion.
+- The site-wide visual base in `src/index.css`: colour variables, theme, fonts, text sizes, hover and focus styles, smooth scrolling, reduced motion.
+- The page tracker at the right edge of every page with several sections.
 - Wrapping the existing route table in the layout.
 
 **Files this feature may change**
@@ -38,6 +39,8 @@ Every page of the site sits inside one shared frame and one visual style, so the
 - `src/components/Header.jsx`, `src/components/Header.css` (new)
 - `src/components/Footer.jsx`, `src/components/Footer.css` (new)
 - `src/components/Backdrop.jsx`, `src/components/Backdrop.css` (new)
+- `src/components/PageTracker.jsx`, `src/components/PageTracker.css` (new)
+- `src/components/PageSection.css` (existing, shared with other features; removing section snapping approved by the site owner on 2026-11-08)
 - `src/assets/logo.png`, `src/assets/starfield.png` (new)
 - `src/App.jsx` (existing, shared with other features; change approved by the site owner on 2026-11-05)
 - `src/index.css` (existing, shared with other features; change approved by the site owner on 2026-11-05)
@@ -46,7 +49,7 @@ Every page of the site sits inside one shared frame and one visual style, so the
 
 - The routes and content of Portfolio, Links, Contact, the login route and `/backoffice`: each page's own feature specification adds its route to `src/App.jsx`.
 - Removing the Vite demo content from the root route, from `src/App.css`, and the demo-only rules this feature keeps in `src/index.css`: `home-page.feature.md`.
-- The `Frame` and `GoldButton` components, full-screen page sections, the "Scroll down" hint and glyph lines: built by the first page feature that uses them (`ai-spec.md` section 5, Visual Design).
+- The `Frame` and `PeachButton` components, page sections, the "Scroll down" hint and glyph lines: built by the first page feature that uses them (`ai-spec.md` section 5, Visual Design).
 - `src/main.jsx`: stays unchanged.
 - Moving the orbit drawing up and down between pages, as the design reference does between chapters: only its rotation follows the page.
 - The favicon (`public/favicon.svg`) and the page title in `index.html`: no source ties them to the layout.
@@ -209,15 +212,15 @@ At 320px wide, the bar reads "Portfolio" on `/#/portfolio` and "Home" on `/#/`, 
 Every page uses the colour variables, dark theme, fonts, text sizes, and hover and focus styles that `ai-spec.md` section 5 (Visual Design) defines.
 
 **Expected Result:**
-On any page, the background is `#020304`, body text is Arial at 16px, headings use Trebuchet MS, links turn `--gold` on hover, and keyboard focus shows a 2px `--gold` outline offset by 6px.
+On any page, the background is `#020304`, body text is Arial at 14px, headings use Trebuchet MS, links turn `--peach` on hover, and keyboard focus shows a 2px `--peach` outline offset by 6px.
 
-### FR-19 — Section snapping below the header
+### FR-19 — Free scrolling below the header
 
 **Requirement:**
-Wider than 760px, the page snaps to the start of each full-screen section, with the section's top just below the header. At 760px or less, the page does not snap.
+The page scrolls freely at every width and never pulls back to a section. An in-page jump stops with the section's top just below the header.
 
 **Expected Result:**
-At 1280px wide, the page has `scroll-snap-type: y proximity` and a `scroll-padding-top` equal to the header's height. At 760px wide, `scroll-snap-type` is `none`.
+At 1280px and 320px wide, the page has `scroll-snap-type: none` and a `scroll-padding-top` equal to the header's height.
 
 ### FR-20 — Starfield behind every page
 
@@ -243,6 +246,14 @@ When the visitor changes page, the orbit drawing rotates to that page's angle ov
 **Expected Result:**
 Going from Home to Portfolio turns the drawing smoothly from −15° to 27° over 1.8 seconds, and going back turns it back. A path that matches none of the four links uses Home's angle. With reduced motion on, the angle changes with no animation.
 
+### FR-23 — Page tracker
+
+**Requirement:**
+A page with several sections shows a vertical line in a rail to the left of its sections, with one evenly spaced dot per section. It marks the section being viewed, shows a section's title when its dot is hovered or focused, and jumps to a section when its dot is chosen.
+
+**Expected Result:**
+Home shows three dots and Portfolio six. Hovering a dot shows its number and section title beside it. The line runs from below the header to the bottom of the window, and ends above the footer when the footer is in view. The current dot changes while the page scrolls, and choosing a dot scrolls that section to just below the header. A page with fewer than two sections shows no tracker.
+
 ---
 
 ## 4. Decisions Already Taken
@@ -260,7 +271,7 @@ Going from Home to Portfolio turns the drawing smoothly from −15° to 27° ove
 - **D-11:** The logo's generating tool is documented in a code comment beside each of its imports, in `Header.jsx` and `Footer.jsx` - site owner decision, 2026-11-05.
 - **D-12:** The footer's contact information is the email address `jacobwilliams2156@gmail.com`, the LinkedIn profile `https://www.linkedin.com/in/jacob-williams-profile/` and the GitHub profile `https://github.com/jacobwilliams-dev`. The footer has no Contact page link, because the header already links to Contact - site owner decision, 2026-11-05.
 - **D-13:** The LinkedIn and GitHub links open in a new tab with `rel="noopener noreferrer"`; the email link opens the visitor's mail app - site owner decision, 2026-11-05.
-- **D-14:** `src/index.css` replaces the Vite starter styles with the visual base: the eight colour variables, a `--header-height` variable, `color-scheme: dark`, the body background, text colour, fonts and size, the `h1`, `h2` and `p` styles, the global hover and focus styles, smooth scrolling, section snapping above 760px with `scroll-padding-top: var(--header-height)`, and the reduced-motion rule. `#root` keeps its full-height flex column but loses the 1126px width, the side borders and the centred text - project-wide spec (section 5, Visual Design); site owner approval of the `src/index.css` change, 2026-11-05.
+- **D-14:** `src/index.css` replaces the Vite starter styles with the visual base: the eight colour variables, a `--header-height` variable, `color-scheme: dark`, the body background, text colour, fonts and size, the `h1`, `h2` and `p` styles, the global hover and focus styles, smooth scrolling with `scroll-padding-top: var(--header-height)`, and the reduced-motion rule. `#root` keeps its full-height flex column but loses the 1126px width, the side borders and the centred text - project-wide spec (section 5, Visual Design); site owner approval of the `src/index.css` change, 2026-11-05.
 - **D-15:** The root route keeps the Vite demo content until `home-page.feature.md` replaces it - site owner decision, 2026-11-04 (recorded in `setup-deploy.feature.md`), confirmed 2026-11-05.
 - **D-16:** `Layout` holds the list of four links and reads the current path once with `useLocation` (`react-router`). It passes the list and the matching entry to `Header` (navigation and narrow-viewport page name), and the entry's position in the list to `Backdrop` (orbit angle) - site owner decision, 2026-11-05 (page name); project-wide spec (section 5: reuse one source instead of a second copy).
 - **D-17:** `Layout` renders `Backdrop` as a fixed layer behind the header, content and footer. Its starfield and orbit drawing are decorative: the starfield `<img>` has `alt=""` and the drawing has `aria-hidden="true"` - site owner decision, 2026-11-05.
@@ -269,9 +280,11 @@ Going from Home to Portfolio turns the drawing smoothly from −15° to 27° ove
 - **D-20:** The orbit angle is the page's position in the link list (Home 0 to Contact 3) × 42°, minus 15°: Home −15°, Portfolio 27°, Links 69°, Contact 111°. A path with no match uses Home's angle - site owner's design reference, 2026-11-05 (42° per chapter, starting at −15°).
 - **D-21:** The header is a plain full-width bar with an `--ink` background at 70% opacity and a 1px `--line` bottom border. Above 760px the logo sits at the left of the bar and the link row at the right. The links and the narrow-viewport page name are 14px bold capitals with 1.8px letter-spacing, made capital by CSS so the link text stays "Home", "Portfolio", "Links" and "Contact". Inactive links are `--text-muted`; the current link is `--text` with a 1px `--peach` line under it. The menu button uses the same capitals inside a 1px `--line` outline, and the open menu has an `--ink` background - project-wide spec (section 5, Visual Design); site owner's design reference; site owner decision, 2026-11-05 (plain bar and links at the right, chosen in the layout preview).
 - **D-22:** The logo PNG has a transparent background, so it sits directly on the header bar with no blend mode - site owner decision, 2026-11-05.
-- **D-23:** The footer has a 1px `--line` top border and three groups in one row, spread apart with space between them: at the left, the logo (`alt=""`, because the name beside it already says who it is) grouped with the name "Jacob Williams" in the heading font, bold, in `--text`; in the middle, a "Get in touch" column holding the email link and a "Find me online" column holding the LinkedIn and GitHub links; at the right, the copyright notice. When the window is too narrow for one row, the groups wrap, and at 760px or less they stack and line up at the left. The column labels are 12px bold capitals with 1.8px letter-spacing in `--text-faint`, made capital by CSS. The links are `--text-muted` with no underline and turn `--gold` on hover; the copyright is at least 12px in `--text-faint`. The footer has `scroll-snap-align: end`, so on wide viewports, where the page snaps to section starts, scrolling to the bottom still shows the whole footer instead of snapping back to the last section - site owner decision, 2026-11-05 (footer layout and reference image); site owner's design reference.
+- **D-23:** The footer has a 1px `--line` top border and three groups in one row: at the left, the logo (`alt=""`, because the name beside it already says who it is) grouped with the name "Jacob Williams" in the heading font, bold, in `--text`; between them and nearer the name, a "Get in touch" column holding the email link and a "Find me online" column holding the LinkedIn and GitHub links; at the right, the copyright notice. The spare width splits 1 to 3 between the space left and right of the columns - site owner decision, 2026-11-07. When the window is too narrow for one row, the groups wrap, and at 760px or less they stack and line up at the left. The column labels are 12px bold capitals with 1.8px letter-spacing in `--peach`, made capital by CSS. The links are `--text-muted` with no underline and turn `--peach` on hover; the copyright is at least 12px in `--text-faint` - site owner decision, 2026-11-05 (footer layout and reference image); site owner's design reference.
 - **D-24:** The LinkedIn and GitHub links each show the brand's icon before the label. Each icon is an inline SVG in `Footer.jsx` with `aria-hidden="true"` and `fill: currentColor`, so it takes the link's colour and the visible label stays the link's name. No icon package is added - site owner decision, 2026-11-05; project-wide spec (section 5, Visual Design: brand icon exception; section 4: ask before adding a dependency).
-- **D-25:** `<main>` has `scroll-snap-align: start`, so the top of the page is a snap point. With the footer as the only snap point, wide pages opened scrolled down - site owner decision, 2026-11-05.
+- **D-25:** The page has no scroll snapping at any width, because snapping pulled the page back to the nearest section while the visitor scrolled. `scroll-padding-top` stays, so jumps from the page tracker stop below the sticky header - site owner decision, 2026-11-08.
+- **D-26:** `PageTracker` is rendered once by `Layout`, keyed by the current path so it restarts on a route change. It finds the `.page-section` elements on the page, and renders nothing when there are fewer than two. The dots are evenly spaced along the line. The current section is the last one whose top has passed one third of the window's height, or the last section when the page is scrolled to the bottom. A `ResizeObserver` on the page and `scroll` update the current section and how far the footer has entered the window. Its dots are buttons inside a `<nav>`, labelled "Go to" and the section's title, read from the `data-label` that `PageSection` sets from its `label` prop, with `aria-current` on the current one. On a mouse hover or keyboard focus, a dot shows a dark outlined box beside it holding a two-digit peach number and the title in spaced-out capitals, and a dot jumps with `scrollIntoView()` - site owner decisions, 2026-11-08 (tracker, clickable dots); project-wide spec (section 7: in-page jumps).
+- **D-27:** The tracker's look copies the site owner's design reference: 4px white dots; above the current dot, separate solid 1px segments that stop 11px short of each dot and warm toward peach at their lower end; below it, a line of faint 1px dots every 8px, running through the dots; and the current dot, 5px, in a 37px, 2px `--peach` ring that fades on its right side, with thin chevrons just above and below that the lines stop 36px clear of. It is `position: fixed` from below the header to the bottom of the window, ending above the footer, centred in a `--rail-width` rail to the left of the page sections. `Layout.css` reserves the rail only on pages with several sections. The rail is 64px wide above 760px. At 760px or less it is 24px wide with a 20px ring, and takes the place of the sections' left padding - site owner decisions, 2026-11-08 (reference image, left rail outside the page contents, full height, shown on phones); project-wide spec (section 5: page tracker, breakpoint).
 
 ---
 
@@ -284,11 +297,12 @@ Order: the two images come first because the header, the footer and the backdrop
 3. **T-03 (FR-18, FR-19, D-14):** Replace the Vite starter styles in `src/index.css` with the visual base listed in D-14. Keep the rules and variables only the Vite demo uses (`code`, `.counter`, `#social .button-icon`, and the variables they and `src/App.css` read) at their existing dark-mode values, until `home-page.feature.md` removes the demo. - `src/index.css`
 4. **T-04 (FR-02, FR-03, FR-04, FR-05, FR-06, FR-07, FR-08, FR-15, FR-16, D-02 to D-07, D-11, D-21, D-22):** Create `Header`: a `<header>` holding a `Link` to `/` around the logo image (alt text from FR-07, with a comment naming ChatGPT beside the logo import), and a `<nav aria-label="Main">` holding a `NavLink` for each entry of the link list it receives, with `end` on Home. Style the header sticky at the top, with the bar, link and current-link styles in D-21; the logo needs no blend mode (D-22). - `src/components/Header.jsx`, `src/components/Header.css`
 5. **T-05 (FR-04, FR-12, FR-13, FR-14, FR-15, FR-16, FR-17, D-08, D-09, D-16, D-21):** Add the narrow-viewport menu to `Header`: an open/closed state that starts closed; a `type="button"` toggle reading "Menu" or "Close" with `aria-expanded` and `aria-controls` pointing to the link list's `id`; clicking any header link or the logo closes the menu. Between the logo and the button, show the label of the matching link entry it receives, or nothing when there is none. At `max-width: 760px`, show the button and the page name, and hide the links unless the menu is open; above it, hide the button and the page name, and always show the links in a row. - `src/components/Header.jsx`, `src/components/Header.css`
-6. **T-06 (FR-08, FR-09, FR-10, FR-11, D-02, D-03, D-10 to D-13, D-23, D-24):** Create `Footer`: a `<footer>` holding three groups: the logo `<img alt="">` (with a comment naming ChatGPT beside the `logo.png` import) and the name "Jacob Williams"; a "Get in touch" column with the email `mailto:` link and a "Find me online" column with the LinkedIn and GitHub links (icons from D-24, new tab, `rel="noopener noreferrer"`); and the copyright notice built from the current year, followed by "All rights reserved.". Lay the groups out and style them as D-23 describes, including `scroll-snap-align: end`. - `src/components/Footer.jsx`, `src/components/Footer.css`
+6. **T-06 (FR-08, FR-09, FR-10, FR-11, D-02, D-03, D-10 to D-13, D-23, D-24):** Create `Footer`: a `<footer>` holding three groups: the logo `<img alt="">` (with a comment naming ChatGPT beside the `logo.png` import) and the name "Jacob Williams"; a "Get in touch" column with the email `mailto:` link and a "Find me online" column with the LinkedIn and GitHub links (icons from D-24, new tab, `rel="noopener noreferrer"`); and the copyright notice built from the current year, followed by "All rights reserved.". Lay the groups out and style them as D-23 describes. - `src/components/Footer.jsx`, `src/components/Footer.css`
 7. **T-07 (FR-20, FR-21, FR-22, D-17, D-18, D-19, D-20):** Create `Backdrop`: a fixed layer behind the page holding the starfield `<img alt="">` (with a comment saying how it was made beside its import) and the orbit SVG with `aria-hidden="true"` and no pointer events. Rotate the SVG to the angle in D-20 for the page position it receives, with a 1.8s ease transition on `transform`. - `src/components/Backdrop.jsx`, `src/components/Backdrop.css`
-8. **T-08 (FR-01, FR-17, FR-22, D-01, D-02, D-03, D-16, D-17, D-25):** Create `Layout`: hold the list of four links, read the current path with `useLocation`, and find the matching entry. Render `Backdrop` with the entry's position, then `Header` with the list and the entry, a `<main>` holding its `children`, and `Footer`. Let `<main>` fill the free height of `#root`, so the footer sits at the bottom of the window on short pages. Give `<main>` the snap point in D-25. - `src/components/Layout.jsx`, `src/components/Layout.css`
+8. **T-08 (FR-01, FR-17, FR-22, D-01, D-02, D-03, D-16, D-17):** Create `Layout`: hold the list of four links, read the current path with `useLocation`, and find the matching entry. Render `Backdrop` with the entry's position, then `Header` with the list and the entry, a `<main>` holding its `children`, and `Footer`. Let `<main>` fill the free height of `#root`, so the footer sits at the bottom of the window on short pages. - `src/components/Layout.jsx`, `src/components/Layout.css`
 9. **T-09 (FR-01, D-01, D-15):** In `src/App.jsx`, import `Layout` and place the existing `Routes` inside it, inside `HashRouter`. Leave the demo markup, its counter state, its imports and `App.css` unchanged. - `src/App.jsx`
 10. **T-10 (FR-01 to FR-22):** Run `npm run lint`, `npm run build` and `npm run preview`, then check every criterion in section 11 at 320px, 760px, 761px and 1280px wide, and once with reduced motion turned on. - no file
+11. **T-11 (FR-19, FR-23, D-25, D-26, D-27):** Remove section snapping. Create `PageTracker` and render it in `Layout`, then check FR-19 and FR-23 at 320px and 1280px wide. - `src/index.css`, `src/components/PageSection.css`, `src/components/Layout.jsx`, `src/components/Layout.css`, `src/components/Footer.css`, `src/components/PageTracker.jsx`, `src/components/PageTracker.css`
 
 ---
 
@@ -326,6 +340,7 @@ Order: the two images come first because the header, the footer and the backdrop
 - `Header` (`src/components/Header.jsx`) - new: logo link to Home, the four navigation links, the narrow-viewport current page name, the menu button and its open/closed state.
 - `Footer` (`src/components/Footer.jsx`) - new: the logo with the site owner's name, the contact links with the LinkedIn and GitHub icons, and the copyright notice.
 - `Backdrop` (`src/components/Backdrop.jsx`) - new: fixed starfield and orbit drawing behind every page.
+- `PageTracker` (`src/components/PageTracker.jsx`) - new: the dots at the right edge that show and change the current section.
 - `App` (`src/App.jsx`) - existing, changed: wraps the route table in `Layout`.
 - `NavLink`, `Link`, `useLocation` (`react-router`) - existing dependency, first used here: navigation links, current-page marking, and the current path.
 - `src/assets/logo.png`, `src/assets/starfield.png` - new: the AI-generated logo and the script-drawn starfield.
@@ -419,10 +434,14 @@ N/A - this feature has no form and takes no user input to check.
 - [ ] At 320px wide on `/#/does-not-exist`, the bar shows no page name. (FR-17)
 - [ ] At 1280px wide on `/#/portfolio`, the header shows no page name apart from the marked link in the link row. (FR-17)
 - [ ] `src/index.css` defines the eight colour variables from `ai-spec.md` section 5 with exactly those values, and no Vite light/dark colour switch remains. (FR-18)
-- [ ] On `/#/`, the browser's computed styles show a body background of `rgb(2, 3, 4)`, a body font family starting with Arial at 16px, and an `h1` font family starting with "Trebuchet MS". (FR-18)
-- [ ] Hovering a header or footer link turns it `rgb(180, 154, 99)` (`--gold`), and focusing it with Tab shows a 2px solid outline in the same colour. (FR-18)
-- [ ] At 1280px wide, the `html` element's computed styles show `scroll-snap-type: y proximity` and a `scroll-padding-top` equal to the header's height; at 760px wide, `scroll-snap-type` is `none`. (FR-19)
-- [ ] At 1280px wide, the footer's computed styles show `scroll-snap-align: end`, and scrolling to the bottom of a page leaves the whole footer in view. (FR-19)
+- [ ] On `/#/`, the browser's computed styles show a body background of `rgb(2, 3, 4)`, a body font family starting with Arial at 14px, and an `h1` font family starting with "Trebuchet MS". (FR-18)
+- [ ] Hovering a header or footer link turns it `rgb(217, 180, 162)` (`--peach`), and focusing it with Tab shows a 2px solid outline in the same colour. (FR-18)
+- [ ] At 1280px and 320px wide, the `html` element's computed styles show `scroll-snap-type: none` and a `scroll-padding-top` equal to the header's height. (FR-19)
+- [ ] Stopping a scroll between two sections leaves the page where it stopped, and scrolling to the bottom of a page leaves the whole footer in view. (FR-19)
+- [ ] At 1280px and 320px wide, Home shows three tracker dots and Portfolio six, evenly spaced on a line in a rail outside the section panels, and the current dot changes while the page scrolls. The line ends above the footer. (FR-23)
+- [ ] Choosing a tracker dot scrolls that section to just below the header, and the dot works with the keyboard. (FR-23)
+- [ ] Hovering a tracker dot with a mouse, or focusing it with the keyboard, shows its number and section title beside it. (FR-23)
+- [ ] A path with no page sections, such as `/#/does-not-exist`, shows no tracker. (FR-23)
 - [ ] The starfield shows behind the content on `/#/`, `/#/portfolio` and `/#/does-not-exist`, and after scrolling `/#/` to the bottom the stars sit where they started. (FR-20)
 - [ ] The starfield `<img>` has `alt=""`, and `src/components/Backdrop.jsx` has a comment beside the `starfield.png` import saying it was drawn by a script. (FR-20)
 - [ ] The orbit drawing shows faintly behind the content on every page checked for FR-20, and every header and footer link it overlaps still opens when clicked. (FR-21)

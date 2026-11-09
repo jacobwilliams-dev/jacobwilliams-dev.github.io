@@ -1,6 +1,16 @@
-/* flex: takes the free height of #root, so the footer stays at the bottom on short pages.
-   snap-align start: a snap point at the page top; with the footer as the only one, pages open scrolled down. */
+/* flex: takes the free height of #root, so the footer stays at the bottom on short pages. */
 .layout-main {
   flex: 1 0 auto;
-  scroll-snap-align: start;
+}
+
+/* Keeps the page tracker's rail clear, only on pages that show the tracker */
+.layout-main:has(> .page-section ~ .page-section) {
+  padding-left: var(--rail-width);
+}
+
+/* On a phone the rail replaces the section's left padding, to keep the text as wide as possible */
+@media (max-width: 760px) {
+  .layout-main:has(> .page-section ~ .page-section) > .page-section {
+    padding-left: 0;
+  }
 }

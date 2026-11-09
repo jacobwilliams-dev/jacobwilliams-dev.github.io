@@ -21,10 +21,27 @@
 }
 
 .frame-outline .frame-marker {
-  fill: var(--peach);
+  fill: none;
+  stroke: var(--line);
+  vector-effect: non-scaling-stroke;
 }
 
-/* position relative: keeps the content above the outline */
+.frame-outline .frame-dot {
+  fill: var(--text);
+}
+
+/* cover: fills the panel at any height without stretching.
+   Frame.jsx sets the clip-path, so the image follows the cut corners */
+.frame-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+}
+
+/* position relative: keeps the content above the outline and image */
 .frame-content {
   position: relative;
   display: flex;

@@ -3,7 +3,11 @@ import './Frame.css'
 
 const CORNER_CUT = 28
 const CORNER_RADIUS = 18
-const MARKER_SIZE = 8
+const MARKER_SIZE = 14
+const MARKER_OVERHANG = 9
+const MARKER_DOT_RADIUS = 1.5
+const CORNER_DOT_RADIUS = 2.5
+const CORNER_DOT_INSET = 3
 
 function getOutlinePath(width, height) {
   return [
@@ -18,7 +22,7 @@ function getOutlinePath(width, height) {
   ].join(' ')
 }
 
-function Frame({ children }) {
+function Frame({ children, image, imageAlt }) {
   const frameRef = useRef(null)
   const [size, setSize] = useState(null)
 
@@ -43,13 +47,40 @@ function Frame({ children }) {
             <path d={getOutlinePath(size.width - 1, size.height - 1)} />
             <rect
               className="frame-marker"
-              x={-MARKER_SIZE / 2}
-              y={-MARKER_SIZE / 2}
+              x={-MARKER_OVERHANG}
+              y={-MARKER_OVERHANG}
               width={MARKER_SIZE}
               height={MARKER_SIZE}
             />
+            <circle
+              className="frame-dot"
+              cx={MARKER_SIZE / 2 - MARKER_OVERHANG}
+              cy={MARKER_SIZE / 2 - MARKER_OVERHANG}
+              r={MARKER_DOT_RADIUS}
+            />
+            {/* These two sit where the cut corners would have been */}
+            <circle
+              className="frame-dot"
+              cx={size.width - 1 - CORNER_DOT_INSET}
+              cy={CORNER_DOT_INSET}
+              r={CORNER_DOT_RADIUS}
+            />
+            <circle
+              className="frame-dot"
+              cx={CORNER_DOT_INSET}
+              cy={size.height - 1 - CORNER_DOT_INSET}
+              r={CORNER_DOT_RADIUS}
+            />
           </g>
         </svg>
+      )}
+      {size && image && (
+        <img
+          className="frame-image"
+          src={image}
+          alt={imageAlt}
+          style={{ clipPath: `path('${getOutlinePath(size.width, size.height)}')` }}
+        />
       )}
       <div className="frame-content">{children}</div>
     </div>
