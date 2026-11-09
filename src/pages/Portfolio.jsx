@@ -4,7 +4,6 @@ import PeachButton from '../components/PeachButton.jsx'
 import PortfolioEntry from '../components/PortfolioEntry.jsx'
 import ProjectEntry from '../components/ProjectEntry.jsx'
 import RingDivider from '../components/RingDivider.jsx'
-import ScrollHint from '../components/ScrollHint.jsx'
 import portfolioContent from '../assets/portfolioContent.json'
 // Image generated with Google Gemini
 import rocketFoodDeliveryImage from '../assets/portfolio-rocket-food-delivery.png'
@@ -12,6 +11,18 @@ import rocketFoodDeliveryImage from '../assets/portfolio-rocket-food-delivery.pn
 import codeBloggsImage from '../assets/portfolio-codebloggs.png'
 // Image generated with Google Gemini
 import rocketElevatorsImage from '../assets/portfolio-rocket-elevators.png'
+// Image generated with Google Gemini
+import fidelisLogo from '../assets/portfolio-logo-fidelis.png'
+// Image generated with Google Gemini
+import curateLogo from '../assets/portfolio-logo-curate.png'
+// Image generated with Google Gemini
+import semperLogo from '../assets/portfolio-logo-semper.png'
+// Image generated with Google Gemini
+import century21Logo from '../assets/portfolio-logo-century21.png'
+// Image generated with Google Gemini
+import codeBoxxLogo from '../assets/portfolio-logo-codeboxx.png'
+// Image generated with Google Gemini
+import lenoirRhyneLogo from '../assets/portfolio-logo-lenoir-rhyne.png'
 import './Portfolio.css'
 
 const RESUME_PATH = '/Jacob-Williams-Resume.pdf'
@@ -21,6 +32,15 @@ const PROJECT_IMAGES = {
   rocketFoodDelivery: rocketFoodDeliveryImage,
   codeBloggs: codeBloggsImage,
   rocketElevators: rocketElevatorsImage,
+}
+
+const ENTRY_LOGOS = {
+  codeboxx: codeBoxxLogo,
+  lenoirRhyne: lenoirRhyneLogo,
+  fidelis: fidelisLogo,
+  curate: curateLogo,
+  semper: semperLogo,
+  century21: century21Logo,
 }
 
 function Portfolio() {
@@ -49,10 +69,12 @@ function Portfolio() {
               title={entry.institution}
               subtitle={entry.program}
               dates={entry.dates}
+              logo={ENTRY_LOGOS[entry.logoKey]}
+              logoAlt={entry.logoAlt}
+              compactLogo
             />
           </Fragment>
         ))}
-        <ScrollHint />
       </PageSection>
 
       {work.map((entry, index) => (
@@ -67,6 +89,8 @@ function Portfolio() {
             dates={entry.dates}
             summary={entry.summary}
             highlights={entry.highlights}
+            logo={ENTRY_LOGOS[entry.logoKey]}
+            logoAlt={entry.logoAlt}
           />
         </PageSection>
       ))}

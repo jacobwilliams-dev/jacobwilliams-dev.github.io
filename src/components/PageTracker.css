@@ -65,7 +65,7 @@
   width: var(--dot-width);
   height: var(--dot-height);
   padding: 0;
-  color: var(--text);
+  color: var(--white);
   background: none;
   border: 0;
   cursor: pointer;

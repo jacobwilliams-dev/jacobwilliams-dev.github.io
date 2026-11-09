@@ -1,6 +1,6 @@
 import './ScrollHint.css'
 
-function ScrollHint({ children = 'Scroll down', className = '' }) {
+function ScrollHint({ children, className = '' }) {
   return (
     <p className={`scroll-hint ${className}`} aria-hidden="true">
       {children}

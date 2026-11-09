@@ -27,7 +27,7 @@
 }
 
 .frame-outline .frame-dot {
-  fill: var(--text);
+  fill: var(--white);
 }
 
 /* cover: fills the panel at any height without stretching.
