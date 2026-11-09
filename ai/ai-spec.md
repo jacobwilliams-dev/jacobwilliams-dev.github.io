@@ -74,7 +74,7 @@ Browser (React app) → Supabase client (`src/lib/supabaseClient.js`) → Supaba
 
 Access to data is controlled by Supabase Row Level Security (RLS) policies, not by application code alone. A GitHub Actions workflow builds the site on every push to `main`, injects environment variables from repository secrets, and deploys the output to GitHub Pages.
 
-The repository started as an `npm create vite@latest` React scaffold. `setup-deploy.feature.md` added React Router (`HashRouter` in `src/App.jsx`), the shared Supabase client in `src/lib/supabaseClient.js` and the deploy workflow. Folders marked (planned) below do not exist yet; the first feature that needs each one creates it.
+The repository started as an `npm create vite@latest` React scaffold. `setup-deploy.feature.md` added React Router (`HashRouter` in `src/App.jsx`), the shared Supabase client in `src/lib/supabaseClient.js` and the deploy workflow.
 
 ### Repository / Project Structure
 
@@ -85,8 +85,8 @@ The repository started as an `npm create vite@latest` React scaffold. `setup-dep
   - `App.jsx` - root component (routes and shared layout)
   - `/src/lib/` - shared service modules; holds `supabaseClient.js`
   - `/src/assets/` - images and other assets imported by components
-  - `/src/pages/` (planned) - one component per routed page
-  - `/src/components/` (planned) - shared and reusable components, including the layout and the `Frame` and `PeachButton` visual components
+  - `/src/pages/` - one component per routed page
+  - `/src/components/` - shared and reusable components, including the layout and the `Frame` and `PeachButton` visual components
 - `/public/` - static files served as-is at the site root (favicon, downloadable files)
 - `/.github/workflows/deploy.yml` - build-and-deploy workflow for GitHub Pages
 - Root - config files only: `index.html`, `vite.config.js`, `eslint.config.js`, `package.json`, `package-lock.json`, `.gitignore`

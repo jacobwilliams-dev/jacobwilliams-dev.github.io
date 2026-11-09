@@ -1,6 +1,7 @@
 import { HashRouter, Route, Routes } from 'react-router'
 import Layout from './components/Layout.jsx'
 import SecretLoginShortcut from './components/SecretLoginShortcut.jsx'
+import BackOffice from './pages/BackOffice.jsx'
 import Contact from './pages/Contact.jsx'
 import Home from './pages/Home.jsx'
 import Links from './pages/Links.jsx'
@@ -18,6 +19,7 @@ function App() {
           <Route path="/links" element={<Links />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/backoffice" element={<BackOffice />} />
         </Routes>
       </Layout>
     </HashRouter>
