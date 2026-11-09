@@ -9,7 +9,7 @@
 .portfolio-entry h3 {
   margin: 0;
   color: var(--text);
-  font: 700 16px/1.2 var(--heading);
+  font: 700 16px/1.2 var(--card-title);
 }
 
 /* The mask cuts the gradient into a ring, and the clear part of the gradient opens the gap */
@@ -90,7 +90,7 @@
   align-items: center;
   margin-top: 4px;
   color: var(--peach);
-  font: 700 12px/1.6 var(--sans);
+  font: 700 12px/1.6 var(--label);
   letter-spacing: 2px;
   text-transform: uppercase;
 }

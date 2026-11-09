@@ -46,7 +46,7 @@
 }
 
 .skill-grid-hover .skill-name {
-  font-family: var(--heading);
+  font-family: var(--card-title);
   font-weight: 700;
 }
 

@@ -3,61 +3,12 @@
 }
 
 .contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
   max-width: 640px;
-}
-
-.contact-field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.contact-field label {
-  color: var(--text);
-  font: 700 12px/1 var(--sans);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-/* border-box: keeps the padding and border inside the field's full width */
-.contact-field input,
-.contact-field textarea {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 12px;
-  color: var(--text);
-  background: var(--ink);
-  border: 1px solid var(--line);
-  border-radius: 0;
-  font: inherit;
-  transition: outline-color 0.2s;
-}
-
-.contact-field textarea {
-  resize: vertical;
-}
-
-.contact-field input:focus-visible,
-.contact-field textarea:focus-visible {
-  outline: 2px solid var(--peach);
-  outline-offset: 6px;
-}
-
-/* flex-start: a flex column would otherwise stretch the button to the form's width */
-.contact-form .peach-button {
-  align-self: flex-start;
 }
 
 /* Cancels the form's 24px gap, so the empty region adds no space under the button */
 .contact-status:empty {
   margin-top: -24px;
-}
-
-.contact-error {
-  color: var(--error);
 }
 
 .contact-success {

@@ -49,7 +49,7 @@ Every page of the site sits inside one shared frame and one visual style, so the
 
 - The routes and content of Portfolio, Links, Contact, the login route and `/backoffice`: each page's own feature specification adds its route to `src/App.jsx`.
 - Removing the Vite demo content from the root route, from `src/App.css`, and the demo-only rules this feature keeps in `src/index.css`: `home-page.feature.md`.
-- The `Frame` and `PeachButton` components, page sections, the "Scroll down" hint and glyph lines: built by the first page feature that uses them (`ai-spec.md` section 5, Visual Design).
+- The `Frame` and `PeachButton` components, page sections and glyph lines: built by the first page feature that uses them (`ai-spec.md` section 5, Visual Design).
 - `src/main.jsx`: stays unchanged.
 - Moving the orbit drawing up and down between pages, as the design reference does between chapters: only its rotation follows the page.
 - The favicon (`public/favicon.svg`) and the page title in `index.html`: no source ties them to the layout.
@@ -212,7 +212,7 @@ At 320px wide, the bar reads "Portfolio" on `/#/portfolio` and "Home" on `/#/`, 
 Every page uses the colour variables, dark theme, fonts, text sizes, and hover and focus styles that `ai-spec.md` section 5 (Visual Design) defines.
 
 **Expected Result:**
-On any page, the background is `#020304`, body text is Arial at 14px, headings use Trebuchet MS, links turn `--peach` on hover, and keyboard focus shows a 2px `--peach` outline offset by 6px.
+On any page, the background is `#020304`, body text is Montserrat at 14px, the `h1` uses Montserrat Underline, links turn `--peach` on hover, and keyboard focus shows a 2px `--peach` outline offset by 6px.
 
 ### FR-19 — Free scrolling below the header
 
@@ -254,6 +254,14 @@ A page with several sections shows a vertical line in a rail to the left of its 
 **Expected Result:**
 Home shows three dots and Portfolio six. Hovering a dot shows its number and section title beside it. The line runs from below the header to the bottom of the window, and ends above the footer when the footer is in view. The current dot changes while the page scrolls, and choosing a dot scrolls that section to just below the header. A page with fewer than two sections shows no tracker.
 
+### FR-24 — A new page starts at the top
+
+**Requirement:**
+When the path changes, the window is at the top of the new page before the page is drawn. This includes the browser's Back and Forward buttons.
+
+**Expected Result:**
+After scrolling to the bottom of `/#/` and choosing Portfolio, the window shows the top of Portfolio at once, with no scrolling animation.
+
 ---
 
 ## 4. Decisions Already Taken
@@ -267,7 +275,7 @@ Home shows three dots and Portfolio six. Hovering a dot shows its number and sec
 - **D-07:** The header uses `position: sticky` at the top of the window, not `position: fixed`, so it keeps its place in the page flow and never covers the top of the content - business doc (The Shared Layout: the header stays visible while the page scrolls; the navigation does not obstruct the content).
 - **D-08:** The narrow-viewport styles apply at `max-width: 760px` - project-wide spec (section 5, Visual Design: breakpoint).
 - **D-09:** On narrow viewports the navigation is a toggle button at the right of the header bar, labelled "Menu" when closed and "Close" when open, that shows the links as a vertical list inside the header, under the bar - site owner decision, 2026-11-05.
-- **D-10:** The logo is generated with ChatGPT and saved as `src/assets/logo.png` (480 × 195 px), imported by `Header.jsx` and `Footer.jsx`. Its starfield background was removed with a Python script (Pillow), keeping only the letters, the orbit arcs and the dot - site owner decision, 2026-11-05; project-wide spec (section 5: images imported by components go in `src/assets/`).
+- **D-10:** The logo is generated with ChatGPT and saved as `src/assets/logo.png` (480 × 195 px), imported by `Header.jsx` and `Footer.jsx`. Its starfield background was removed with a Python script (Pillow), keeping only the letters, the orbit arcs and the dot - site owner decision, 2026-11-05; project-wide spec (section 5: images imported by components go in `src/assets/`). In the emblem both components import, `src/assets/logo-emblem.svg`, the globe is recoloured to `--peach` (`#d9b4a2`) and the JW letters keep their original off-white, with the transparency kept - site owner decision, 2026-11-09.
 - **D-11:** The logo's generating tool is documented in a code comment beside each of its imports, in `Header.jsx` and `Footer.jsx` - site owner decision, 2026-11-05.
 - **D-12:** The footer's contact information is the email address `jacobwilliams2156@gmail.com`, the LinkedIn profile `https://www.linkedin.com/in/jacob-williams-profile/` and the GitHub profile `https://github.com/jacobwilliams-dev`. The footer has no Contact page link, because the header already links to Contact - site owner decision, 2026-11-05.
 - **D-13:** The LinkedIn and GitHub links open in a new tab with `rel="noopener noreferrer"`; the email link opens the visitor's mail app - site owner decision, 2026-11-05.
@@ -285,6 +293,7 @@ Home shows three dots and Portfolio six. Hovering a dot shows its number and sec
 - **D-25:** The page has no scroll snapping at any width, because snapping pulled the page back to the nearest section while the visitor scrolled. `scroll-padding-top` stays, so jumps from the page tracker stop below the sticky header - site owner decision, 2026-11-08.
 - **D-26:** `PageTracker` is rendered once by `Layout`, keyed by the current path so it restarts on a route change. It finds the `.page-section` elements on the page, and renders nothing when there are fewer than two. The dots are evenly spaced along the line. The current section is the last one whose top has passed one third of the window's height, or the last section when the page is scrolled to the bottom. A `ResizeObserver` on the page and `scroll` update the current section and how far the footer has entered the window. Its dots are buttons inside a `<nav>`, labelled "Go to" and the section's title, read from the `data-label` that `PageSection` sets from its `label` prop, with `aria-current` on the current one. On a mouse hover or keyboard focus, a dot shows a dark outlined box beside it holding a two-digit peach number and the title in spaced-out capitals, and a dot jumps with `scrollIntoView()` - site owner decisions, 2026-11-08 (tracker, clickable dots); project-wide spec (section 7: in-page jumps).
 - **D-27:** The tracker's look copies the site owner's design reference: 4px white dots; above the current dot, separate solid 1px segments that stop 11px short of each dot and warm toward peach at their lower end; below it, a line of faint 1px dots every 8px, running through the dots; and the current dot, 5px, in a 37px, 2px `--peach` ring that fades on its right side, with thin chevrons just above and below that the lines stop 36px clear of. It is `position: fixed` from below the header to the bottom of the window, ending above the footer, centred in a `--rail-width` rail to the left of the page sections. `Layout.css` reserves the rail only on pages with several sections. The rail is 64px wide above 760px. At 760px or less it is 24px wide with a 20px ring, and takes the place of the sections' left padding - site owner decisions, 2026-11-08 (reference image, left rail outside the page contents, full height, shown on phones); project-wide spec (section 5: page tracker, breakpoint).
+- **D-28:** `Layout` resets the window to the top when `pathname` changes, with `window.scrollTo({ top: 0, behavior: 'instant' })` in a `useLayoutEffect`. The effect runs before the browser draws, so the new page never shows part-way down. `behavior: 'instant'` overrides the smooth scrolling on `html`, which would otherwise animate the reset. Back and Forward also start at the top - site owner decision, 2026-11-09.
 
 ---
 
@@ -434,7 +443,7 @@ N/A - this feature has no form and takes no user input to check.
 - [ ] At 320px wide on `/#/does-not-exist`, the bar shows no page name. (FR-17)
 - [ ] At 1280px wide on `/#/portfolio`, the header shows no page name apart from the marked link in the link row. (FR-17)
 - [ ] `src/index.css` defines the eight colour variables from `ai-spec.md` section 5 with exactly those values, and no Vite light/dark colour switch remains. (FR-18)
-- [ ] On `/#/`, the browser's computed styles show a body background of `rgb(2, 3, 4)`, a body font family starting with Arial at 14px, and an `h1` font family starting with "Trebuchet MS". (FR-18)
+- [ ] On `/#/`, the browser's computed styles show a body background of `rgb(2, 3, 4)`, a body font family starting with Montserrat at 14px, and an `h1` font family starting with "Montserrat Underline". (FR-18)
 - [ ] Hovering a header or footer link turns it `rgb(217, 180, 162)` (`--peach`), and focusing it with Tab shows a 2px solid outline in the same colour. (FR-18)
 - [ ] At 1280px and 320px wide, the `html` element's computed styles show `scroll-snap-type: none` and a `scroll-padding-top` equal to the header's height. (FR-19)
 - [ ] Stopping a scroll between two sections leaves the page where it stopped, and scrolling to the bottom of a page leaves the whole footer in view. (FR-19)
@@ -447,3 +456,4 @@ N/A - this feature has no form and takes no user input to check.
 - [ ] The orbit drawing shows faintly behind the content on every page checked for FR-20, and every header and footer link it overlaps still opens when clicked. (FR-21)
 - [ ] Going from `/#/` to `/#/portfolio` turns the orbit drawing from −15° to 27° in a visible 1.8-second rotation; `/#/links` shows 69°, `/#/contact` 111°, and `/#/does-not-exist` −15°. (FR-22)
 - [ ] With reduced motion emulated in the browser's developer tools, changing page moves the orbit drawing to its new angle with no animation. (FR-22)
+- [ ] After scrolling to the bottom of `/#/` and choosing Portfolio in the header, the top of Portfolio shows at once with no scrolling animation, and the page tracker marks the first section. (FR-24)

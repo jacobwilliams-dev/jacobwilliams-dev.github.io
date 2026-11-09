@@ -209,7 +209,7 @@ Pressing Send again before the insert finishes adds no second row, and the butto
 - **D-11:** The field validation messages use the `--error` colour - business doc (every validation failure is explained); site owner decision, 2026-11-09.
 - **D-12:** The success message hides after 5 seconds or on the next typing in a field, whichever comes first - business doc (short interval or next interaction); site owner decision, 2026-11-09.
 - **D-13:** When the client is not configured, a message replaces the form, so a visitor never writes a message that cannot be sent - business doc (degrade gracefully); project-wide spec (section 4: Graceful degradation); site owner decision, 2026-11-09.
-- **D-14:** The labels use spaced-out bold capitals at 12px or larger, the fields use only palette colours, and keyboard focus on a field shows the same 2px `--peach` outline as links and buttons - project-wide spec (section 5: Colour variables, Text sizes, Hover and focus).
+- **D-14:** The labels use spaced-out bold capitals at 12px or larger, the fields use only palette colours, and keyboard focus on a field shows the same 2px `--peach` outline as links and buttons. These styles live in `src/components/Form.css`, shared with the login page (`login-page.feature.md`, D-13) - project-wide spec (section 5: Colour variables, Text sizes, Hover and focus).
 - **D-15:** The form is at most 640px wide, and its fields fill that width - site owner decision, 2026-11-09.
 - **D-16:** Screen readers are told about results: each validation message is tied to its field with `aria-describedby`, the success message appears inside a `role="status"` region that is always on the page, and the failure message has `role="alert"` - site owner decision, 2026-11-09.
 

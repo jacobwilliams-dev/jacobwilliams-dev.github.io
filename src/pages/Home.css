@@ -31,6 +31,7 @@
 .home-tagline {
   margin-bottom: 24px;
   color: var(--peach);
+  font-family: var(--label);
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;

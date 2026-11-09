@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import PageSection from '../components/PageSection.jsx'
 import PeachButton from '../components/PeachButton.jsx'
 import { supabase } from '../lib/supabaseClient.js'
+import { EMAIL_FORMAT } from '../lib/validation.js'
+import '../components/Form.css'
 import './Contact.css'
 
 const EMPTY_FIELDS = { name: '', email: '', message: '' }
-const EMAIL_FORMAT = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const SUCCESS_VISIBLE_MS = 5000
 
 function validate({ name, email, message }) {
@@ -72,8 +73,8 @@ function Contact() {
     <PageSection label="Contact" heading={<h1 className="contact-heading">Contact</h1>}>
       {supabase ? (
         // noValidate: the browser's pop-ups would replace the messages below
-        <form className="contact-form" onSubmit={handleSubmit} noValidate>
-          <div className="contact-field">
+        <form className="form contact-form" onSubmit={handleSubmit} noValidate>
+          <div className="form-field">
             <label htmlFor="contact-name">Name</label>
             <input
               id="contact-name"
@@ -84,13 +85,13 @@ function Contact() {
               aria-describedby={errors.name ? 'contact-name-error' : undefined}
             />
             {errors.name && (
-              <p id="contact-name-error" className="contact-error">
+              <p id="contact-name-error" className="form-error">
                 {errors.name}
               </p>
             )}
           </div>
 
-          <div className="contact-field">
+          <div className="form-field">
             <label htmlFor="contact-email">Email</label>
             <input
               id="contact-email"
@@ -101,13 +102,13 @@ function Contact() {
               aria-describedby={errors.email ? 'contact-email-error' : undefined}
             />
             {errors.email && (
-              <p id="contact-email-error" className="contact-error">
+              <p id="contact-email-error" className="form-error">
                 {errors.email}
               </p>
             )}
           </div>
 
-          <div className="contact-field">
+          <div className="form-field">
             <label htmlFor="contact-message">Message</label>
             <textarea
               id="contact-message"
@@ -118,7 +119,7 @@ function Contact() {
               aria-describedby={errors.message ? 'contact-message-error' : undefined}
             />
             {errors.message && (
-              <p id="contact-message-error" className="contact-error">
+              <p id="contact-message-error" className="form-error">
                 {errors.message}
               </p>
             )}
@@ -135,7 +136,7 @@ function Contact() {
             )}
           </div>
           {status === 'failed' && (
-            <p className="contact-error" role="alert">
+            <p className="form-error" role="alert">
               Your message could not be sent. Please try again.
             </p>
           )}

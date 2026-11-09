@@ -1,3 +1,4 @@
+import { useLayoutEffect } from 'react'
 import { matchPath, useLocation } from 'react-router'
 import Backdrop from './Backdrop.jsx'
 import Footer from './Footer.jsx'
@@ -17,6 +18,12 @@ function Layout({ children }) {
   const pagePosition = NAV_LINKS.findIndex((link) =>
     matchPath(link.path, pathname),
   )
+
+  // A route change swaps the page but keeps the window's scroll position.
+  // 'instant' because the smooth scrolling on html would animate the reset.
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [pathname])
 
   return (
     <>

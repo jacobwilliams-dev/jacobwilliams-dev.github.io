@@ -1,29 +1,30 @@
 /* swap: show the fallback font while these load, not blank text */
 @font-face {
-  font-family: 'Orbitron';
-  src: url('./assets/fonts/Orbitron-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Orbitron';
-  src: url('./assets/fonts/Orbitron-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Tomorrow';
-  src: url('./assets/fonts/Tomorrow-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Tomorrow';
-  src: url('./assets/fonts/Tomorrow-Regular.ttf') format('truetype');
+  font-family: 'Federo';
+  src: url('./assets/fonts/Federo-Regular.ttf') format('truetype');
   font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Marcellus SC';
+  src: url('./assets/fonts/MarcellusSC-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Variable fonts: one file holds every weight from 100 to 900 */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./assets/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat Underline';
+  src: url('./assets/fonts/MontserratUnderline-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
   font-display: swap;
 }
 
@@ -39,9 +40,12 @@
   --success: #8fd6a4;
   --error: #f09a9a;
 
-  --sans: Arial, Helvetica, sans-serif;
-  --heading: 'Orbitron', 'Trebuchet MS', Arial, sans-serif;
-  --detail: 'Tomorrow', Arial, sans-serif;
+  --body: 'Montserrat', Arial, sans-serif;
+  --display: 'Montserrat Underline', 'Montserrat', Arial, sans-serif;
+  --heading: 'Federo', Arial, sans-serif;
+  --card-title: 'Marcellus SC', Georgia, serif;
+  --detail: 'Federo', Arial, sans-serif;
+  --label: 'Federo', Arial, sans-serif;
 
   --header-height: 95px;
   --rail-width: 64px;
@@ -66,7 +70,7 @@ body {
   margin: 0;
   color: var(--text);
   background: var(--bg);
-  font: 14px/1.6 var(--sans);
+  font: 14px/1.6 var(--body);
 }
 
 #root {
@@ -85,6 +89,7 @@ h2 {
 }
 
 h1 {
+  font-family: var(--display);
   font-size: clamp(38px, 4.05vw, 70px);
   margin: 32px 0;
 }
