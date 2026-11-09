@@ -28,7 +28,7 @@ The site opens on a landing page that tells an employer who the site owner is an
 - The Soft Skills section: six entries in a grid.
 - Three AI-generated images, one per section, with alt text and the generating tool documented.
 - The site owner's photo in the Intro section.
-- The first reusable page pieces from `ai-spec.md` section 5 that Home uses: `Frame`, page sections and the "Scroll down" hint.
+- The first reusable page pieces from `ai-spec.md` section 5 that Home uses: `Frame` and page sections.
 - Removing the Vite demo: its markup and state in `src/App.jsx`, `src/App.css`, its assets, and its rules and variables in `src/index.css`.
 
 **Files this feature may change**
@@ -42,7 +42,7 @@ The site opens on a landing page that tells an employer who the site owner is an
 - `src/components/CarouselTracker.jsx`, `src/components/CarouselTracker.css` (new)
 - `src/lib/skillIcons.js` (new)
 - `src/assets/homeContent.json` (new)
-- `src/assets/fonts/Orbitron-Medium.ttf`, `Orbitron-Bold.ttf`, `Tomorrow-Light.ttf`, `Tomorrow-Regular.ttf`, `OFL-Orbitron.txt`, `OFL-Tomorrow.txt` (new)
+- `src/assets/fonts/Federo-Regular.ttf`, `MarcellusSC-Regular.ttf`, `Montserrat-VariableFont_wght.ttf`, `MontserratUnderline-VariableFont_wght.ttf`, `OFL-Federo.txt`, `OFL-MarcellusSC.txt`, `OFL-Montserrat.txt`, `OFL-MontserratUnderline.txt` (new)
 - `src/assets/home-intro.png`, `src/assets/home-technical.png`, `src/assets/home-soft.png` (new)
 - `src/assets/profile-photo.jpg` (new)
 - `src/assets/skill-icons/` (new: the 20 image icon files)
@@ -63,7 +63,6 @@ The site opens on a landing page that tells an employer who the site owner is an
 - The routes and content of Portfolio, Links, Contact, the login route and `/backoffice`: each page's own feature specification.
 - The `PeachButton` component and any call-to-action on Home: no source asks for one. The first feature that uses `PeachButton` builds it.
 - Glyph lines: `ai-spec.md` section 5 makes them optional and no source asks for them on Home. The first feature that uses one builds it.
-- Making the "Scroll down" hint clickable: no source asks for a jump.
 - The page title in `index.html` and the favicon: no source ties them to Home.
 - Any Supabase use: Home shows static content only.
 - Translated text and a light theme: the extra-mile features `languages.feature.md` and `light-dark-mode.feature.md`.
@@ -72,7 +71,7 @@ The site opens on a landing page that tells an employer who the site owner is an
 
 - **Exception to `ai-spec.md` section 4 (Allowed Technologies):** this feature adds the `lucide-react` package for the skill icons. Approved by the site owner on 2026-11-06.
 - **Dependencies:** this feature builds on `setup-deploy.feature.md` (the route table in `src/App.jsx`) and `header-footer.feature.md` (the layout Home renders inside, and the variables in `src/index.css`).
-- **Reuse by later features:** `Frame`, `PageSection` and `ScrollHint` take no Home-specific content, because `portfolio-page.feature.md` and other page features reuse them.
+- **Reuse by later features:** `Frame` and `PageSection` take no Home-specific content, because `portfolio-page.feature.md` and other page features reuse them.
 - **Images come from the site owner:** Google Gemini is used outside this repository, so the three image files must exist before `src/pages/Home.jsx` can import them.
 
 ---
@@ -217,7 +216,7 @@ Five dots and two circled arrows sit under the cards at every width. Choosing a 
 - **D-02:** `Home` lives in `src/pages/Home.jsx` and replaces `demoContent` as the element of the existing `Route` at `/` - project-wide spec (section 3); `setup-deploy.feature.md` D-04; `header-footer.feature.md` D-15.
 - **D-03:** The full name is `Jacob Williams` - project-wide spec (section 1); existing code (`src/components/Footer.jsx`).
 - **D-04:** The tagline is `Full-Stack Developer`, shown in spaced-out bold capitals in `--peach` and made capital by CSS, so the text stays as written - site owner decision, 2026-11-06; project-wide spec (section 5: labels).
-- **D-05:** The introduction paragraph was drafted from the site owner's two skill content files and is reviewed with this specification - site owner decision, 2026-11-06.
+- **D-05:** The introduction paragraph is the summary at the top of the site owner's résumé (`public/Jacob-Williams-Resume.pdf`), word for word - site owner decision, 2026-11-09.
 - **D-06:** All 20 technical skills sit in one section, on five cards that are all on the page, one card per group, with their wording unchanged. The exceptions are `Specification & decomposition`, which the site owner asked to combine from two entries, and `Context engineering`, which drops `(CLAUDE.md)` from its name. The order within each card follows section 8 - site owner decisions, 2026-11-06 and 2026-11-07; site owner's content file `home-page-technical-skills.md`.
 - **D-07:** All six recommended soft skills are shown, with their wording unchanged, so the grid is even - site owner's content file `home-page-soft-skills.md`.
 - **D-08:** The name, tagline, paragraph and skill entries live in `src/assets/homeContent.json`, which `Home` imports - portal slides (Slide #7: data comes from static JSON files); project-wide spec (section 3: `src/assets/` holds assets imported by components).
@@ -231,7 +230,7 @@ Five dots and two circled arrows sit under the cards at every width. Choosing a 
 - **D-16:** `PageSection` renders a `<section>` holding a `Frame`, only as tall as its content. A `label` prop names the section for the page tracker, and Home's labels are Introduction, Technical Skills and Soft Skills. An optional `heading` prop renders above the `Frame`, outside the outline. Its content stays in normal flow - site owner decision, 2026-11-07; project-wide spec (section 5: page sections, Frame panel).
 - **D-17:** `PageSection` has 16px of padding above and below, so neighbouring panels sit 32px apart - site owner decision, 2026-11-07.
 - **D-18:** `Frame` measures its own size with a `ResizeObserver` and draws its outline in pixels, because stretching a fixed drawing would bend the 45° corners on sections of different heights - project-wide spec (section 5: Frame panel).
-- **D-19:** `ScrollHint` is plain text reading `Scroll down` by default with `aria-hidden="true"`, not a link or a button, shown at the end of the Intro section. It is decorative, and screen reader users do not need it - project-wide spec (section 5: page sections).
+- **D-19:** `ScrollHint` is plain pulsing text with `aria-hidden="true"`, not a link or a button, showing the content it is given. The carousel's "Swipe" hint (D-25) uses it. It is decorative, and screen reader users do not need it. The page shows no "Scroll down" text - site owner decision, 2026-11-09.
 - **D-20:** The three images are generated with Google Gemini by the site owner and saved as widescreen PNG files, 1400px wide, in `src/assets/`. They use a dark sci-fi look with gold and peach light accents, and contain no text, logos or franchise material - site owner decision, 2026-11-06; project-wide spec (section 5: no franchise material).
 - **D-21:** Each section's image sits behind its content as a background: `PageSection` passes it to `Frame`, which fills the panel without stretching, cuts the image to the panel's outline and shows it at 30% opacity. It stays an `<img>` so it keeps its alt text. Technical Skills has the heading and title list at the left and the cards at the right. When the two columns do not fit side by side, the cards move below. Soft Skills has its heading at the top and its grid below it - site owner decision, 2026-11-07 (one image per section); project-wide spec (section 5: Frame panel).
 - **D-22:** The generating tool is documented in a code comment beside each image import, the way the logo's tool is documented - business doc (The Public Pages); existing code (`src/components/Header.jsx`).
@@ -239,10 +238,10 @@ Five dots and two circled arrows sit under the cards at every width. Choosing a 
 - **D-24:** `SkillCarousel` shows the five titles as a vertical ARIA tab list and the five cards as its panels. Titles are buttons, because they change content in place and `href="#id"` links are banned under `HashRouter`. The first card is in focus on load. Clicking a title or a card brings that card into focus, and the arrow keys move between titles and wrap around. On a touch screen the cards follow the finger live as it drags left or right, and the title changes as a new card becomes the nearest. On release, the nearest card glides into focus. A drag stops at the first and last card, with a slight give that springs back. Each title shows its number and name. The open title carries a `--peach` bar and the card in focus a `--peach` border, because `--peach` marks the current state - site owner decision, 2026-11-06; site owner's wireframes (`home-page-card-layout`); project-wide spec (section 5: current-state marks; section 7: in-page jumps).
 - **D-25:** The card in focus sits in the centre, in front. The other four sit smaller and dimmer behind it, two on each side, so all five stay in view. Cards have rounded corners and a soft shadow, and drift slowly up and down so they look like they float. The section heading sits above the titles, at the top left of the panel, level with the Soft Skills heading. Titles have the same see-through fill as the Soft Skills cards at rest, and the open title has an 85% fill, the faint glow of the Soft Skills hover, peach text and a 2px peach bar on its left edge. Cards move with a 0.4s CSS transition, and the transition and the drift are switched off under reduced motion. When the titles and the carousel do not fit side by side, the titles move above the carousel. At 760px or less the card in focus fills most of the width and its neighbours show at the edges. The titles are hidden from sight, so the heading sits directly above the cards, and visitors drag between cards. The cards sit in a line, not a loop: the first card has none to its left and the last has none to its right. A pulsing `ScrollHint` reading "Swipe" sits above the cards, with three arrows on each side that fade going outward from the word, at 100%, 55% and 25% opacity (site owner decision, 2026-11-08), and a side's arrows disappear when there is no card in its direction. The titles stay in the page for keyboard and screen reader users - site owner decision, 2026-11-07; site owner's carousel examples (`home-page-carousel-examples`); project-wide spec (section 5: motion, breakpoint; section 7: responsive behaviour).
 - **D-26:** Each technical group has a one-sentence summary, shown on its card above its entries. Claude drafted the sentences from the skills on each card, and the site owner reviewed them - site owner decision, 2026-11-06.
-- **D-27:** Headings use Orbitron Medium, including the footer name, through the `--heading` variable. Card titles use Orbitron Bold: the `h3` on each Technical Skills card and the skill name on each Soft Skills card. Each card's summary uses Tomorrow Light. Skill names in Technical Skills and all descriptions use Tomorrow Regular. The TTF files are used unconverted, because Orbitron's licence reserves its name for unmodified copies - site owner decision, 2026-11-06; project-wide spec (section 5: fonts).
+- **D-27:** The `h1` and the footer name use Montserrat Underline Medium through the `--display` variable, and `h2` headings use Federo through the `--heading` variable. Card titles use Marcellus SC Bold through the `--card-title` variable: the `h3` on each Technical Skills card and the skill name on each Soft Skills card. Each card's summary, the skill names in Technical Skills and all descriptions use Federo through the `--detail` variable. The TTF files are used unconverted, because Marcellus SC's licence reserves its name for unmodified copies - site owner decision, 2026-11-09; project-wide spec (section 5: fonts).
 - **D-28:** Soft Skills is a grid of six cards with a see-through fill at rest, at 70% of the carousel card's fill, and they drift slowly up and down, out of step, with the same float as the carousel cards. On hover, a card lifts 4px and moves up to about 4px toward the cursor, and its fill rises to 85%, with a hairline peach border and a faint peach glow. It resets when the cursor leaves. The fill, border and glow sit on a layer that fades in, so only `transform` and `opacity` change. Exceptions to `ai-spec.md` section 5 (motion): the hover takes 0.3s ease-out instead of 0.2s, and `SkillGrid` uses JavaScript to read the cursor position, while CSS still does the moving. The hover is off on touch devices. Under reduced motion the fill, border and glow stay, and the drift and all movement are off - site owner decision, 2026-11-07.
 - **D-29:** The Technical Skills cards use the Soft Skills hover from D-28, with the same exceptions: the lift toward the cursor, the hairline peach border and the faint peach glow, off on touch devices, and with the movement off under reduced motion. Their fill stays solid, because a see-through card would show the cards behind it. The hairline replaces the card's own border while it is hovered - site owner decision, 2026-11-07.
-- **D-30:** The Intro section shows the site owner's photo, `src/assets/profile-photo.jpg`, a square crop of their headshot. Above 760px it sits to the right of the text and the "Scroll down" hint, with the same gap to the panel's top, right and bottom edges, and it crops to fill the height when the text is taller than it. At 760px or less it sits above the name. It has rounded corners, a hairline peach outline and a faint peach glow, to match the cards. Its alt text is "Portrait of" followed by the site owner's name. It is a real photo, so FR-12 to FR-15 do not apply to it - site owner decision, 2026-11-07.
+- **D-30:** The Intro section shows the site owner's photo, `src/assets/profile-photo.jpg`, a square crop of their headshot. Above 760px it sits to the right of the text, with the same gap to the panel's top, right and bottom edges, and it crops to fill the height when the text is taller than it. At 760px or less it sits above the name. It has rounded corners, a hairline peach outline and a faint peach glow, to match the cards. Its alt text is "Portrait of" followed by the site owner's name. It is a real photo, so FR-12 to FR-15 do not apply to it - site owner decision, 2026-11-07.
 - **D-31:** `CarouselTracker` sits in a second row of the carousel stage, centred under the cards, at every width. Its controls follow the site owner's design reference: a left and a right arrow, each in a 44px circle with a 1px `--line` outline, and between them five 6px dots, the current one white inside a thin ring. The dots and arrows are buttons with their own labels, the current dot has `aria-current`, and the arrows wrap past the first and last card the same way the arrow keys do - site owner decisions, 2026-11-08 (reference image, shown on phones too); project-wide spec (section 5: hover and focus, breakpoint).
 
 ---
@@ -259,7 +258,7 @@ Order: the images and the package come first because `Home` and `skillIcons.js` 
 6. **T-06 (FR-03, FR-04, FR-05, FR-06, FR-07, FR-10, D-05 to D-08, D-11, D-26):** Create the content file with the shape and the text in section 8. - `src/assets/homeContent.json`
 7. **T-07 (FR-09, D-10, D-11):** Create the maps from icon name to `lucide-react` component and to image file for the 26 icons in section 8. - `src/lib/skillIcons.js`, `src/assets/skill-icons/`
 8. **T-08 (FR-06, FR-08, FR-09, FR-10, D-12, D-13, D-14, D-24, D-25, D-28, D-29):** Create `SkillGrid`: a list of entries built from the skills it receives, each with its icon, name and description, using the columns in D-14 and the hover from D-28. Create `SkillCarousel`: the titles and cards from D-24 and D-25, showing each group's entries through `SkillGrid`. - `src/components/SkillGrid.jsx`, `src/components/SkillGrid.css`, `src/components/SkillCarousel.jsx`, `src/components/SkillCarousel.css`
-9. **T-09 (FR-02 to FR-08, FR-11 to FR-15, D-01, D-03, D-04, D-15, D-21, D-22, D-30):** Create `Home`: three `PageSection`s with the content from `homeContent.json`, `SkillCarousel` for the technical groups, `SkillGrid` for the soft skills, `ScrollHint` at the end of the Intro section, and the three images with the alt text from section 8 and a comment naming Google Gemini beside each import. - `src/pages/Home.jsx`, `src/pages/Home.css`
+9. **T-09 (FR-02 to FR-08, FR-11 to FR-15, D-01, D-03, D-04, D-15, D-21, D-22, D-30):** Create `Home`: three `PageSection`s with the content from `homeContent.json`, `SkillCarousel` for the technical groups, `SkillGrid` for the soft skills, and the three images with the alt text from section 8 and a comment naming Google Gemini beside each import. - `src/pages/Home.jsx`, `src/pages/Home.css`
 10. **T-10 (FR-01, D-02):** In `src/App.jsx`, render `Home` as the element of the `/` route, and remove `demoContent`, the counter state, the demo imports and the `App.css` import. - `src/App.jsx`
 11. **T-11 (FR-01, D-23):** Delete the demo files listed in section 2, and remove the variables and rules in D-23. - `src/App.css`, `src/assets/hero.png`, `src/assets/react.svg`, `src/assets/vite.svg`, `public/icons.svg`, `src/index.css`
 12. **T-12 (all FRs):** Verify the feature against section 11 at phone and desktop widths. - no file change
@@ -272,7 +271,7 @@ Order: the images and the package come first because `Home` and `skillIcons.js` 
 **Main flow**
 
 1. A visitor opens the site's root URL.
-2. The Intro section shows the name, tagline, paragraph, photo, background image and "Scroll down" hint.
+2. The Intro section shows the name, tagline, paragraph, photo and background image.
 3. The visitor scrolls down; the Technical Skills section shows its image, five titles and five cards, with the first card in focus. The visitor clicks a title or a card to bring another card into focus.
 4. The visitor scrolls on; the Soft Skills section shows its image and six entries, followed by the footer. Hovering an entry shows it as a card.
 
@@ -293,7 +292,7 @@ N/A
 - `Home` (`src/pages/Home.jsx`) - new: composes the three sections from the content file.
 - `Frame` (`src/components/Frame.jsx`) - new: the outlined panel from `ai-spec.md` section 5, reusable by other pages.
 - `PageSection` (`src/components/PageSection.jsx`) - new: the section holding a `Frame`, reusable by other pages.
-- `ScrollHint` (`src/components/ScrollHint.jsx`) - new: the "Scroll down" hint, reusable by other pages.
+- `ScrollHint` (`src/components/ScrollHint.jsx`) - new: the pulsing text behind the carousel's "Swipe" hint.
 - `SkillGrid` (`src/components/SkillGrid.jsx`) - new: the grid of skill entries used by both skill sections.
 - `SkillCarousel` (`src/components/SkillCarousel.jsx`) - new: the title list and five cards in Technical Skills.
 - `CarouselTracker` (`src/components/CarouselTracker.jsx`) - new: the dots and circled arrows under the carousel.
@@ -325,7 +324,7 @@ N/A
 
 - Name: Jacob Williams
 - Tagline: Full-Stack Developer
-- Paragraph: I'm a full-stack developer who builds across the front end, the back end and mobile with React, Node.js, Java and React Native. I write a spec before I write code, and every change, AI-assisted or not, gets tested and reviewed before it ships.
+- Paragraph: Full stack developer and graduate of CodeBoxx Academy’s AI Native Full Stack Development program who builds web, API and mobile applications with React, Node.js, Java Spring Boot and React Native. Pairs that technical range with 8.5 years of sales experience, including building the internal system behind a wholesale startup’s $5.1M launch. Skilled at turning business needs into clear specs and working software, and at explaining technical decisions in plain language. Recognized for the emotional intelligence and empathic curiosity that build rapport with teammates and users, along with a proven ability to adapt quickly, drive results and exceed targets.
 
 **Technical Skills**
 
