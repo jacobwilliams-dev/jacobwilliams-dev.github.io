@@ -1,0 +1,97 @@
+/* skill-float lives in SkillGrid.css: keyframe names are global, and that file is always bundled.
+   isolate: keeps the -1 hover area below inside the card */
+.project-entry {
+  position: relative;
+  isolation: isolate;
+  background-color: color-mix(in srgb, var(--card-fill) 70%, transparent);
+  border-radius: 20px;
+  animation: skill-float 3.5s ease-in-out infinite alternate;
+  animation-delay: calc(var(--index) * -0.7s);
+  transition:
+    transform 0.3s ease-out,
+    background-color 0.3s ease-out;
+}
+
+/* Above the content, or the image would cover the hairline. pointer-events: the layer never blocks the card */
+.project-entry::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: '';
+  border-radius: inherit;
+  box-shadow: var(--card-ring);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+}
+
+/* A fixed ratio, so every card's text starts at the same height. cover crops instead of stretching */
+.project-entry-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+}
+
+.project-entry-body {
+  padding: 24px;
+}
+
+.project-entry-body h3 {
+  margin: 0 0 12px;
+  color: var(--text);
+  font: 700 16px/1.2 var(--card-title);
+}
+
+.project-entry-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.project-entry-tags li {
+  padding: 2px 10px;
+  color: var(--peach);
+  font: 400 12px/1.6 var(--detail);
+  border: 1px solid var(--peach);
+  border-radius: 10px;
+}
+
+.project-entry-description {
+  font-family: var(--detail);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-entry:hover {
+    background-color: color-mix(in srgb, var(--card-fill) 85%, transparent);
+  }
+
+  .project-entry:hover::after {
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  /* transform adds to the float, which uses translate */
+  .project-entry:hover {
+    transform: translate(var(--magnet-x, 0), calc(var(--magnet-y, 0px) - 4px));
+  }
+
+  /* A wider hover area, so the lift cannot pull the card out from under the cursor and flicker */
+  .project-entry:hover::before {
+    position: absolute;
+    inset: -8px;
+    z-index: -1;
+    content: '';
+  }
+}
+
+@media (max-width: 760px) {
+  .project-entry-body {
+    padding: 16px;
+  }
+}

@@ -1,0 +1,16 @@
+.contact-heading {
+  margin: 0;
+}
+
+.contact-form {
+  max-width: 640px;
+}
+
+/* Cancels the form's 24px gap, so the empty region adds no space under the button */
+.contact-status:empty {
+  margin-top: -24px;
+}
+
+.contact-success {
+  color: var(--success);
+}

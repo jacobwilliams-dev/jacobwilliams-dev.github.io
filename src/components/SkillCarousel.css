@@ -1,0 +1,200 @@
+/* flex-wrap moves the stage under the titles when both cannot share a row */
+.skill-carousel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+/* flex-start: puts the heading at the top of the panel, level with the Soft Skills heading */
+.skill-side {
+  flex: 1 1 330px;
+  align-self: flex-start;
+}
+
+.skill-heading {
+  margin-bottom: 24px;
+}
+
+.skill-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Phones only: a mouse has the titles */
+.skill-swipe-hint {
+  display: none;
+}
+
+.skill-title {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 16px 14px;
+  color: var(--text-muted);
+  background: color-mix(in srgb, var(--card-fill) 70%, transparent);
+  border: 0;
+  border-left: 2px solid transparent;
+  border-radius: 10px;
+  font: 700 14px/1.2 var(--label);
+  letter-spacing: 1.8px;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.skill-title[aria-selected='true'] {
+  color: var(--peach);
+  background: color-mix(in srgb, var(--card-fill) 85%, transparent);
+  border-left-color: var(--peach);
+  box-shadow: var(--card-soft-glow);
+}
+
+.skill-title:hover {
+  color: var(--peach);
+}
+
+.skill-title-number {
+  color: var(--peach);
+  font-size: 12px;
+}
+
+.skill-title-name {
+  flex: 1;
+}
+
+/* The large grow value gives spare width to the stage, not the titles */
+.skill-stage {
+  display: grid;
+  flex: 999 1 680px;
+  justify-items: center;
+  min-width: 0;
+  /* Leaves sideways moves to the drag code, and up and down to the page */
+  touch-action: pan-y;
+}
+
+/* One shared grid cell stacks the cards in normal flow, and grows to the tallest.
+   brightness, not opacity: a see-through card would show the text behind it.
+   Above 760px the cards sit in a loop, so all five stay in view */
+.skill-card {
+  --offset: var(--loop-offset);
+  --distance: var(--loop-distance);
+
+  box-sizing: border-box;
+  grid-area: 1 / 1;
+  z-index: calc(5 - var(--distance));
+  width: min(440px, 54%);
+  padding: 24px;
+  background: var(--card-fill);
+  border: 1px solid color-mix(in srgb, var(--line) 40%, transparent);
+  border-radius: 20px;
+  box-shadow: var(--card-shadow);
+  filter: brightness(calc(1 - var(--distance) * 0.25));
+  /* --lift-x and --lift-y come from the hover in SkillGrid.css */
+  transform: translateX(calc(var(--offset) * 28%))
+    translate(var(--lift-x, 0), var(--lift-y, 0))
+    scale(calc(1 - var(--distance) * 0.14));
+  cursor: pointer;
+  transition:
+    transform 0.4s,
+    filter 0.4s,
+    border-color 0.2s;
+}
+
+.skill-card[aria-hidden='false'] {
+  border-color: var(--peach);
+  box-shadow: var(--card-shadow), var(--card-glow);
+  cursor: default;
+}
+
+/* The cards follow the finger directly, and the transition only runs on release */
+.skill-stage-dragging .skill-card {
+  transition: none;
+}
+
+/* The global focus rule covers links and buttons only */
+.skill-card:focus-visible {
+  outline: 2px solid var(--peach);
+  outline-offset: 6px;
+}
+
+.skill-card-title {
+  margin: 0 0 12px;
+  color: var(--text);
+  font: 700 14px/1.2 var(--card-title);
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.skill-card-summary {
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  color: var(--text);
+  font-family: var(--detail);
+  font-weight: 300;
+  border-bottom: 1px solid var(--line);
+}
+
+/* clip, not hidden: hidden would also cut the focus outline above and below */
+@media (max-width: 760px) {
+  .skill-swipe-hint {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+    color: var(--peach);
+  }
+
+  .skill-swipe-arrows {
+    display: flex;
+  }
+
+  /* row-reverse: the first arrow sits nearest the word on both sides, so one fade rule fits both */
+  .skill-swipe-left {
+    flex-direction: row-reverse;
+  }
+
+  /* Negative margin: each icon has clear space around its drawing, which spaces the arrows too far apart */
+  .skill-swipe-hint svg {
+    width: 16px;
+    height: 16px;
+    margin-inline: -3px;
+  }
+
+  .skill-swipe-arrows svg:nth-child(2) {
+    opacity: 0.55;
+  }
+
+  .skill-swipe-arrows svg:nth-child(3) {
+    opacity: 0.25;
+  }
+
+  /* visibility, not display: the word stays centred when an arrow disappears */
+  .skill-swipe-end {
+    visibility: hidden;
+  }
+
+  /* Hidden from sight only: keyboard and screen reader users still need the titles */
+  .skill-titles {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .skill-stage {
+    overflow-x: clip;
+  }
+
+  /* A line, not a loop: the first and last cards are the ends */
+  .skill-card {
+    --offset: var(--line-offset);
+    --distance: var(--line-distance);
+
+    width: 86%;
+    padding: 16px;
+  }
+}

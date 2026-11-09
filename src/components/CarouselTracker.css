@@ -1,0 +1,92 @@
+/* Row 2 of the stage's grid: the cards all share row 1 */
+.carousel-tracker {
+  display: flex;
+  grid-area: 2 / 1;
+  gap: 32px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.carousel-dots {
+  display: flex;
+}
+
+.carousel-arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--text-muted);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    outline-color 0.2s,
+    border-color 0.2s;
+}
+
+.carousel-arrow:hover {
+  border-color: var(--peach);
+}
+
+.carousel-arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* The button is wider than its dot, so it is easy to tap */
+.carousel-dot {
+  position: relative;
+  width: 24px;
+  height: 32px;
+  padding: 0;
+  color: var(--text-faint);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.carousel-dot[aria-current='true'] {
+  color: var(--white);
+}
+
+.carousel-dot[aria-current='true']:hover {
+  color: var(--peach);
+}
+
+.carousel-dot::before,
+.carousel-dot::after {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  margin: auto;
+  content: '';
+  border-radius: 50%;
+}
+
+.carousel-dot::before {
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+}
+
+.carousel-dot::after {
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--line);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.carousel-dot[aria-current='true']::after {
+  opacity: 1;
+}
+
+@media (max-width: 760px) {
+  .carousel-tracker {
+    gap: 12px;
+  }
+}

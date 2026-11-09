@@ -1,0 +1,10 @@
+.login-heading {
+  margin: 0;
+}
+
+/* Narrower than the Contact form: it only holds two short fields */
+.login-form {
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
+}

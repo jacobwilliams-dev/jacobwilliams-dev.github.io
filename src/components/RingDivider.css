@@ -1,0 +1,29 @@
+/* Negative margin: the line reaches the panel's outline, past the Frame's padding of 48px */
+.ring-divider {
+  --frame-padding: 48px;
+
+  position: relative;
+  height: 1px;
+  margin: 24px calc(var(--frame-padding) * -1);
+  background: color-mix(in srgb, var(--peach) 45%, transparent);
+}
+
+/* The ink hides the line inside the ring; the ring lines up with the text */
+.ring-divider::after {
+  position: absolute;
+  top: -7px;
+  left: var(--frame-padding);
+  box-sizing: border-box;
+  width: 15px;
+  height: 15px;
+  content: '';
+  background: radial-gradient(circle, var(--white) 1.5px, var(--ink) 2px);
+  border: 1px solid var(--peach);
+  border-radius: 50%;
+}
+
+@media (max-width: 760px) {
+  .ring-divider {
+    --frame-padding: 20px;
+  }
+}

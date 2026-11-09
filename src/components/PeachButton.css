@@ -1,0 +1,114 @@
+/* filter, not box-shadow: clip-path on the layers inside would cut a box-shadow off.
+   isolate: keeps the -1 layers inside the link */
+.peach-button {
+  --peach-glow: drop-shadow(0 0 10px color-mix(in srgb, var(--peach) 45%, transparent));
+
+  position: relative;
+  isolation: isolate;
+  display: inline-block;
+  padding: 4px;
+  color: var(--peach);
+  font: 700 12px/1 var(--label);
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    color 0.2s,
+    outline-color 0.2s,
+    transform 0.2s,
+    filter 0.2s;
+}
+
+button.peach-button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* pointer-events: a pointer that cannot reach the button cannot trigger the hover rules */
+.peach-button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.peach-button::before,
+.peach-button::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+}
+
+/* Each layer sits further in, so its cut is smaller to keep the diagonals parallel */
+.peach-button::before,
+.peach-button::after,
+.peach-button-gap,
+.peach-button-label {
+  clip-path: polygon(
+    var(--cut) 0,
+    100% 0,
+    100% calc(100% - var(--cut)),
+    calc(100% - var(--cut)) 100%,
+    0 100%,
+    0 var(--cut)
+  );
+}
+
+.peach-button::before {
+  --cut: 14px;
+
+  inset: 0;
+  background: var(--peach);
+}
+
+/* Covers the peach layer except its outer 1px, which leaves the outline at rest */
+.peach-button-gap {
+  --cut: 13.4px;
+
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  background: var(--ink);
+}
+
+.peach-button::after {
+  --cut: 12px;
+
+  inset: 3px;
+  background: var(--peach);
+}
+
+/* The label's fill covers the middle of the layer behind it, leaving a 1px line */
+.peach-button-label {
+  --cut: 11.5px;
+
+  display: block;
+  padding: 14px 24px;
+  background: var(--ink);
+}
+
+.peach-button::after,
+.peach-button-gap,
+.peach-button-label {
+  transition: background-color 0.2s;
+}
+
+/* Keeps the label white: the global a:hover would turn it peach on a peach fill */
+.peach-button:hover {
+  color: var(--text);
+  filter: brightness(1.1) var(--peach-glow);
+}
+
+.peach-button:hover::after {
+  background: var(--line);
+}
+
+.peach-button:hover .peach-button-gap,
+.peach-button:hover .peach-button-label {
+  background: var(--peach);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .peach-button:hover {
+    transform: translateY(-2px);
+  }
+}

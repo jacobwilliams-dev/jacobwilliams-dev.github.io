@@ -1,0 +1,44 @@
+[
+  {
+    "title": "GitHub",
+    "description": "The code behind my work. Browse my repositories to see how I structure projects and build features.",
+    "url": "https://github.com/jacobwilliams-dev",
+    "imageKey": "github",
+    "imageAlt": "The GitHub cat logo drawn as a glowing peach outline inside a circular sci-fi frame on a starry background."
+  },
+  {
+    "title": "CodeBoxx",
+    "description": "The AI Native Full Stack Development Program where I made the move into software. It taught me the skills behind every project in my portfolio, and this site too.",
+    "url": "https://codeboxx.ai/",
+    "imageKey": "codeboxx",
+    "imageAlt": "The CodeBoxx logo drawn as a glowing peach outline inside a circular sci-fi frame on a starry background."
+  },
+  {
+    "title": "YouTube",
+    "description": "Videos where I explain my code, talk through how I solve coding challenges and demo the projects I build.",
+    "url": "https://www.youtube.com/channel/UCCS6YAQ6f83lCYgV8m8m5Og",
+    "imageKey": "youtube",
+    "imageAlt": "The YouTube play-button logo drawn as a glowing peach outline inside a circular sci-fi frame on a starry background."
+  },
+  {
+    "title": "LinkedIn",
+    "description": "Connect with me professionally. My full career story is here, from sales and real estate to software development.",
+    "url": "https://www.linkedin.com/in/jacob-williams-profile/",
+    "imageKey": "linkedin",
+    "imageAlt": "The LinkedIn logo drawn as a glowing peach outline inside a circular sci-fi frame on a starry background."
+  },
+  {
+    "title": "React",
+    "description": "The library I built this site with. The official docs cover components, hooks and how to structure an interface.",
+    "url": "https://react.dev/",
+    "imageKey": "react",
+    "imageAlt": "The React atom logo drawn as a glowing peach outline inside a circular sci-fi frame on a starry background."
+  },
+  {
+    "title": "Supabase",
+    "description": "The backend behind this site. It stores the messages from my contact form and handles the admin login.",
+    "url": "https://supabase.com/docs",
+    "imageKey": "supabase",
+    "imageAlt": "The Supabase lightning-bolt logo drawn as a glowing peach outline inside a circular sci-fi frame on a starry background."
+  }
+]

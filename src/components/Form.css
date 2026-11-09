@@ -1,0 +1,51 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field label {
+  color: var(--text);
+  font: 700 12px/1 var(--label);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* border-box: keeps the padding and border inside the field's full width */
+.form-field input,
+.form-field textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  color: var(--text);
+  background: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  font: inherit;
+  transition: outline-color 0.2s;
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+
+.form-field input:focus-visible,
+.form-field textarea:focus-visible {
+  outline: 2px solid var(--peach);
+  outline-offset: 6px;
+}
+
+/* flex-start: a flex column would otherwise stretch the button to the form's width */
+.form .peach-button {
+  align-self: flex-start;
+}
+
+.form-error {
+  color: var(--error);
+}
