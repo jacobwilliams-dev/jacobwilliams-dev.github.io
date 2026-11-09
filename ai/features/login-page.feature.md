@@ -22,7 +22,8 @@ The site owner gets a private way into the admin area: a login page that no visi
 
 ### In Scope
 
-- The login page at `/login`, reached by typing its URL.
+- The login page at `/login`, reached by typing its URL or with the secret keyboard shortcut.
+- The secret keyboard shortcut: holding Option and pressing Left, Up, Right, Down.
 - The email input, password input and submit button.
 - Signing in through Supabase Auth.
 - The redirect to `/backoffice` after a successful login.
@@ -32,14 +33,15 @@ The site owner gets a private way into the admin area: a login page that no visi
 **Files this feature may change**
 
 - `src/pages/Login.jsx`, `src/pages/Login.css` (new)
-- `src/App.jsx` (existing, shared with other features; adding the `/login` route approved by the site owner on 2026-11-09)
+- `src/components/SecretLoginShortcut.jsx` (new)
+- `src/App.jsx` (existing, shared with other features; adding the `/login` route and the shortcut component approved by the site owner on 2026-11-09)
 - `src/lib/validation.js` (new)
-- `src/pages/Contact.jsx` (existing, owned by `contact-page.feature.md`; moving `EMAIL_FORMAT` to `src/lib/validation.js` approved by the site owner on 2026-11-09)
+- `src/components/Form.css` (new)
+- `src/pages/Contact.jsx`, `src/pages/Contact.css` (existing, owned by `contact-page.feature.md`; moving `EMAIL_FORMAT` to `src/lib/validation.js` and the shared form styles to `src/components/Form.css` approved by the site owner on 2026-11-09)
 
 ### Out of Scope
 
 - The `/backoffice` route, its authentication check and its logout control (`back-office.feature.md`).
-- A secret keyboard event that opens the login route. The site owner chose not to build this optional entry point.
 - Registration, sign-up and password-reset screens, and any link to them.
 - Supabase project setup and the admin account (`setup-deploy.feature.md`).
 - Changes to `Layout`, `Header` or `Footer`. The header and footer already link only to public pages.
@@ -65,13 +67,13 @@ Typing the `/login` route into the address bar opens the login page.
 **Expected Result:**
 `https://jacobwilliams-dev.github.io/#/login` displays the login form to a visitor with no session.
 
-### FR-02 — Typing the URL is the only way in
+### FR-02 — No visible way in
 
 **Requirement:**
-This feature adds no link, button or keyboard event that leads to the login page.
+This feature adds no link or button that leads to the login page. The only keyboard route is the sequence in FR-12.
 
 **Expected Result:**
-The header, footer and mobile navigation offer no way to reach `/login`, and no key press opens it.
+The header, footer and mobile navigation offer no way to reach `/login`, and no key press other than the FR-12 sequence opens it.
 
 ### FR-03 — Email input
 
@@ -145,12 +147,20 @@ A failed login produces a visually distinct error message.
 **Expected Result:**
 An error message in the `--error` colour appears on the login page, and the visitor stays on `/login`.
 
+### FR-12 — Secret keyboard shortcut
+
+**Requirement:**
+Holding Option and pressing Left, Up, Right, Down, in that order, opens the login page from any page. The shortcut is written in the submission summary so an evaluator can get in.
+
+**Expected Result:**
+The address changes to `#/login` when the fourth key is pressed. A wrong key, releasing Option, or pressing the keys inside a text field does not open it.
+
 ---
 
 ## 4. Decisions Already Taken
 
 - **D-01:** `Login` lives in `src/pages/Login.jsx` and is the element of a new `Route` at `/login` in `src/App.jsx`, inside the existing `Layout` - project-wide spec (section 3); site owner decision, 2026-11-09 (route path).
-- **D-02:** The login route is reached by typing its URL only, with no secret keyboard event - business doc (Secure Administration); site owner decision, 2026-11-09.
+- **D-02:** The login route is reached by typing its URL or with the secret keyboard shortcut in FR-12, and by no link or button - business doc (Secure Administration); site owner decision, 2026-11-09.
 - **D-03:** `/login` stays out of `NAV_LINKS`. `Header` shows no page name for it, and `Backdrop` uses Home's angle, because both already handle a path outside that list - existing code (`src/components/Layout.jsx`, `src/components/Header.jsx`, `src/components/Backdrop.jsx`).
 - **D-04:** The page is one `PageSection` with the label `Login` and an `h1` reading `Admin Login`. `PageTracker` shows nothing, because the page has fewer than two sections - existing code (`src/components/PageSection.jsx`, `src/components/PageTracker.jsx`); business doc (clean layout that makes its purpose obvious).
 - **D-05:** The fields are one centred column, with the visible labels `Email` and `Password`, and a `PeachButton` labelled `Log In` - business doc (Secure Administration); project-wide spec (section 5, Peach button).
@@ -161,21 +171,24 @@ An error message in the `--error` colour appears on the login page, and the visi
 - **D-10:** The session check is `supabase.auth.getSession()` when the page loads - business doc (someone who already holds a valid session is sent straight through); existing code (`@supabase/supabase-js`).
 - **D-11:** Session persistence needs no extra code or client option. `createClient()` in `src/lib/supabaseClient.js` passes no auth options, so the library default `persistSession: true` applies - existing code (`src/lib/supabaseClient.js`, `@supabase/supabase-js`).
 - **D-12:** Both redirects replace the current history entry. Otherwise, pressing Back would return to `/login` and be sent forward again at once - business doc (redirect and straight-through behaviour).
-- **D-13:** `Login.css` gives the labels, inputs and focus outline the same values as the Contact form, under its own `login-` class names. `Contact.css` is left alone, because restyling finished code is outside this feature - existing code (`src/pages/Contact.css`); project-wide spec (section 5, Maintainability Rules).
+- **D-13:** The form layout, labels, inputs, focus outline and error colour live in `src/components/Form.css`, under the classes `form`, `form-field` and `form-error`, and both the Login and Contact pages use them. The values move unchanged from `Contact.css`. Each page's stylesheet keeps only its own form width - site owner decision, 2026-11-09; existing code (`src/pages/Contact.css`); project-wide spec (section 5, Maintainability Rules: reuse an existing pattern).
 - **D-14:** When `supabase` is `null`, a plain paragraph replaces the form, as on the Contact page - existing code (`src/pages/Contact.jsx`).
+- **D-15:** The shortcut uses Option, held for all four keys, not Cmd, because Cmd+Left is the browser's Back shortcut on a Mac. It is a Mac shortcut: on Windows, Alt+Left is Back. It cancels no browser behaviour, so visitors' keyboards work as before. A wrong key or releasing Option restarts it, with no time limit, and key presses inside `input` and `textarea` do not count, because Option+arrows moves the cursor there - site owner decision, 2026-11-09.
+- **D-16:** The shortcut lives in `SecretLoginShortcut`, a component that renders nothing, placed inside `HashRouter` in `src/App.jsx`, because `useNavigate` only works inside the router. `Layout` stays unchanged - existing code (`src/App.jsx`, `src/components/Layout.jsx`).
 
 ---
 
 ## 5. Task Breakdown
 
-Order: the shared email check first, because the page imports it. The form comes next, then its behaviour. `src/App.jsx` changes last, so the route only exists once the page is ready.
+Order: the shared email check and form styles first, because the page imports them. The form comes next, then its behaviour. `src/App.jsx` changes last, so the route only exists once the page is ready.
 
-1. **T-01 (FR-07, D-08):** Move `EMAIL_FORMAT` to the new module and import it in the Contact page. - `src/lib/validation.js`, `src/pages/Contact.jsx`
+1. **T-01 (FR-03, FR-07, D-08, D-13):** Move `EMAIL_FORMAT` to the new module and the shared form styles to `Form.css`, and switch the Contact page to both. - `src/lib/validation.js`, `src/components/Form.css`, `src/pages/Contact.jsx`, `src/pages/Contact.css`
 2. **T-02 (FR-03, FR-04, FR-05, FR-06, D-04, D-05, D-06, D-13):** Create the `Login` page with its heading, labelled inputs and submit button, and style it. - `src/pages/Login.jsx`, `src/pages/Login.css`
 3. **T-03 (FR-07, FR-08, FR-11, D-07, D-08, D-09, D-12, D-14):** On submit, validate both fields, then call `supabase.auth.signInWithPassword()`. Redirect on success and show the error on failure. Show the not-configured message when `supabase` is `null`. - `src/pages/Login.jsx`, `src/pages/Login.css`
 4. **T-04 (FR-09, FR-10, D-10, D-11, D-12):** When the page loads, check for a session. Redirect if one exists, and keep the form hidden until the check finishes. - `src/pages/Login.jsx`
 5. **T-05 (FR-01, FR-02, D-01, D-02, D-03):** Import `Login` and add its `Route` at `/login`. - `src/App.jsx`
-6. **T-06 (all FRs):** Verify the feature against section 11. - no file changes
+6. **T-06 (FR-12, D-02, D-15, D-16):** Create `SecretLoginShortcut` and render it inside `HashRouter`. - `src/components/SecretLoginShortcut.jsx`, `src/App.jsx`
+7. **T-07 (all FRs):** Verify the feature against section 11. - no file changes
 
 ---
 
@@ -195,6 +208,7 @@ Order: the shared email check first, because the page imports it. The form comes
 2. Invalid input: a field is empty or the email is badly formatted. The page sends nothing and shows a message under that field.
 3. Failed login: Supabase rejects the credentials or the request fails. The error message appears, the site owner stays on the login page and can submit again.
 4. Supabase not configured: the page shows a message that login is unavailable instead of the form.
+5. Secret shortcut: on any page, the site owner holds Option and presses Left, Up, Right, Down, and the login page opens. The main flow continues from step 2.
 
 ---
 
@@ -208,9 +222,11 @@ Order: the shared email check first, because the page imports it. The form comes
 ### Components
 
 - `Login` (`src/pages/Login.jsx`) - new: the page, its form, the session check and the sign-in call.
-- `App` (`src/App.jsx`) - existing, changed: mounts `Login` at `/login`.
-- `Contact` (`src/pages/Contact.jsx`) - existing, changed: imports `EMAIL_FORMAT` instead of defining it.
+- `SecretLoginShortcut` (`src/components/SecretLoginShortcut.jsx`) - new: listens for the FR-12 key sequence and opens `/login`. Renders nothing.
+- `App` (`src/App.jsx`) - existing, changed: mounts `Login` at `/login` and renders `SecretLoginShortcut`.
+- `Contact` (`src/pages/Contact.jsx`, `src/pages/Contact.css`) - existing, changed: imports `EMAIL_FORMAT` instead of defining it, and uses the classes in `Form.css`.
 - `validation.js` (`src/lib/validation.js`) - new: exports `EMAIL_FORMAT`, used by `Login` and `Contact`.
+- `Form.css` (`src/components/Form.css`) - new: the form styles shared by `Login` and `Contact`.
 - `PeachButton` (`src/components/PeachButton.jsx`) - existing, unchanged: the submit button.
 - `PageSection` (`src/components/PageSection.jsx`) - existing: holds the page heading and the `Frame` around the form.
 - `Layout` (`src/components/Layout.jsx`) - existing, unchanged: renders the page.
@@ -268,13 +284,14 @@ Order: the shared email check first, because the page imports it. The form comes
 
 - While the session check runs, the page section shows no form, so a signed-in admin is never asked to authenticate.
 - An expired session that cannot be refreshed counts as no session, and the form is shown.
+- The secret shortcut pressed with a valid session opens `/login`, which then sends the admin to `/backoffice` (FR-10).
 
 ---
 
 ## 11. Acceptance Criteria
 
 - [ ] Opening `#/login` with no session displays the login form. (FR-01)
-- [ ] The header, footer and open mobile menu contain no link to `/login`, and no key press opens it. (FR-02)
+- [ ] The header, footer and open mobile menu contain no link to `/login`, and no key press other than the secret shortcut opens it. (FR-02)
 - [ ] The email input has a visible label and `type="email"`. (FR-03)
 - [ ] The password input has a visible label and `type="password"`, and typed characters are masked. (FR-04)
 - [ ] The form has a `PeachButton` rendered as `<button type="submit">`, and clicking it submits the form. (FR-05)
@@ -282,9 +299,13 @@ Order: the shared email check first, because the page imports it. The form comes
 - [ ] Submitting valid input sends exactly one request to Supabase Auth, and its body holds the entered email and password. (FR-07)
 - [ ] Submitting an empty email, an empty password or a badly formatted email shows the matching section 9 message in the `--error` colour under that field and sends no request. (FR-07)
 - [ ] The Contact form still shows its badly-formatted-email message after `EMAIL_FORMAT` moves. (FR-07)
+- [ ] The Contact form's width, labels, fields, focus outline, send button and error colour look the same after its styles move to `Form.css`. (FR-03)
 - [ ] With `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` unset, `#/login` shows the login-unavailable message, does not crash and makes no Supabase call. (FR-07)
 - [ ] Submitting the admin credentials changes the address to `#/backoffice`. (FR-08)
 - [ ] After a successful login, refreshing the page and then opening `#/login` ends at `#/backoffice`, with no new sign-in. (FR-09)
 - [ ] Opening `#/login` with a valid session ends at `#/backoffice`, and the form is never displayed. (FR-10)
 - [ ] Submitting a wrong password shows an error message in the `--error` colour, distinct from the form's normal text, and the address stays `#/login`. (FR-11)
 - [ ] After a failed login, a request with correct credentials succeeds from the same form without reloading the page. (FR-11)
+- [ ] Holding Option and pressing Left, Up, Right, Down on a public page changes the address to `#/login`. (FR-12)
+- [ ] The same keys in the wrong order, without Option, with Option released partway, or pressed inside a text field do not open `#/login`. (FR-12)
+- [ ] Cmd+Left still goes Back in the browser. (FR-12)
