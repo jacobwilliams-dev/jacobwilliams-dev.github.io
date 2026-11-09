@@ -3,12 +3,16 @@
     {
       "institution": "CodeBoxx Academy",
       "program": "AI Native Full Stack Development Program",
-      "dates": "Jul 2026 – Nov 2026"
+      "dates": "Jul 2026 – Nov 2026",
+      "logoKey": "codeboxx",
+      "logoAlt": "CodeBoxx Academy logo: an angular hexagon outline mark."
     },
     {
       "institution": "Lenoir-Rhyne University",
       "program": "78 of 120 Credits Completed toward a B.A. in Marketing – Minor in Management",
-      "dates": "Aug 2015 – May 2017"
+      "dates": "Aug 2015 – May 2017",
+      "logoKey": "lenoirRhyne",
+      "logoAlt": "Lenoir-Rhyne University logo: the letters L and R interlocked."
     }
   ],
   "work": [
@@ -16,6 +20,8 @@
       "title": "Business Systems Manager & Wholesale Food Broker",
       "organization": "Fidelis Food Group, LLC",
       "dates": "Feb 2024 – Apr 2026",
+      "logoKey": "fidelis",
+      "logoAlt": "Fidelis Food Group emblem: a geometric shield monogram under a star.",
       "summary": "Recruited as a startup member with a foundational role in establishing Fidelis Food Group, LLC as an operational frozen food wholesaler, later transitioning into a hybrid role as Wholesale Broker & Systems Manager after launch. Led development of the company’s internal technology and integration of parent company’s business systems. Ensured adoption of internal systems by a newly formed 4-person sales team, optimizing operational efficiency.",
       "highlights": [
         "Played a pivotal role in building and positioning the company as a wholesale distributor of frozen #2 further processed proteins and overrun excess inventory commodities during Q2–Q3 and the beginning of Q4, leading up to its launch.",
@@ -28,6 +34,8 @@
       "title": "National Accounts Sales Manager",
       "organization": "Curate Foodservice",
       "dates": "May 2023 – Feb 2024",
+      "logoKey": "curate",
+      "logoAlt": "Curate Foodservice emblem: two crossed knives with the text Est. 1987.",
       "summary": "Managed sales and account growth within the Chartwells Higher Education sector amid enforced non-compete restrictions during ongoing litigation. Strategically shifted focus to approved markets, revitalizing and expanding partnerships by 48.75% while driving revenue and profitability through high-volume outreach and strategic sourcing.",
       "highlights": [
         "Generated $143K in revenue across 8 orders within 3 weeks, driving $26,286 in profit before a non-compete lawsuit, showcasing immediate sales momentum",
@@ -41,6 +49,8 @@
       "title": "Sales Operations Specialist",
       "organization": "Semper Foods, LLC",
       "dates": "Jun 2021 – May 2023",
+      "logoKey": "semper",
+      "logoAlt": "Semper Foods logo: a rooster standing on an arrow.",
       "summary": "Established & managed portfolio of wholesale frozen food customers creating repeat business through relationship-driven sales with a focus on #2 value-added protein products. Played a key role in driving the company’s 115% YoY revenue growth, from $13M in 2021 to $28M in 2022, generating $5.67M in total sales revenue across 184 orders over two years.",
       "highlights": [
         "Ranked 3rd out of 12 sales reps, driving $3.93M in sales revenue in 2022, placing among the top 3 sales producers, who collectively generated 59% of the company’s total revenue. (1st & 2nd rankings were held by two senior reps with 5+ years of industry experience)",
@@ -54,6 +64,8 @@
       "title": "Licensed Real Estate Agent [Florida & Michigan]",
       "organization": "Century 21 ListSmart | Century 21 C. Howard",
       "dates": "Aug 2017 – Jun 2021",
+      "logoKey": "century21",
+      "logoAlt": "Century 21 emblem: a large letter C wrapped around the number 21.",
       "summary": "Top-performing real estate agent representing buyers and sellers in residential and commercial transactions, specializing in seller representation and new development projects. Consistently ranked among the top agents in the office, recognized for sales excellence, client satisfaction, and industry leadership. Recognized for strong negotiation skills, strategic marketing, and delivering seamless transactions while maintaining a high standard of client service.",
       "highlights": [
         "Ranked 2nd in YTD Office Performance at Time of Industry Exit (June 2021) – Outperformed 53 other licensed agents (Managing Broker ranked 1st.)",

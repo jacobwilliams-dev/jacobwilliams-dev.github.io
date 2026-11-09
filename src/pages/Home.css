@@ -3,12 +3,8 @@
   gap: 48px;
 }
 
-/* The hint sits in this column, so the photo can fill the panel's height beside it */
 .home-intro-text {
-  display: flex;
   flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
   min-width: 0;
 }
 

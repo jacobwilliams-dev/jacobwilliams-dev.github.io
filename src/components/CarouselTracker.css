@@ -50,7 +50,7 @@
 }
 
 .carousel-dot[aria-current='true'] {
-  color: var(--text);
+  color: var(--white);
 }
 
 .carousel-dot[aria-current='true']:hover {

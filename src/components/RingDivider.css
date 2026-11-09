@@ -17,7 +17,7 @@
   width: 15px;
   height: 15px;
   content: '';
-  background: radial-gradient(circle, var(--text) 1.5px, var(--ink) 2px);
+  background: radial-gradient(circle, var(--white) 1.5px, var(--ink) 2px);
   border: 1px solid var(--peach);
   border-radius: 50%;
 }

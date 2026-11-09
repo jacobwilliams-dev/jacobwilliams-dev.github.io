@@ -1,5 +1,4 @@
 import PageSection from '../components/PageSection.jsx'
-import ScrollHint from '../components/ScrollHint.jsx'
 import SkillGrid from '../components/SkillGrid.jsx'
 import SkillCarousel from '../components/SkillCarousel.jsx'
 import homeContent from '../assets/homeContent.json'
@@ -29,7 +28,6 @@ function Home() {
               <p className="home-tagline">{intro.tagline}</p>
               <p>{intro.paragraph}</p>
             </div>
-            <ScrollHint />
           </div>
           <img
             className="home-photo"

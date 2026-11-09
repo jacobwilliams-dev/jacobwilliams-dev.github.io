@@ -1,0 +1,104 @@
+/* skill-float lives in SkillGrid.css: keyframe names are global, and that file is always bundled.
+   isolate: keeps the -1 hover area below inside the card */
+.link-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  background-color: color-mix(in srgb, var(--card-fill) 70%, transparent);
+  border-radius: 20px;
+  animation: skill-float 3.5s ease-in-out infinite alternate;
+  animation-delay: calc(var(--index) * -0.7s);
+  transition:
+    transform 0.3s ease-out,
+    background-color 0.3s ease-out;
+}
+
+/* Above the content, or the image would cover the hairline. pointer-events: the layer never blocks the link */
+.link-card::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: '';
+  border-radius: inherit;
+  box-shadow: var(--card-ring);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+}
+
+.link-card-image-link {
+  display: block;
+}
+
+/* A fixed ratio, so every card's text starts at the same height. cover crops instead of stretching */
+.link-card-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+}
+
+.link-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.link-card-body h2 {
+  margin: 0 0 12px;
+  color: var(--text);
+  font: 700 16px/1.2 var(--heading);
+}
+
+.link-card-title {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.link-card-description {
+  font-family: var(--detail);
+}
+
+/* margin auto: pushes the URL to the card's bottom, so URLs in a row line up.
+   anywhere: a URL has no spaces to wrap at, and must stay inside a narrow card */
+.link-card-url {
+  margin-top: auto;
+  padding-top: 12px;
+  color: var(--peach);
+  font: 400 10px/1.6 var(--detail);
+  overflow-wrap: anywhere;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link-card:hover {
+    background-color: color-mix(in srgb, var(--card-fill) 85%, transparent);
+  }
+
+  .link-card:hover::after {
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  /* transform adds to the float, which uses translate */
+  .link-card:hover {
+    transform: translate(var(--magnet-x, 0), calc(var(--magnet-y, 0px) - 4px));
+  }
+
+  /* A wider hover area, so the lift cannot pull the card out from under the cursor and flicker */
+  .link-card:hover::before {
+    position: absolute;
+    inset: -8px;
+    z-index: -1;
+    content: '';
+  }
+}
+
+@media (max-width: 760px) {
+  .link-card-body {
+    padding: 16px;
+  }
+}

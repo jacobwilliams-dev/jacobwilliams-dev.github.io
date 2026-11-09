@@ -105,9 +105,46 @@
   margin-top: 4px;
 }
 
+/* flex-start: the logo is placed from the top of the title, not centred against the text */
+.portfolio-entry-head {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.portfolio-entry-head-text {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Each PNG is trimmed to its visible edges, so this box runs from the top of the title's
+   capitals to the baseline of the dates. The fixed width keeps every title starting at the same place */
+.portfolio-entry-logo {
+  flex: none;
+  width: 76px;
+  height: 60.7px;
+  margin-top: 3.3px;
+  object-fit: contain;
+}
+
+/* The school logos fill their box more than the work logos do, so at equal height they look
+   bigger. scale keeps them centred on the three lines and leaves the layout untouched */
+.portfolio-entry-logo-compact {
+  transform: scale(0.89);
+}
+
 /* Titles wrap on a phone, so the long line has no room */
 @media (max-width: 760px) {
   .portfolio-entry-trail {
     display: none;
+  }
+
+  .portfolio-entry-head {
+    gap: 12px;
+  }
+
+  .portfolio-entry-logo {
+    width: 56px;
+    height: 44px;
   }
 }
