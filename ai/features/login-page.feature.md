@@ -23,7 +23,7 @@ The site owner gets a private way into the admin area: a login page that no visi
 ### In Scope
 
 - The login page at `/login`, reached by typing its URL or with the secret keyboard shortcut.
-- The secret keyboard shortcut: holding Option and pressing Left, Up, Right, Down.
+- The secret keyboard shortcut: holding Alt and Shift (Option and Shift on a Mac) and pressing Left, Up, Right, Down.
 - The email input, password input and submit button.
 - Signing in through Supabase Auth.
 - The redirect to `/backoffice` after a successful login.
@@ -150,10 +150,10 @@ An error message in the `--error` colour appears on the login page, and the visi
 ### FR-12 — Secret keyboard shortcut
 
 **Requirement:**
-Holding Option and pressing Left, Up, Right, Down, in that order, opens the login page from any page. The shortcut is written in the submission summary so an evaluator can get in.
+Holding Alt and Shift (Option and Shift on a Mac) and pressing Left, Up, Right, Down, in that order, opens the login page from any page. The shortcut is written in the submission summary so an evaluator can get in.
 
 **Expected Result:**
-The address changes to `#/login` when the fourth key is pressed. A wrong key, releasing Option, or pressing the keys inside a text field does not open it.
+The address changes to `#/login` when the fourth key is pressed. A wrong key, releasing Alt or Shift, or pressing the keys inside a text field does not open it.
 
 ---
 
@@ -173,7 +173,7 @@ The address changes to `#/login` when the fourth key is pressed. A wrong key, re
 - **D-12:** Both redirects replace the current history entry. Otherwise, pressing Back would return to `/login` and be sent forward again at once - business doc (redirect and straight-through behaviour).
 - **D-13:** The form layout, labels, inputs, focus outline and error colour live in `src/components/Form.css`, under the classes `form`, `form-field` and `form-error`, and both the Login and Contact pages use them. The values move unchanged from `Contact.css`. Each page's stylesheet keeps only its own form width - site owner decision, 2026-11-09; existing code (`src/pages/Contact.css`); project-wide spec (section 5, Maintainability Rules: reuse an existing pattern).
 - **D-14:** When `supabase` is `null`, a plain paragraph replaces the form, as on the Contact page - existing code (`src/pages/Contact.jsx`).
-- **D-15:** The shortcut uses Option, held for all four keys, not Cmd, because Cmd+Left is the browser's Back shortcut on a Mac. It is a Mac shortcut: on Windows, Alt+Left is Back. It cancels no browser behaviour, so visitors' keyboards work as before. A wrong key or releasing Option restarts it, with no time limit, and key presses inside `input` and `textarea` do not count, because Option+arrows moves the cursor there - site owner decision, 2026-11-09.
+- **D-15:** The shortcut uses Alt and Shift (Option and Shift on a Mac), held for all four keys, because Cmd+Left is the browser's Back shortcut on a Mac and Alt+Left is Back on Windows and Linux, while Alt+Shift+Left is Back on none of them. It cancels no browser behaviour, so visitors' keyboards work as before. A wrong key or releasing Alt or Shift restarts it, with no time limit, and key presses inside `input` and `textarea` do not count, because these keys change the text selection there - site owner decision, 2026-11-09.
 - **D-16:** The shortcut lives in `SecretLoginShortcut`, a component that renders nothing, placed inside `HashRouter` in `src/App.jsx`, because `useNavigate` only works inside the router. `Layout` stays unchanged - existing code (`src/App.jsx`, `src/components/Layout.jsx`).
 
 ---
@@ -208,7 +208,7 @@ Order: the shared email check and form styles first, because the page imports th
 2. Invalid input: a field is empty or the email is badly formatted. The page sends nothing and shows a message under that field.
 3. Failed login: Supabase rejects the credentials or the request fails. The error message appears, the site owner stays on the login page and can submit again.
 4. Supabase not configured: the page shows a message that login is unavailable instead of the form.
-5. Secret shortcut: on any page, the site owner holds Option and presses Left, Up, Right, Down, and the login page opens. The main flow continues from step 2.
+5. Secret shortcut: on any page, the site owner holds Alt and Shift (Option and Shift on a Mac) and presses Left, Up, Right, Down, and the login page opens. The main flow continues from step 2.
 
 ---
 
@@ -306,6 +306,6 @@ Order: the shared email check and form styles first, because the page imports th
 - [ ] Opening `#/login` with a valid session ends at `#/backoffice`, and the form is never displayed. (FR-10)
 - [ ] Submitting a wrong password shows an error message in the `--error` colour, distinct from the form's normal text, and the address stays `#/login`. (FR-11)
 - [ ] After a failed login, a request with correct credentials succeeds from the same form without reloading the page. (FR-11)
-- [ ] Holding Option and pressing Left, Up, Right, Down on a public page changes the address to `#/login`. (FR-12)
-- [ ] The same keys in the wrong order, without Option, with Option released partway, or pressed inside a text field do not open `#/login`. (FR-12)
-- [ ] Cmd+Left still goes Back in the browser. (FR-12)
+- [ ] Holding Alt and Shift (Option and Shift on a Mac) and pressing Left, Up, Right, Down on a public page changes the address to `#/login`. (FR-12)
+- [ ] The same keys in the wrong order, with only one of the two modifier keys, with a modifier released partway, or pressed inside a text field do not open `#/login`. (FR-12)
+- [ ] The browser's Back shortcut (Cmd+Left on a Mac, Alt+Left on Windows and Linux) still goes Back. (FR-12)

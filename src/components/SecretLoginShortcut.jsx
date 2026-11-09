@@ -14,11 +14,14 @@ function SecretLoginShortcut() {
     function handleKeyDown(event) {
       // Holding a key repeats it, which must not count as a wrong key
       if (event.repeat) return
-      // Option+arrows moves the cursor inside a text field
+      // These keys change the text selection inside a text field
       if (event.target.matches('input, textarea')) return
 
-      if (!event.altKey || event.key !== SEQUENCE[nextStep]) {
-        nextStep = event.altKey && event.key === SEQUENCE[0] ? 1 : 0
+      // Alt alone would not do: Alt+Left is Back on Windows and Linux
+      const isHeld = event.altKey && event.shiftKey
+
+      if (!isHeld || event.key !== SEQUENCE[nextStep]) {
+        nextStep = isHeld && event.key === SEQUENCE[0] ? 1 : 0
         return
       }
 
