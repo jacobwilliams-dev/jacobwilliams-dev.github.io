@@ -1,0 +1,83 @@
+.backoffice-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.backoffice-heading h1 {
+  margin: 0;
+}
+
+/* currentcolor: the border follows the text colour, including the global hover colour */
+.backoffice-button {
+  padding: 8px 14px;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid currentcolor;
+  border-radius: 0;
+  font: 700 12px/1 var(--label);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.backoffice-button:disabled {
+  color: var(--text-faint);
+  cursor: not-allowed;
+}
+
+.backoffice-action-error {
+  margin-bottom: 16px;
+}
+
+.backoffice-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.backoffice-table th,
+.backoffice-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.backoffice-table th {
+  color: var(--text);
+  font: 700 12px/1.6 var(--label);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* anywhere: a long email address can break, so it never widens the page */
+.backoffice-table td {
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.backoffice-actions {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 760px) {
+  .backoffice-table th,
+  .backoffice-table td {
+    padding: 8px 4px;
+  }
+
+  .backoffice-table th {
+    letter-spacing: 1.5px;
+  }
+
+  .backoffice-actions {
+    flex-direction: column;
+  }
+
+  .backoffice-button {
+    padding: 8px;
+  }
+}

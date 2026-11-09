@@ -1,0 +1,46 @@
+/* No padding or border here: any pixel the dialog owns counts as a click on the backdrop */
+.message-modal {
+  width: min(640px, 100% - 40px);
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.message-modal::backdrop {
+  background: color-mix(in srgb, var(--bg) 75%, transparent);
+}
+
+.message-modal-panel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: calc(100svh - 64px);
+  padding: 32px;
+  color: var(--text);
+  background: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.message-modal-panel h2,
+.message-modal-detail {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.message-modal-detail {
+  font-family: var(--detail);
+}
+
+/* Only the text scrolls, so the Close button stays in view and opening never jumps to it */
+.message-modal-body {
+  min-height: 0;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* flex-start: a flex column would otherwise stretch the button to the panel's width */
+.message-modal-panel .backoffice-button {
+  align-self: flex-start;
+}
