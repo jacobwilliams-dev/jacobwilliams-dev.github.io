@@ -36,6 +36,8 @@
   --text-faint: #828685;
   --peach: #d9b4a2;
   --line: rgba(230, 229, 220, 0.65);
+  --success: #8fd6a4;
+  --error: #f09a9a;
 
   --sans: Arial, Helvetica, sans-serif;
   --heading: 'Orbitron', 'Trebuchet MS', Arial, sans-serif;
