@@ -18,6 +18,7 @@ function Home() {
   return (
     <>
       <PageSection
+        label="Introduction"
         image={introImage}
         imageAlt="A developer seen from behind at a glowing workstation, looking out a wide window at a starfield."
       >
@@ -39,6 +40,7 @@ function Home() {
       </PageSection>
 
       <PageSection
+        label="Technical Skills"
         image={technicalImage}
         imageAlt="Floating holographic screens showing abstract code, database and server diagrams in a dark control room."
       >
@@ -46,6 +48,7 @@ function Home() {
       </PageSection>
 
       <PageSection
+        label="Soft Skills"
         image={softImage}
         imageAlt="Two people planning together around a holographic table in a dark control room."
       >

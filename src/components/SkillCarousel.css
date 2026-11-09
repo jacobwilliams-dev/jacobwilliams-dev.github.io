@@ -147,9 +147,28 @@
     color: var(--peach);
   }
 
+  .skill-swipe-arrows {
+    display: flex;
+  }
+
+  /* row-reverse: the first arrow sits nearest the word on both sides, so one fade rule fits both */
+  .skill-swipe-left {
+    flex-direction: row-reverse;
+  }
+
+  /* Negative margin: each icon has clear space around its drawing, which spaces the arrows too far apart */
   .skill-swipe-hint svg {
     width: 16px;
     height: 16px;
+    margin-inline: -3px;
+  }
+
+  .skill-swipe-arrows svg:nth-child(2) {
+    opacity: 0.55;
+  }
+
+  .skill-swipe-arrows svg:nth-child(3) {
+    opacity: 0.25;
   }
 
   /* visibility, not display: the word stays centred when an arrow disappears */

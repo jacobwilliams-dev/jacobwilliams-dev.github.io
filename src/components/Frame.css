@@ -21,7 +21,13 @@
 }
 
 .frame-outline .frame-marker {
-  fill: var(--peach);
+  fill: none;
+  stroke: var(--line);
+  vector-effect: non-scaling-stroke;
+}
+
+.frame-outline .frame-dot {
+  fill: var(--text);
 }
 
 /* cover: fills the panel at any height without stretching.

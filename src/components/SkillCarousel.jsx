@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { handleMagnetMove } from '../lib/magnetHover.js'
+import CarouselTracker from './CarouselTracker.jsx'
 import ScrollHint from './ScrollHint.jsx'
 import SkillGrid from './SkillGrid.jsx'
 import './SkillCarousel.css'
@@ -8,6 +9,7 @@ import './SkillCarousel.css'
 const ARROW_STEPS = { ArrowUp: -1, ArrowLeft: -1, ArrowDown: 1, ArrowRight: 1 }
 const DRAG_START = 8
 const OVERDRAG_GIVE = 0.2
+const SWIPE_ARROWS = [0, 1, 2]
 
 // The second % handles negatives, because % keeps the sign in JavaScript
 function wrap(value, total) {
@@ -34,6 +36,8 @@ function SkillCarousel({ heading, groups }) {
   const position = stoppedPosition + (dragPosition - stoppedPosition) * OVERDRAG_GIVE
   // The nearest card, so the title and focus marks follow the drag
   const activeIndex = Math.round(stoppedPosition)
+
+  const selectCard = (index) => setFocusedIndex(wrap(index, groups.length))
 
   const handleKeyDown = (event) => {
     const step = ARROW_STEPS[event.key]
@@ -76,11 +80,29 @@ function SkillCarousel({ heading, groups }) {
       <div className="skill-side">
         <h2 className="skill-heading">{heading}</h2>
         <ScrollHint className="skill-swipe-hint">
-          <ChevronLeft className={activeIndex === 0 ? 'skill-swipe-end' : undefined} />
+          <span
+            className={
+              activeIndex === 0
+                ? 'skill-swipe-arrows skill-swipe-left skill-swipe-end'
+                : 'skill-swipe-arrows skill-swipe-left'
+            }
+          >
+            {SWIPE_ARROWS.map((arrow) => (
+              <ChevronLeft key={arrow} />
+            ))}
+          </span>
           Swipe
-          <ChevronRight
-            className={activeIndex === groups.length - 1 ? 'skill-swipe-end' : undefined}
-          />
+          <span
+            className={
+              activeIndex === groups.length - 1
+                ? 'skill-swipe-arrows skill-swipe-end'
+                : 'skill-swipe-arrows'
+            }
+          >
+            {SWIPE_ARROWS.map((arrow) => (
+              <ChevronRight key={arrow} />
+            ))}
+          </span>
         </ScrollHint>
         <div
           role="tablist"
@@ -156,6 +178,11 @@ function SkillCarousel({ heading, groups }) {
             </div>
           )
         })}
+        <CarouselTracker
+          titles={groups.map((group) => group.title)}
+          activeIndex={activeIndex}
+          onSelect={selectCard}
+        />
       </div>
     </div>
   )

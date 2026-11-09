@@ -1,0 +1,32 @@
+.portfolio-heading-row {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.portfolio-heading-row h1 {
+  margin: 0;
+}
+
+/* 16px: more than the two 6px drifts, so neighbours never touch */
+.portfolio-projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 760px) {
+  .portfolio-heading-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .portfolio-projects {
+    grid-template-columns: 1fr;
+  }
+}

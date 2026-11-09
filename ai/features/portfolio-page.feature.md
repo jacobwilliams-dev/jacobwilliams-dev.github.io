@@ -24,7 +24,7 @@ The Portfolio page gives an employer the evidence behind the skills on Home. It 
 
 - The Portfolio page at `/portfolio`.
 - The Education section: two institutions, with the page heading and the résumé button at its top.
-- The Work Experience section: four roles.
+- The Work Experience sections: four roles, each in its own section block.
 - The Projects section: three completed projects shown as cards, each with its own AI-generated image.
 - The résumé PDF, served from `public/` and downloaded through a button.
 - The `PeachButton` component, because this is the first feature that uses it.
@@ -35,6 +35,8 @@ The Portfolio page gives an employer the evidence behind the skills on Home. It 
 - `src/components/PeachButton.jsx`, `src/components/PeachButton.css` (new)
 - `src/components/PortfolioEntry.jsx`, `src/components/PortfolioEntry.css` (new)
 - `src/components/ProjectEntry.jsx`, `src/components/ProjectEntry.css` (new)
+- `src/components/RingDivider.jsx`, `src/components/RingDivider.css` (new)
+- `src/components/PageSection.jsx`, `src/components/PageSection.css` (existing, shared with other features; adding the `heading` and `label` props approved by the site owner on 2026-11-08)
 - `src/assets/portfolioContent.json` (new)
 - `src/assets/portfolio-rocket-food-delivery.png`, `src/assets/portfolio-codebloggs.png`, `src/assets/portfolio-rocket-elevators.png` (new)
 - `public/Jacob-Williams-Resume.pdf` (new)
@@ -44,8 +46,8 @@ The Portfolio page gives an employer the evidence behind the skills on Home. It 
 ### Out of Scope
 
 - The header link to `/portfolio`, the current-page mark and the footer: `header-footer.feature.md`.
-- Changes to `Frame`, `PageSection` and `ScrollHint`: `home-page.feature.md` built them, and this feature reuses them unchanged.
-- An intro section above Education: the site owner chose three sections only.
+- Changes to `Frame` and `ScrollHint`: `home-page.feature.md` built them, and this feature reuses them unchanged.
+- An intro section above Education: the site owner chose not to have one.
 - Background images behind the sections: the site owner chose images on the project entries instead.
 - Links to live projects or their repositories: no source asks for them.
 - The Personal Portfolio project listed on the résumé: the site owner chose three projects.
@@ -167,7 +169,7 @@ Activating the button saves `Jacob-Williams-Resume.pdf`, and the file opens as t
 The page is divided into at least three visually distinct sections, separated by spacing, background contrast or dividers.
 
 **Expected Result:**
-Education, Work Experience and Projects each sit in their own outlined panel, with visible space between the panels.
+Education, each of the four work roles and Projects each sit in their own outlined panel, with visible space between the panels.
 
 ### FR-14 — AI-generated images
 
@@ -205,10 +207,10 @@ The tool that generated each project image is documented.
 
 ## 4. Decisions Already Taken
 
-- **D-01:** The page has three stacked sections in this order: Education, Work Experience, Projects. There is no intro section - business doc (The Public Pages: order of the page's content, at least three sections); site owner decision, 2026-11-07.
+- **D-01:** The page has six stacked sections in this order: Education, one for each of the four work roles, Projects. There is no intro section - business doc (The Public Pages: order of the page's content, at least three sections); site owner decisions, 2026-11-07 and 2026-11-08 (one section per work role).
 - **D-02:** `Portfolio` lives in `src/pages/Portfolio.jsx` and is the element of a new `Route` at `/portfolio` in `src/App.jsx` - project-wide spec (section 3); existing code (`NAV_LINKS` in `src/components/Layout.jsx`); site owner decision, 2026-11-07.
-- **D-03:** The Education section opens with an `h1` reading `Portfolio`, above its `h2` reading `Education`, so the page has one top heading. Work Experience and Projects each open with an `h2` - site owner decision, 2026-11-08; project-wide spec (section 5: text sizes).
-- **D-04:** The résumé button sits at the top of the page on the right, on the same row as the `h1`, inside the Education section. At 760px or less it moves below the `h1`, aligned left - site owner decision, 2026-11-08; project-wide spec (section 5: breakpoint).
+- **D-03:** The page heading and the section headings sit above the outlined panels, through the `heading` prop of `PageSection`. Above the Education panel are the `h1` reading `Portfolio`, as the page's one top heading, and the `h2` reading `Education`. Above the first work role's panel is the `h2` reading `Work Experience`, and above the Projects panel is its own `h2` - site owner decisions, 2026-11-08; project-wide spec (section 5: text sizes).
+- **D-04:** The résumé button sits at the top of the page on the right, on the same row as the `h1`, above the Education panel. At 760px or less it moves below the `h1`, aligned left - site owner decision, 2026-11-08; project-wide spec (section 5: breakpoint).
 - **D-05:** The résumé button is a `PeachButton` labelled `Download Résumé`. `PeachButton` renders an `<a>` and takes `href`, `download` and its label as children, to the design in `ai-spec.md` section 5 - project-wide spec (section 5: peach button, where the pieces are built).
 - **D-06:** The PDF is `public/Jacob-Williams-Resume.pdf`. The button uses a plain `<a>` with `href="/Jacob-Williams-Resume.pdf"` and a `download` attribute, not a React Router `Link`, because the file is not a route - project-wide spec (section 5: `public/` holds the résumé PDF; section 7: routing); site owner's file.
 - **D-07:** The entries live in `src/assets/portfolioContent.json`, which `Portfolio` imports - portal slides (Slide #7: data comes from static JSON files); existing code (`src/assets/homeContent.json`).
@@ -222,10 +224,11 @@ The tool that generated each project image is documented.
 - **D-15:** Each entry in `portfolioContent.json` names its image with an `imageKey`. `Portfolio.jsx` maps that key to the imported file, because JSON cannot hold an image import - existing code (`src/lib/skillIcons.js`, the same approach for icons).
 - **D-16:** The generating tool is documented in a code comment beside each image import, the way Home documents its images - business doc (The Public Pages); existing code (`src/pages/Home.jsx`).
 - **D-17:** `PortfolioEntry` renders education and work entries, so both keep one style. `ProjectEntry` renders one project card, because it adds an image and technology tags - project-wide spec (section 5: one component per file, reuse an existing pattern).
-- **D-18:** Each education and work entry's title is an `h3` in Orbitron Bold in `--text`. Dates use the spaced-out bold capitals label style in `--peach`. Education and work entries are separated by a 1px `--line` divider - project-wide spec (section 5: fonts, text sizes, colour variables).
+- **D-18:** Each education and work entry's title is an `h3` in Orbitron Bold in `--text`. Dates use the spaced-out bold capitals label style in `--peach`. Education entries are separated by a `RingDivider` - project-wide spec (section 5: fonts, text sizes, colour variables).
 - **D-19:** Each project image is an `<img>` at full opacity, in a 16:9 box cropped with `object-fit: cover`, so it is not stretched and every card's text starts at the same height. It reaches the card's top, left and right edges and follows the card's rounded top corners - site owner decisions, 2026-11-07 and 2026-11-08.
 - **D-20:** Project cards use the site's dark card look, not the light fill of the reference: the Soft Skills card's see-through fill at 70%, 20px rounded corners, the slow up-and-down drift out of step, and the same hover (a 4px lift, the pull toward the cursor through `handleMagnetMove` in `src/lib/magnetHover.js`, the fill rising to 85%, the hairline `--peach` border and the faint glow), off on touch devices, with the movement off under reduced motion. The five `--card-*` variables (`--card-fill`, `--card-shadow`, `--card-glow`, `--card-soft-glow`, `--card-ring`) move unchanged from the `.skill-carousel, .skill-grid-hover` rule in `src/components/SkillGrid.css` to `:root` in `src/index.css`, so Home and `ProjectEntry.css` share one set of values and Home's cards look the same as before - site owner decisions, 2026-11-08 (must match the current site; moving the variables approved); `home-page.feature.md` (D-28); project-wide spec (section 5: maintainability rules).
 - **D-21:** A project's name is an `h3` in Orbitron Bold in `--text`, 16px, as on the Soft Skills cards. Its technologies are a list of tags in `Tomorrow` Regular at 12px, in `--peach`, each with a 1px `--peach` border and 10px rounded corners. Its description is a paragraph in `Tomorrow` Regular in the default paragraph colour - site owner decision, 2026-11-08 (reference layout); project-wide spec (section 5: fonts, text sizes, colour variables); `home-page.feature.md` (D-27).
+- **D-22:** Education and work entries carry peach accents from the site owner's design reference. A small open ring sits before the entry's dates. After the title, a line fades in toward a small hollow ring and a dot; it is hidden at 760px or less, where titles wrap. After the organization or program, two small dots and a short line that fades out follow the last word. A `RingDivider`, a thin peach line reaching both sides of the panel with a ringed dot lined up with the text, sits between a work role's dates and its summary, and between Education entries. All of them are `aria-hidden` - site owner decision, 2026-11-08 (reference image and suggested placements).
 
 ---
 
@@ -239,9 +242,10 @@ Order: the image files and the PDF come first because the page depends on them. 
 4. **T-04 (FR-12, D-05):** Create `PeachButton` to the design in `ai-spec.md` section 5. - `src/components/PeachButton.jsx`, `src/components/PeachButton.css`
 5. **T-05 (FR-03, FR-06, FR-07, D-09, D-17, D-18):** Create `PortfolioEntry`: a title, a subtitle, dates, and an optional summary and bullets. - `src/components/PortfolioEntry.jsx`, `src/components/PortfolioEntry.css`
 6. **T-06 (FR-10, FR-11, FR-16, D-09, D-14, D-17, D-19, D-20, D-21):** Move the `--card-*` variables to `:root` as in D-20. Create `ProjectEntry`: one card with the image and its alt text, the name, the technology tags and the description, with the card look and hover in D-20. - `src/index.css`, `src/components/SkillGrid.css`, `src/components/ProjectEntry.jsx`, `src/components/ProjectEntry.css`
-7. **T-07 (FR-02 to FR-17, D-01, D-03, D-04, D-12, D-15, D-16):** Create `Portfolio`: three `PageSection`s built from the content file, the heading row with the résumé button, `ScrollHint` at the end of Education, the image map and the tool comments. - `src/pages/Portfolio.jsx`, `src/pages/Portfolio.css`
+7. **T-07 (FR-02 to FR-17, D-01, D-03, D-04, D-12, D-15, D-16):** Create `Portfolio`: six `PageSection`s built from the content file, the heading row with the résumé button, `ScrollHint` at the end of Education, the image map and the tool comments. - `src/pages/Portfolio.jsx`, `src/pages/Portfolio.css`
 8. **T-08 (FR-01, D-02):** In `src/App.jsx`, import `Portfolio` and add its `Route` at `/portfolio`. - `src/App.jsx`
 9. **T-09 (all FRs):** Verify the feature against section 11 at phone and desktop widths. - no file change
+10. **T-10 (D-03, D-22):** Move the headings above the panels through the `heading` prop, and add the entry accents and `RingDivider`. - `src/components/PageSection.jsx`, `src/components/PageSection.css`, `src/components/RingDivider.jsx`, `src/components/RingDivider.css`, `src/components/PortfolioEntry.jsx`, `src/components/PortfolioEntry.css`, `src/pages/Portfolio.jsx`, `src/pages/Portfolio.css`
 
 ---
 
@@ -269,15 +273,16 @@ N/A
 
 ### Components
 
-- `Portfolio` (`src/pages/Portfolio.jsx`) - new: composes the three sections from the content file.
+- `Portfolio` (`src/pages/Portfolio.jsx`) - new: composes the six sections from the content file.
 - `PeachButton` (`src/components/PeachButton.jsx`) - new: the call-to-action link from `ai-spec.md` section 5, reusable by other pages.
 - `PortfolioEntry` (`src/components/PortfolioEntry.jsx`) - new: one education or work entry.
 - `ProjectEntry` (`src/components/ProjectEntry.jsx`) - new: one project card with its image.
+- `RingDivider` (`src/components/RingDivider.jsx`) - new: the peach line with a ringed dot.
 - `handleMagnetMove` (`src/lib/magnetHover.js`) - existing, unchanged: reports the cursor position for the card hover.
 - `src/index.css` - existing, changed: gains the `--card-*` variables at `:root`.
 - `src/components/SkillGrid.css` - existing, changed: loses the `--card-*` variables.
 - `src/assets/portfolioContent.json` - new: the page's entries.
-- `PageSection` (`src/components/PageSection.jsx`) - existing, unchanged: holds each section in a `Frame`.
+- `PageSection` (`src/components/PageSection.jsx`) - existing, changed: holds each section in a `Frame`, and gains the `heading` and `label` props.
 - `Frame` (`src/components/Frame.jsx`) - existing, unchanged: the outlined panel.
 - `ScrollHint` (`src/components/ScrollHint.jsx`) - existing, unchanged: the "Scroll down" hint.
 - `Layout` (`src/components/Layout.jsx`) - existing, unchanged: renders `Portfolio` inside the header and footer, and already lists the `/portfolio` link.
@@ -388,7 +393,7 @@ N/A
 
 ### Success Behavior
 
-- `/#/portfolio` shows the three sections in order, inside the shared layout, with the Portfolio link marked as the current page.
+- `/#/portfolio` shows the six sections in order, inside the shared layout, with the Portfolio link marked as the current page.
 - Activating the résumé button saves the PDF and leaves the visitor on the page.
 
 ### Error / Invalid Behavior
@@ -409,6 +414,7 @@ N/A
 - [ ] CodeBoxx Academy appears above Lenoir-Rhyne University. (FR-04)
 - [ ] The Work Experience section shows all four roles from section 8. (FR-05)
 - [ ] Each work entry shows its job title, organization and dates. (FR-06)
+- [ ] At 1280px wide, each Education and work title has the fading line, ring and dot after it, each organization or program has the two dots and fading line after it, each entry's dates have the open ring before them, and a ringed peach line separates a work role's dates from its summary. (D-22)
 - [ ] Each work entry shows its summary paragraph and every bullet from section 8. (FR-07)
 - [ ] The roles appear in the order Fidelis Food Group, Curate Foodservice, Semper Foods, Century 21. (FR-08)
 - [ ] The Projects section shows Rocket Food Delivery, CodeBloggs and Rocket Elevators, in that order. (FR-09)
@@ -419,7 +425,8 @@ N/A
 - [ ] After the `--card-*` variables move, the Home carousel cards and Soft Skills cards show the same fill, shadow and hover as before. (FR-09, D-20)
 - [ ] At 1280px wide the résumé button sits on the same row as the `Portfolio` heading, at the right. At 320px wide it sits below the heading. (FR-12)
 - [ ] Activating the résumé button saves `Jacob-Williams-Resume.pdf`, the file opens as the two-page résumé, and the page stays on `/#/portfolio`. (FR-12)
-- [ ] Education, Work Experience and Projects each sit in their own `Frame` outline, with visible space between the outlines, at 1280px and 320px wide. (FR-13)
+- [ ] Education, each of the four work roles and Projects each sit in their own `Frame` outline, with visible space between the outlines, at 1280px and 320px wide. (FR-13)
+- [ ] The `Portfolio` heading and the `Education`, `Work Experience` and `Projects` headings sit above the panels, outside their outlines. (D-03)
 - [ ] The three project images are present and are device mockups generated with Google Gemini from real project screenshots. (FR-14)
 - [ ] Each image shows the device and screen listed for its project in section 8. (FR-15)
 - [ ] Each project `<img>` has the alt text listed in section 8. (FR-16)

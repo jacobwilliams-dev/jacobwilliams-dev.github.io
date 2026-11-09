@@ -41,13 +41,21 @@
   --detail: 'Tomorrow', Arial, sans-serif;
 
   --header-height: 95px;
+  --rail-width: 64px;
+
+  /* The card look, shared by the carousel, the hover cards and the project cards */
+  --card-fill: color-mix(in srgb, var(--text) 8%, var(--ink));
+  --card-shadow: 0 18px 40px color-mix(in srgb, var(--bg) 80%, transparent);
+  --card-glow: 0 0 36px color-mix(in srgb, var(--peach) 22%, transparent);
+  --card-soft-glow: 0 0 18px color-mix(in srgb, var(--peach) 35%, transparent);
+  /* An inset shadow, not a border: browsers can round a 0.5px border up to 1px */
+  --card-ring: inset 0 0 0 0.5px var(--peach), var(--card-soft-glow);
 
   color-scheme: dark;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
   scroll-padding-top: var(--header-height);
 }
 
@@ -107,8 +115,8 @@ button:focus-visible {
 }
 
 @media (max-width: 760px) {
-  html {
-    scroll-snap-type: none;
+  :root {
+    --rail-width: 24px;
   }
 }
 
